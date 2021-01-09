@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatefulWidget {
   
@@ -21,6 +22,8 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text('Home ${widget.user.user.email}'),
       ),
+      // body: StreamBuilder<DocumentSnapshot>(
+      //   builder: ,)
     );
   }
 }

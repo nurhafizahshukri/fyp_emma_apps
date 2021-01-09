@@ -58,7 +58,7 @@ Future <void> signIn() async {
     formState.save();
     try{
       UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home(user: user)));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(user: user)));
     }catch(e) {
       print(e.message);
     }
