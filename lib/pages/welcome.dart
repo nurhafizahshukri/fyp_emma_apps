@@ -14,10 +14,13 @@ class _WelcomePageState extends State<WelcomePage> {
       appBar: AppBar(
         title: Text('Welcome to EMMA')
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget> [
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(colors: [Colors.red, Colors.white])),
+        // mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Column(
+          children: <Widget> [
           RaisedButton(
               onPressed: navigateToSignIn,
               child: Text('Sign in'),
@@ -27,6 +30,8 @@ class _WelcomePageState extends State<WelcomePage> {
               child: Text('Sign Up'),
             ),
         ]
+        )
+        
       )
     );
   }

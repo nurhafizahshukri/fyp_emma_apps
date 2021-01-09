@@ -63,3 +63,12 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
+
+dependencies {
+  implementation 'com.android.support:multidex:2.0.1' //enter the latest version
+}
+android {
+    defaultConfig {
+        multiDexEnabled true
+    }
+}
