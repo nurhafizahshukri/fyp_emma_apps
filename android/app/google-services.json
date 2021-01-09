@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "212405216220",
+    "project_id": "fyp-emma-apps",
+    "storage_bucket": "fyp-emma-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212405216220:android:a77b4e18adfe3f59f46519",
+        "android_client_info": {
+          "package_name": "com.example.EMMA"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212405216220-m2osokc07j7um1hf1khrshv1ftn5u44t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0D_HU7tfrIuQGBtlwlWSv3vZpmFo_dNw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212405216220-m2osokc07j7um1hf1khrshv1ftn5u44t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
