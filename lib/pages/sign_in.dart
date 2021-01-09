@@ -1,3 +1,4 @@
+import 'package:EMMA/pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -51,11 +52,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-void signIn() {
+Future <void> signIn() async {
   final formState = _formKey.currentState;
   if(formState.validate()){
     formState.save();
-    FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+    try{
+      UserCredential user = await FirebaseAuth.instance.signInWithEmailAndPassword(email: _email, password: _password);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Home(user: user)));
+    }catch(e) {
+      print(e.message);
+    }
   }
 }
 
