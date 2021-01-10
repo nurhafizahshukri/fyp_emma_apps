@@ -17,9 +17,9 @@ class _WelcomePageState extends State<WelcomePage> {
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: [Colors.red, Colors.white])),
-        // mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.stretch,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget> [
           RaisedButton(
               onPressed: navigateToSignIn,

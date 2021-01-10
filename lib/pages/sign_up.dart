@@ -13,48 +13,115 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Sign Up')
+      resizeToAvoidBottomPadding: false,
+      appBar: PreferredSize(
+        preferredSize: Size(double.infinity, 200),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: 350,
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.red[700],
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(35),bottomRight: Radius.circular(35))
+            ),
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  new Image.asset(
+                            "assets/images/logo_white.png",
+                            height: 100.0,
+                            width: 100.0,
+                            fit: BoxFit.scaleDown,
+                          )
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget> [
-            TextFormField(
-              // ignore: missing_return
-              validator: (input) {
-                if(input.isEmpty){
-                  return 'Please type an email';
-                }
-              },
-              onSaved: (input) => _email = input,
-              decoration: InputDecoration(
-                labelText: 'Email'
-              )
+      body: Column(
+        // mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget> [
+        Container(
+          child: Text(
+            "Hello",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 50,
+              color: Colors.black),),),
+        Form(
+          key: _formKey,
+          child: Container(
+            margin: EdgeInsets.fromLTRB(40, 20, 40, 0),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget> [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    // ignore: missing_return
+                    validator: (input) {
+                      if(input.isEmpty){
+                        return 'Please type an email';
+                      }
+                    },
+                    onSaved: (input) => _email = input,
+                    decoration: InputDecoration(
+                      labelText: 'Email',
+                      fillColor: Colors.white,
+                            border: new OutlineInputBorder(
+                              borderRadius: new BorderRadius.circular(25.0),
+                            )
+                    )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    // ignore: missing_return
+                    validator: (input) {
+                      if(input.length < 6){
+                        return 'Your password is weak';
+                      }
+                    },
+                    onSaved: (input) => _password = input,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: 'Password',
+                      fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                          )
+                    )
+                  ),
+                ),
+                SizedBox(height: 20),
+                    ButtonTheme(
+                        minWidth: 338.0,
+                        height: 40.0,
+                        child: RaisedButton(
+                          onPressed: signUp,
+                          color: Colors.red[600],
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            side: BorderSide(color: Colors.red[600])
+                          ),
+                          child: Text('Sign up'.toUpperCase(), style: TextStyle(fontSize: 20)),
+                        ),
+                    ),
+              ],
             ),
-            TextFormField(
-              // ignore: missing_return
-              validator: (input) {
-                if(input.length < 6){
-                  return 'Your password is weak';
-                }
-              },
-              onSaved: (input) => _password = input,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password'
-              )
-            ),
-            RaisedButton(
-              onPressed: signUn,
-              child: Text('Sign up'),
-            ),
-          ],
-        ),),
+          ),),
+        ]
+      ),
     );
 }
 
-Future <void> signUn() async {
+Future <void> signUp() async {
   final formState = _formKey.currentState;
   if(formState.validate()){
     formState.save();
