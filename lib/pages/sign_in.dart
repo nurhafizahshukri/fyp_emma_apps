@@ -24,126 +24,149 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 250),
+        preferredSize: Size(double.infinity, 200),
         child: Container(
           width: MediaQuery.of(context).size.width,
-          height: 400,
+          height: 350,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.red[700],
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(35),bottomRight: Radius.circular(35))
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(95),bottomRight: Radius.circular(0))
             ),
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("HELLO",style: TextStyle(fontSize: 30,color: Colors.white),),
-                ],
+                  new Image.asset(
+                            "assets/images/logo_white.png",
+                            height: 100.0,
+                            width: 100.0,
+                            fit: BoxFit.scaleDown,
+                          ) ],
               ),
             ),
           ),
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: FocusScope(
-          node: _node,
-          child: Container(
-            // color: Colors.black,
-            margin: EdgeInsets.fromLTRB(40, 20, 40, 0),
-            // height: 450,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget> [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    onEditingComplete: _node.nextFocus,
-                    // ignore: missing_return
-                    validator: (input) {
-                      if(input.isEmpty || !input.contains('@')){
-                        return 'Invalid email!';
-                      }
-                    },
-                    onSaved: (input) => _email = input,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(padding: EdgeInsets.only(right: 7.0, left: 17.0),child: new Image.asset(
-                          "assets/images/email_icon.png",
-                          height: 25.0,
-                          width: 25.0,
-                      )),
-                      labelText: 'Email Address',
-                      fillColor: Colors.white,
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                      )
-                    )
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    onEditingComplete: _node.nextFocus,
-                    autofocus: false,
-                    // ignore: missing_return
-                    validator: (input) {
-                      if(input.length < 6){
-                        return 'Your password is weak';
-                      }
-                    },
-                    onSaved: (input) => _password = input,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      prefixIcon: Padding(padding: EdgeInsets.only(right: 7.0, left: 17.0),child: new Image.asset(
-                          "assets/images/password_icon.png",
-                          height: 25.0,
-                          width: 25.0,
-                      )),
-                      labelText: 'Password',
-                      fillColor: Colors.white,
-                      border: new OutlineInputBorder(
-                        borderRadius: new BorderRadius.circular(25.0),
-                      )
-                    )
-                  ),
-                ),
-                SizedBox(height: 20),
-                ButtonTheme(
-                    minWidth: 338.0,
-                    height: 40.0,
-                    child: RaisedButton(
-                      onPressed: signIn,
-                      color: Colors.red[600],
-                      textColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        side: BorderSide(color: Colors.red[600])
+      body: Column(
+        children: <Widget> [
+          Container(
+            child: Text(
+            "Hello",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 80,
+              color: Colors.black),),),
+          Container(
+            child: Text(
+            "Sign in to your account",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.black),),),
+          Form(
+            key: _formKey,
+            child: FocusScope(
+              node: _node,
+              child: Container(
+                // color: Colors.black,
+                margin: EdgeInsets.fromLTRB(40, 25, 40, 0),
+                // height: 450,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget> [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        onEditingComplete: _node.nextFocus,
+                        // ignore: missing_return
+                        validator: (input) {
+                          if(input.isEmpty || !input.contains('@')){
+                            return 'Invalid email!';
+                          }
+                        },
+                        onSaved: (input) => _email = input,
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(padding: EdgeInsets.only(right: 7.0, left: 17.0),child: new Image.asset(
+                              "assets/images/email_icon.png",
+                              height: 25.0,
+                              width: 25.0,
+                          )),
+                          labelText: 'Email Address',
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                          )
+                        )
                       ),
-                      child: Text('Sign in'.toUpperCase(), style: TextStyle(fontSize: 20)),
                     ),
-                ),
-                SizedBox(height: 15),
-                ButtonTheme(
-                    minWidth: 338.0,
-                    height: 40.0,
-                    child: RaisedButton(
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp(), fullscreenDialog: true));
-                      },
-                      color: Colors.white,
-                      textColor: Colors.red[600],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        side: BorderSide(color: Colors.red[600])
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextFormField(
+                        onEditingComplete: _node.nextFocus,
+                        autofocus: false,
+                        // ignore: missing_return
+                        validator: (input) {
+                          if(input.length < 6){
+                            return 'Your password is weak';
+                          }
+                        },
+                        onSaved: (input) => _password = input,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(padding: EdgeInsets.only(right: 7.0, left: 17.0),child: new Image.asset(
+                              "assets/images/password_icon.png",
+                              height: 25.0,
+                              width: 25.0,
+                          )),
+                          labelText: 'Password',
+                          fillColor: Colors.white,
+                          border: new OutlineInputBorder(
+                            borderRadius: new BorderRadius.circular(25.0),
+                          )
+                        )
                       ),
-                      child: Text('Sign up'.toUpperCase(), style: TextStyle(fontSize: 20)),
                     ),
+                    SizedBox(height: 20),
+                    ButtonTheme(
+                        minWidth: 338.0,
+                        height: 40.0,
+                        child: RaisedButton(
+                          onPressed: signIn,
+                          color: Colors.red[600],
+                          textColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            side: BorderSide(color: Colors.red[600])
+                          ),
+                          child: Text('Sign in'.toUpperCase(), style: TextStyle(fontSize: 20)),
+                        ),
+                    ),
+                    SizedBox(height: 15),
+                    ButtonTheme(
+                        minWidth: 338.0,
+                        height: 40.0,
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp(), fullscreenDialog: true));
+                          },
+                          color: Colors.white,
+                          textColor: Colors.red[600],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            side: BorderSide(color: Colors.red[600])
+                          ),
+                          child: Text('Create a new account'.toUpperCase(), style: TextStyle(fontSize: 20)),
+                        ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
-        ),),
+              ),
+            ),),
+        ],
+      ),
     );
   }
 

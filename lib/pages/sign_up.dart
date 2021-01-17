@@ -22,7 +22,7 @@ class _SignUpState extends State<SignUp> {
           child: Container(
             decoration: BoxDecoration(
               color: Colors.red[700],
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(35),bottomRight: Radius.circular(35))
+              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(0),bottomRight: Radius.circular(95))
             ),
             child: Container(
               margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -45,12 +45,19 @@ class _SignUpState extends State<SignUp> {
         // mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget> [
         Container(
-          child: Text(
-            "Hello",
+            child: Text(
+            "Welcome",
             textAlign: TextAlign.left,
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 50,
+              fontSize: 70,
+              color: Colors.black),),),
+          Container(
+            child: Text(
+            "Create a new account",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 20,
               color: Colors.black),),),
         Form(
           key: _formKey,
