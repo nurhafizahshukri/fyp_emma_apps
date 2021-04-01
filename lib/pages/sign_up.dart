@@ -120,6 +120,23 @@ class _SignUpState extends State<SignUp> {
                           child: Text('Sign up'.toUpperCase(), style: TextStyle(fontSize: 20)),
                         ),
                     ),
+                SizedBox(height: 15),
+                    ButtonTheme(
+                        minWidth: 338.0,
+                        height: 40.0,
+                        child: RaisedButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(), fullscreenDialog: true));
+                          },
+                          color: Colors.white,
+                          textColor: Colors.red[600],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            side: BorderSide(color: Colors.red[600])
+                          ),
+                          child: Text('Sign In'.toUpperCase(), style: TextStyle(fontSize: 20)),
+                        ),
+                    ),
               ],
             ),
           ),),
