@@ -1,5 +1,7 @@
 // import 'package:EMMA/pages/sign_in.dart';
-import 'package:EMMA/pages/splash_screen.dart';
+import 'package:EMMA/pages/Organiser/eventDetails.dart';
+// import 'package:EMMA/pages/Organiser/mainpage.dart';
+// import 'package:EMMA/pages/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SplashScreen(),
+      home: EventDetails(),
     );
   }
 }
