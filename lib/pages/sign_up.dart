@@ -13,7 +13,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, 200),
         child: Container(
@@ -109,14 +109,14 @@ class _SignUpState extends State<SignUp> {
                     ButtonTheme(
                         minWidth: 338.0,
                         height: 40.0,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: signUp,
-                          color: Colors.red[600],
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.red[600])
-                          ),
+                          // color: Colors.red[600],
+                          // textColor: Colors.white,
+                          // shape: RoundedRectangleBorder(
+                          //   borderRadius: BorderRadius.circular(25.0),
+                          //   side: BorderSide(color: Colors.red[600])
+                          // ),
                           child: Text('Sign up'.toUpperCase(), style: TextStyle(fontSize: 20)),
                         ),
                     ),
@@ -124,16 +124,16 @@ class _SignUpState extends State<SignUp> {
                     ButtonTheme(
                         minWidth: 338.0,
                         height: 40.0,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage(), fullscreenDialog: true));
                           },
-                          color: Colors.white,
-                          textColor: Colors.red[600],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.red[600])
-                          ),
+                          // color: Colors.white,
+                          // textColor: Colors.red[600],
+                          // shape: RoundedRectangleBorder(
+                          //   borderRadius: BorderRadius.circular(25.0),
+                          //   side: BorderSide(color: Colors.red[600])
+                          // ),
                           child: Text('Sign In'.toUpperCase(), style: TextStyle(fontSize: 20)),
                         ),
                     ),

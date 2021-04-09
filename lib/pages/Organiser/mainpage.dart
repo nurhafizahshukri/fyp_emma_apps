@@ -1,6 +1,7 @@
 import 'package:EMMA/pages/Organiser/createEvent.dart';
 import 'package:EMMA/pages/Organiser/dashboard.dart';
 import 'package:EMMA/pages/Organiser/report.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MainpageOrganizer extends StatefulWidget {
@@ -36,7 +37,7 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
         IconButton(
             icon: new Icon(Icons.logout),
             onPressed: () {
-              // Navigator.of(context).pushReplacementNamed(AUTH_SCREEN);
+              FirebaseAuth.instance.signOut();
             }),
       ],
       ),

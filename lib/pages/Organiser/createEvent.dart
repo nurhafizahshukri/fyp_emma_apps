@@ -1,8 +1,16 @@
+import 'package:EMMA/model/class.dart';
+import 'package:EMMA/providers/event_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class CreateEvent extends StatefulWidget {
+
+  final EventInfo eventInfo;
+
+  CreateEvent({this.eventInfo});
+
   @override
   _CreateEventState createState() => _CreateEventState();
 }
@@ -14,11 +22,30 @@ class _CreateEventState extends State<CreateEvent> {
   String _date, _time;
   final FocusScopeNode _node = FocusScopeNode();
 
+  final eventController = TextEditingController();
+
   @override
   void dispose() {
+    eventController.dispose();
     _node.dispose();
     super.dispose();
   }
+
+  @override
+  void initState() {
+    final entryProvider = Provider.of<EventProvider>(context,listen: false);
+    if (widget.eventInfo != null){
+      //Edit
+      eventController.text = widget.eventInfo.eventName;
+
+      entryProvider.loadAll(widget.eventInfo);
+    } else {
+      //Add
+      entryProvider.loadAll(null);
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,14 +185,14 @@ class _CreateEventState extends State<CreateEvent> {
                         ButtonTheme(
                             minWidth: 338.0,
                             height: 40.0,
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () {},
-                              color: Colors.red[600],
-                              textColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(color: Colors.red[600])
-                              ),
+                              // color: Colors.red[600],
+                              // textColor: Colors.white,
+                              // shape: RoundedRectangleBorder(
+                              //   borderRadius: BorderRadius.circular(25.0),
+                              //   side: BorderSide(color: Colors.red[600])
+                              // ),
                               child: Text('Submit'.toUpperCase(), style: TextStyle(fontSize: 20)),
                             ),
                         ),
@@ -173,14 +200,14 @@ class _CreateEventState extends State<CreateEvent> {
                         ButtonTheme(
                             minWidth: 338.0,
                             height: 40.0,
-                            child: RaisedButton(
+                            child: ElevatedButton(
                               onPressed: () { },
-                              color: Colors.white,
-                              textColor: Colors.red[600],
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(color: Colors.red[600])
-                              ),
+                              // color: Colors.white,
+                              // textColor: Colors.red[600],
+                              // shape: RoundedRectangleBorder(
+                              //   borderRadius: BorderRadius.circular(25.0),
+                              //   side: BorderSide(color: Colors.red[600])
+                              // ),
                               child: Text('Reset'.toUpperCase(), style: TextStyle(fontSize: 20)),
                             ),
                         ),

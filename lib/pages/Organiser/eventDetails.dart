@@ -246,28 +246,28 @@ class _EventDetailsState extends State<EventDetails> {
                      ButtonTheme(
                         minWidth: 180.0,
                         // height: 40.0,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          color: Colors.red[600],
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.red[600])
-                          ),
+                          // color: Colors.red[600],
+                          // textColor: Colors.white,
+                          // shape: RoundedRectangleBorder(
+                          //   borderRadius: BorderRadius.circular(25.0),
+                          //   side: BorderSide(color: Colors.red[600])
+                          // ),
                           child: Text('Edit'.toUpperCase(), style: TextStyle(fontSize: 20)),
                         ),
                           ),
                       ButtonTheme(
                         minWidth: 180.0,
                         // height: 40.0,
-                        child: RaisedButton(
+                        child: ElevatedButton(
                           onPressed: () {},
-                          color: Colors.red[600],
-                          textColor: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.red[600])
-                          ),
+                          // color: Colors.red[600],
+                          // textColor: Colors.white,
+                          // shape: RoundedRectangleBorder(
+                          //   borderRadius: BorderRadius.circular(25.0),
+                          //   side: BorderSide(color: Colors.red[600])
+                          // ),
                           child: Text('Delete'.toUpperCase(), style: TextStyle(fontSize: 20)),
                         ),
                           ),

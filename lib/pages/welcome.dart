@@ -21,11 +21,11 @@ class _WelcomePageState extends State<WelcomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget> [
-          RaisedButton(
+          ElevatedButton(
               onPressed: navigateToSignIn,
               child: Text('Sign in'),
             ),
-          RaisedButton(
+          ElevatedButton(
               onPressed: navigateToSignUp,
               child: Text('Sign Up'),
             ),
