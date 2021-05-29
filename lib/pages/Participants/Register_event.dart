@@ -1,15 +1,24 @@
-import 'package:EMMA/services/databaseservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-class CreateEvent extends StatefulWidget {
+import 'package:EMMA/services/databaseservice.dart';
+class RegisterEvent extends StatefulWidget {
+  DateTime date;
+  DateTime time;
+  String eventName;
+  String location;
+  String eventfee;
+  
+  String uid;
 
+  RegisterEvent(this.date, this.time, this.eventName, this.location,
+      this.eventfee, this.uid,);
   @override
-  _CreateEventState createState() => _CreateEventState();
+  _RegisterEventState createState() => _RegisterEventState();
 }
 
-class _CreateEventState extends State<CreateEvent> {
+class _RegisterEventState extends State<RegisterEvent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final newformat = DateFormat("yyyy-MM-dd");
   final format1 = DateFormat("HH:mm");
@@ -21,9 +30,17 @@ class _CreateEventState extends State<CreateEvent> {
   String _description;
   String _lebel;
   String _reg;
+  String _name;
+  String _contact;
   final FocusScopeNode _node = FocusScopeNode();
 
   final eventController = TextEditingController();
+  final TextEditingController dateController = new TextEditingController();
+  final TextEditingController timeController = new TextEditingController();
+  final TextEditingController eventNameController = new TextEditingController();
+  final TextEditingController locationController = new TextEditingController();
+  final TextEditingController eventfeeController = new TextEditingController();
+  
 
   @override
   void dispose() {
@@ -34,12 +51,23 @@ class _CreateEventState extends State<CreateEvent> {
 
   @override
   void initState() {
-   // TODO
-  }
+dateController.text = widget.date.toString();
+    timeController.text = widget.time.toString();
+    eventNameController.text = widget.eventName;
+    locationController.text = widget.location;
+    eventfeeController.text = widget.eventfee;
+ 
+    _date = widget.date;
+    _time = widget.time;
+    _eventName = widget.eventName;
+    _location = widget.location;
+    _eventfee = widget.eventfee;
+   }
 
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Create event'),
@@ -60,6 +88,12 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            enabled: false,
+                                                        controller: eventNameController,
+
+                            style:TextStyle(color: Colors.grey),
+
+                            
                           onChanged: (currentValue) => _eventName = currentValue,
 
                             // onEditingComplete: _node.nextFocus,
@@ -72,6 +106,7 @@ class _CreateEventState extends State<CreateEvent> {
                             // onSaved: (input) => _email = input,
                             decoration: InputDecoration(
                               labelText: 'Event Name',
+                              
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -81,6 +116,11 @@ class _CreateEventState extends State<CreateEvent> {
                         ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child: DateTimeField(
+                        
+                                                        controller: dateController,
+
+                            style:TextStyle(color: Colors.grey),
+                        enabled: false,
                         onChanged: (currentValue) => _date = currentValue,
                         decoration: InputDecoration(
                           border: new OutlineInputBorder(
@@ -101,6 +141,11 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
+                        
+                                                        controller: timeController,
+
+                            style:TextStyle(color: Colors.grey),
+                        enabled: false,
                         onChanged: (currentValue) => _time = currentValue,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
@@ -118,6 +163,11 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            
+                                                        controller: locationController,
+
+                            style:TextStyle(color: Colors.grey),
+                            enabled: false,
                                                     onChanged: (currentValue) => _location = currentValue,
 
                             decoration: InputDecoration(
@@ -133,6 +183,11 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            
+                                                        controller:eventfeeController,
+
+                            style:TextStyle(color: Colors.grey),
+                            enabled: false,
                                                     onChanged: (currentValue) => _eventfee = currentValue,
 
                             decoration: InputDecoration(
@@ -144,13 +199,13 @@ class _CreateEventState extends State<CreateEvent> {
                             )
                           ),
                         ),
-                        Padding(
+                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _description = currentValue,
+                                                    onChanged: (currentValue) => _name = currentValue,
 
                             decoration: InputDecoration(
-                              labelText: 'Event Description',
+                              labelText: 'Name',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -161,24 +216,10 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _lebel = currentValue,
+                                                    onChanged: (currentValue) => _contact = currentValue,
 
                             decoration: InputDecoration(
-                              labelText: 'Label (Sports,Seminar etc)',
-                              fillColor: Colors.white,
-                              border: new OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(25.0),
-                              )
-                            )
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                              onChanged: (currentValue) => _reg = currentValue,
-
-                            decoration: InputDecoration(
-                              labelText: 'Open for registration (Yes / No)',
+                              labelText: 'Contact Number',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -228,7 +269,7 @@ class _CreateEventState extends State<CreateEvent> {
   final formState = _formKey.currentState;
   
     formState.save();
-    DatabaseService().addEvent(_eventName,_date,_time,_location,_eventfee,_description,_lebel,_reg);
+    DatabaseService().addParticipant(_name,_contact,widget.uid);
 
 }
 

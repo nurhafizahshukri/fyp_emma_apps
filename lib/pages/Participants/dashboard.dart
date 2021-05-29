@@ -1,15 +1,16 @@
 // import 'package:fiza/model/class.dart';
-import 'package:EMMA/pages/Organiser/eventDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:EMMA/Pages/Organiser/eventDetails.dart';
+import 'package:EMMA/Pages/Participants/eventView.dart';
 
-class Dashboard extends StatefulWidget {
+class DashboardParticipant extends StatefulWidget {
   @override
-  _DashboardState createState() => _DashboardState();
+  _DashboardParticipantState createState() => _DashboardParticipantState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardParticipantState extends State<DashboardParticipant> {
   @override
   Widget build(BuildContext context) {
     CollectionReference event = FirebaseFirestore.instance.collection('event');
@@ -37,7 +38,7 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EventDetails(
+                            builder: (context) => EventView(
                                 myDateTime,
                                 myTimeDate,
                                 document.data()['EventName'],
@@ -46,7 +47,8 @@ class _DashboardState extends State<Dashboard> {
                                 document.data()['Description'],
                                 document.data()['lebel'],
                                 document.data()['Open_Registeration'],
-                                document.id),
+                                document.id,
+                                document.data()['participant']),
                             fullscreenDialog: true));
                   },
                   child: new Center(
@@ -59,7 +61,8 @@ class _DashboardState extends State<Dashboard> {
                               borderRadius: BorderRadius.circular(24),
                               gradient: LinearGradient(
                                   colors: [
-                                    Color(0xffD76Ef5),
+                                    Colors.red,
+                                    //Color(0xffD76Ef5),
                                     Color(0xff3BB2BB)
                                   ],
                                   begin: Alignment.topLeft,
@@ -132,7 +135,6 @@ class _DashboardState extends State<Dashboard> {
                   )),
                 );
               }).toList());
-            })
-            );
+            }));
   }
 }
