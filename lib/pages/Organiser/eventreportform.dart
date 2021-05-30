@@ -88,7 +88,6 @@ class _UploadingImageToFirebaseStorageState
     TaskSnapshot taskSnapshot = await uploadTask;
     taskSnapshot.ref.getDownloadURL().then(
           (value) => {
-            print(value),
             if (_imageFile == _imageFile1)
               {_imageUrl1 = value, print("image URL 1 : $_imageUrl1")}
             else if (_imageFile == _imageFile2)

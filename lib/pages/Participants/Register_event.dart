@@ -96,14 +96,6 @@ dateController.text = widget.date.toString();
                             
                           onChanged: (currentValue) => _eventName = currentValue,
 
-                            // onEditingComplete: _node.nextFocus,
-                            // ignore: missing_return
-                            // validator: (input) {
-                            //   if(input.isEmpty || !input.contains('@')){
-                            //     return 'Invalid email!';
-                            //   }
-                            // },
-                            // onSaved: (input) => _email = input,
                             decoration: InputDecoration(
                               labelText: 'Event Name',
                               

@@ -95,10 +95,6 @@ class _DashboardState extends State<Dashboard> {
                                     ],
                                   ),
                                 )
-                                // Image.asset(
-                                //   'assets/images/logo_white.png',
-                                //   height: 64,
-                                //   width: 64)
                                 ),
                             Expanded(
                               flex: 5,

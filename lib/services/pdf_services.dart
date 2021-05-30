@@ -80,14 +80,6 @@ class PdfApi {
   String _imageUrl7,
   String _imageUrl8) async {
     final pdf = Document();
-print("_imageUrl1=$_imageUrl1");
-print("_imageUrl2=$_imageUrl2");
-print("_imageUrl3=$_imageUrl3");
-print("_imageUrl4=$_imageUrl4");
-print("_imageUrl5=$_imageUrl5");
-print("_imageUrl6=$_imageUrl6");
-print("_imageUrl7=$_imageUrl7");
-print("_imageUrl8=$_imageUrl8");
 Uint8List bytes = (await NetworkAssetBundle(Uri.parse("${_imageUrl1}")).load("${_imageUrl1}"))
     .buffer
     .asUint8List();
