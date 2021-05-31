@@ -65,6 +65,7 @@ class _EventViewState extends State<EventView> {
   final FocusScopeNode _node = FocusScopeNode();
   final newformat = DateFormat("yyyy-MM-dd");
   final format1 = DateFormat("HH:mm");
+  final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   User user = FirebaseAuth.instance.currentUser;
   bool isRegisterd=false;
   @override
@@ -119,7 +120,7 @@ class _EventViewState extends State<EventView> {
                                       fontSize: 20, color: Colors.black),
                                 ),
                                 Text(
-                                   widget.date.month.toString(),
+                                   "${months[widget.date.month-1]}",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
@@ -266,8 +267,8 @@ class _EventViewState extends State<EventView> {
                     )
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshotuser) {
-                  //signOut()
                   if (snapshotuser.hasData&& snapshotuser.data.size>0) {
+                            // ignore: unused_local_variable
                             DocumentSnapshot queryDocumentSnapshot = snapshotuser.data.docs.first;
                     if(  snapshotuser.data.docs[0]["payment"]==false)
                     {
@@ -389,13 +390,15 @@ class _EventViewState extends State<EventView> {
                               ),
                           fullscreenDialog: true));
                 },
+                          style: ElevatedButton.styleFrom(
+                                primary: Colors.red[600],
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                side: BorderSide(color: Colors.red[600]),
+                                fixedSize: Size(280, 40)
+                              ),
 
-                // color: Colors.red[600],
-                // textColor: Colors.white,
-                // shape: RoundedRectangleBorder(
-                //   borderRadius: BorderRadius.circular(25.0),
-                //   side: BorderSide(color: Colors.red[600])
-                // ),
                 child: Text('Register'.toUpperCase(),
                     style: TextStyle(fontSize: 20)),
               ),

@@ -11,6 +11,15 @@ class DashboardParticipant extends StatefulWidget {
 }
 
 class _DashboardParticipantState extends State<DashboardParticipant> {
+  final List<Set<Color>> newColor = [
+    {Color(0xff6DC8F3), Color(0xff73A1F9)},
+    {Color(0xffFFB157), Color(0xffFFA057)},
+    {Color(0xffFF5B95), Color(0xffF8556D)},
+    {Color(0xffD76EF5), Color(0xff8F7AFE)},
+    {Color(0xff42E695), Color(0xff3BB2B8)}
+  ];
+  final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  int index =-1; 
   @override
   Widget build(BuildContext context) {
     CollectionReference event = FirebaseFirestore.instance.collection('event');
@@ -32,7 +41,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                 DateTime myDateTime = (document.data()['Date']).toDate();
 
                 DateTime myTimeDate = (document.data()['Time']).toDate();
-
+                index += 1;
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -61,15 +70,14 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                               borderRadius: BorderRadius.circular(24),
                               gradient: LinearGradient(
                                   colors: [
-                                    Colors.red,
-                                    //Color(0xffD76Ef5),
-                                    Color(0xff3BB2BB)
+                                    newColor[index%4].first,
+                                    newColor[index%4].last
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight),
                               boxShadow: [
                                 BoxShadow(
-                                    color: Color(0xff3BB2BB),
+                                    color: newColor[index%4].last,
                                     blurRadius: 12,
                                     offset: Offset(0, 6))
                               ])),
@@ -90,7 +98,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                             fontSize: 20, color: Colors.black),
                                       ),
                                       Text(
-                                        myDateTime.month.toString(),
+                                        "${months[myDateTime.month-1]}",
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w600),

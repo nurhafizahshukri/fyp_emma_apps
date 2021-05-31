@@ -37,6 +37,7 @@ dependencies:
   open_file: ^3.2.1
   path_provider: ^2.0.2
   pdf: ^3.3.0
+  table_calendar: ^3.0.0
   ticketview: ^1.0.0
 
 dev_dependencies:

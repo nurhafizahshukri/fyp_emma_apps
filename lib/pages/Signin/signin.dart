@@ -39,16 +39,16 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Expanded(
-                      child: Container(
-                    height: double.infinity,
-                    width: 100,
-                  )),
+                  // Expanded(
+                  //     child: Container(
+                  //   height: double.infinity,
+                  //   width: 100,
+                  // )),
                   Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Container(
-                      height: MediaQuery.of(context).size.width * 0.4,
-                      width: MediaQuery.of(context).size.width * 0.4,
+                      height: MediaQuery.of(context).size.width * 0.3,
+                      width: MediaQuery.of(context).size.width * 0.3,
                       child: Image.asset(
                         "assets/images/logo_white.png",
                       ),

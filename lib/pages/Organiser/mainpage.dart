@@ -1,5 +1,5 @@
 
-import 'package:EMMA/pages/Organiser/report.dart';
+import 'package:EMMA/pages/Organiser/calendar.dart';
 import 'package:EMMA/pages/Organiser/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:EMMA/services/authservice.dart';
@@ -14,7 +14,7 @@ class MainpageOrganizer extends StatefulWidget {
 int currentTab = 0; // to keep track of active tab index
   final List<Widget> screens = [
     Dashboard(),
-    GenerateReport(),
+    CalendarView(),
   ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = Dashboard(); // Our first view 
@@ -145,7 +145,7 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            GenerateReport(); // if user taps on this dashboard tab will be active
+                            CalendarView(); // if user taps on this dashboard tab will be active
                         currentTab = 1;
                       });
                     },
@@ -153,11 +153,11 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Icon(
-                          Icons.person,
+                          Icons.calendar_today,
                           color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                         ),
                         Text(
-                          'Profile',
+                          'Calendar',
                           style: TextStyle(
                             color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                           ),

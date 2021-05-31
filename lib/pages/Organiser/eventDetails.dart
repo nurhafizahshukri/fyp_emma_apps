@@ -281,7 +281,7 @@ class _EventDetailsState extends State<EventDetails> {
                                 mainAxisAlignment:MainAxisAlignment.spaceBetween ,children:<Widget> [
                                 Text(document.data()["userName"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
                                 
-                                                                Text(document.data()["userContact"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
+                                Text(document.data()["userContact"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
 
                               ],)
                             ;}
@@ -356,21 +356,24 @@ class _EventDetailsState extends State<EventDetails> {
                         'Report not generate yet',
                       ),
                       
-                   Flatbutton(
-                          fontsize: 15,
-                          icon: Icon(Icons.document_scanner, color:  Colors.red,),
-                          colortext: Colors.red,
-
-                          text: "create a report",
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.time, widget.eventName, widget.location, widget.eventfee, widget.uid )
-                              )
-                              );
-                          },
-                        )
+                   Visibility(
+                     visible: widget.date.compareTo(now)>0 ? false : true,
+                     child: Flatbutton(
+                            fontsize: 15,
+                            icon: Icon(Icons.document_scanner, color:  Colors.red,),
+                            colortext: Colors.red,
+                   
+                            text: "create a report",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.time, widget.eventName, widget.location, widget.eventfee, widget.uid )
+                                )
+                                );
+                            },
+                          ),
+                   )
                       ],
                   ),
                                   ],

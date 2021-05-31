@@ -98,7 +98,7 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('Create event'),
+          title: Text('Generate Report'),
           backgroundColor: Colors.red[700],
         ),
         body: SingleChildScrollView(
@@ -238,14 +238,16 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () async {
-                    onSubmit();
-                  },
-                              // color: Colors.red[600],
-                              // textColor: Colors.white,
-                              // shape: RoundedRectangleBorder(
-                              //   borderRadius: BorderRadius.circular(25.0),
-                              //   side: BorderSide(color: Colors.red[600])
-                              // ),
+                                onSubmit();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[600],
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                side: BorderSide(color: Colors.red[600]),
+                                fixedSize: Size(280, 40)
+                              ),
                               child: Text('Submit'.toUpperCase(),
                                   style: TextStyle(fontSize: 20)),
                             ),
@@ -256,12 +258,14 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () {},
-                              // color: Colors.white,
-                              // textColor: Colors.red[600],
-                              // shape: RoundedRectangleBorder(
-                              //   borderRadius: BorderRadius.circular(25.0),
-                              //   side: BorderSide(color: Colors.red[600])
-                              // ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[600],
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                side: BorderSide(color: Colors.red[600]),
+                                fixedSize: Size(280, 40)
+                              ),
                               child: Text('Reset'.toUpperCase(),
                                   style: TextStyle(fontSize: 20)),
                             ),
