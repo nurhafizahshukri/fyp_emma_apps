@@ -1,25 +1,23 @@
 
-import 'package:EMMA/pages/Organiser/calendar.dart';
-import 'package:EMMA/pages/Organiser/dashboard.dart';
+import 'package:EMMA/Pages/Participants/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:EMMA/Pages/Participants/report.dart';
 import 'package:EMMA/services/authservice.dart';
 
-import 'createEvent.dart';
-
-class MainpageOrganizer extends StatefulWidget {
+class MainpageParticipant extends StatefulWidget {
 
   @override
-  _MainpageOrganizerState createState() => _MainpageOrganizerState();
+  _MainpageParticipantState createState() => _MainpageParticipantState();
 }
 int currentTab = 0; // to keep track of active tab index
   final List<Widget> screens = [
-    Dashboard(),
-    CalendarView(),
+    DashboardParticipant(),
+    HistoryReport(),
   ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = Dashboard(); // Our first view 
+  Widget currentScreen = DashboardParticipant(); // Our first view 
 
-class _MainpageOrganizerState extends State<MainpageOrganizer> {
+class _MainpageParticipantState extends State<MainpageParticipant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,14 +26,12 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-               Container(height: 45,),
-               new Image.asset(
-                            "assets/images/logo_white.png",
-                            height: 45.0,
-                            fit: BoxFit.scaleDown,
-                          ) 
-               ]
-                  
+               Container(height: 45,),]
+                  // new Image.asset(
+                  //           "assets/images/logo_white.png",
+                  //           height: 45.0,
+                  //           fit: BoxFit.scaleDown,
+                  //         ) ],
         ),
         backgroundColor: Colors.red[700],
         actions: <Widget>[
@@ -60,7 +56,6 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
             ListTile(
               title: Text('Profile'),
               onTap: () {
-                
                 // Update the state of the app
                 // ...
                 // Then close the drawer
@@ -84,15 +79,9 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepOrange,
-          child: Icon(Icons.add),
+          child: Icon(Icons.history),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CreateEvent(),
-              ),
-            );
-          },
+                      },
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
@@ -112,7 +101,7 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            Dashboard(); // if user taps on this dashboard tab will be active
+                            DashboardParticipant(); // if user taps on this dashboard tab will be active
                         currentTab = 0;
                       });
                     },
@@ -145,7 +134,7 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            CalendarView(); // if user taps on this dashboard tab will be active
+                            HistoryReport(); // if user taps on this dashboard tab will be active
                         currentTab = 1;
                       });
                     },
@@ -153,11 +142,11 @@ class _MainpageOrganizerState extends State<MainpageOrganizer> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Icon(
-                          Icons.calendar_today,
+                          Icons.history,
                           color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                         ),
                         Text(
-                          'Calendar',
+                          'History',
                           style: TextStyle(
                             color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                           ),

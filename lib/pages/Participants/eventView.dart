@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ticket_widget/flutter_ticket_widget.dart';
 import 'package:intl/intl.dart';
-import 'package:EMMA/Comman_widget/Flat_button.dart';
-import 'package:EMMA/Pages/Organiser/eventreportform.dart';
-import 'package:EMMA/Pages/Organiser/updateEvent.dart';
-import 'package:EMMA/services/databaseservice.dart';
+import 'package:EMMA/Comman_widget/Submit_button.dart';
+import 'package:EMMA/Pages/Participants/Register_event.dart';
+import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:EMMA/Pages/Participants/payment.dart';
 
-class EventDetails extends StatefulWidget {
+class EventView extends StatefulWidget {
   DateTime date = DateTime.now();
   DateTime time = DateTime.now();
   String eventName = "";
@@ -16,7 +18,8 @@ class EventDetails extends StatefulWidget {
   String lebel = "";
   String reg = "";
   String uid = "";
-  EventDetails(
+  String puid = "";
+  EventView(
     this.date,
     this.time,
     this.eventName,
@@ -26,6 +29,7 @@ class EventDetails extends StatefulWidget {
     this.lebel,
     this.reg,
     this.uid,
+    this.puid,
   ) {
     print(date);
     print(time);
@@ -37,17 +41,33 @@ class EventDetails extends StatefulWidget {
     print(reg);
   }
 
+ Event buildEvent({Recurrence recurrence}) {
+    return Event(
+      title: '$eventName',
+      description: '$description',
+      location: '$location',
+      startDate: date,
+      endDate: date.add(Duration(minutes: 30)),
+      allDay: false,
+      iosParams: IOSParams(
+        reminder: Duration(minutes: 40),
+      ),
+      androidParams: AndroidParams(
+      ),
+      recurrence: recurrence,
+    );
+  }
   @override
-  _EventDetailsState createState() => _EventDetailsState();
+  _EventViewState createState() => _EventViewState();
 }
 
-class _EventDetailsState extends State<EventDetails> {
+class _EventViewState extends State<EventView> {
   final FocusScopeNode _node = FocusScopeNode();
-  final newformat = DateFormat("MMMM");
+  final newformat = DateFormat("yyyy-MM-dd");
   final format1 = DateFormat("HH:mm");
-  CollectionReference participant =
-      FirebaseFirestore.instance.collection('participant');
   final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  User user = FirebaseAuth.instance.currentUser;
+  bool isRegisterd=false;
   @override
   void dispose() {
     _node.dispose();
@@ -56,7 +76,6 @@ class _EventDetailsState extends State<EventDetails> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime now = DateTime.now();
     String eventName;
     return Scaffold(
       appBar: AppBar(
@@ -101,8 +120,7 @@ class _EventDetailsState extends State<EventDetails> {
                                       fontSize: 20, color: Colors.black),
                                 ),
                                 Text(
-                                  "${months[widget.date.month-1]}",
-                                  //  widget.date.month.toString(),
+                                   "${months[widget.date.month-1]}",
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
@@ -148,8 +166,7 @@ class _EventDetailsState extends State<EventDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      // 'COMING SOON',
-                      widget.date.compareTo(now)>0 ? 'COMING SOON': 'ENDED',
+                      'COMING SOON',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,
@@ -180,7 +197,7 @@ class _EventDetailsState extends State<EventDetails> {
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
                       Text(widget.date.toString() != null
-                          ? "${widget.date.day} - ${widget.date.month} - ${widget.date.year} Time ${widget.time.hour} : ${widget.time.minute}  "
+                          ? widget.date.toString()
                           : ''),
                     ],
                   ),
@@ -188,7 +205,7 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.location_pin),
                       SizedBox(width: 10),
-                      Text(widget.location != null ? widget.location: ''),
+                      Text(widget.location != null ? widget.location : ''),
                     ],
                   ),
                   Row(
@@ -238,151 +255,118 @@ class _EventDetailsState extends State<EventDetails> {
                   ),
                 ],
               )),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-              child: Container(
-                  // constraints: BoxConstraints(minWidth: 100, maxWidth: 400),
-                  child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Participant',
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 25,
-                        ),
-                      ),
-                    ],
-                    
-                  ),
-                  SizedBox(height: 10),
-                  Container(
-                    height: 100,
-                    child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("participant").snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(child: Text('Something went wrong'));
-                          }
-                          if(!snapshot.hasData)
-                          return Center(child: Text('No participant'));
 
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: Text("Loading"));
-                          }
-                          return new ListView(
-                            children:  snapshot.data.docs.map((DocumentSnapshot document) {
-                              return Row(
-                                mainAxisAlignment:MainAxisAlignment.spaceBetween ,children:<Widget> [
-                                Text(document.data()["userName"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
-                                
-                                Text(document.data()["userContact"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
-
-                              ],)
-                            ;}
-                            ).toList(),
-                          );
-                        }),
-                  )
-                ],
-              )),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-              child: Container(
-                  // constraints: BoxConstraints(minWidth: 100, maxWidth: 400),
-                  child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Invitation',
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 25,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'No invitation sent',
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Send one now',
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              )),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-              child: Container(
-                  // constraints: BoxConstraints(minWidth: 100, maxWidth: 400),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Report',
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 25,
+      
 
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Report not generate yet',
-                      ),
-                      
-                   Visibility(
-                     visible: widget.date.compareTo(now)>0 ? false : true,
-                     child: Flatbutton(
-                            fontsize: 15,
-                            icon: Icon(Icons.document_scanner, color:  Colors.red,),
-                            colortext: Colors.red,
-                   
-                            text: "create a report",
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.time, widget.eventName, widget.location, widget.eventfee, widget.uid )
-                                )
-                                );
-                            },
-                          ),
-                   )
-                      ],
-                  ),
+      
+            StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('event').doc(widget.uid).collection("participant").where(
+                      "user_uid",isEqualTo: user.uid
+                    )
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshotuser) {
+                  if (snapshotuser.hasData&& snapshotuser.data.size>0) {
+                            // ignore: unused_local_variable
+                            DocumentSnapshot queryDocumentSnapshot = snapshotuser.data.docs.first;
+                    if(  snapshotuser.data.docs[0]["payment"]==false)
+                    {
+                      return Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                       child: FormSubmitButton(
+                        color: Colors.red,
+                        colortext: Colors.white,
+                        text: 'Make Payment'.toUpperCase(),
+                        onPressed:(){
+                           Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaymentInfo(widget.eventfee,widget.uid,snapshotuser.data.docs[0].id)
+                            )
+                            );
+                        } ),
+                       );
+                    }
+                    else
+                    {return Padding(
+                      padding: const EdgeInsets.only(top: 30.0),
+                       child: 
+                      FlutterTicketWidget(
+                        width: 350.0,
+                        height: 350.0,
+                        color: Colors.red[700],
+                        isCornerRounded: true,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Container(
+                                    width: 120.0,
+                                    height: 25.0,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                      border: Border.all(
+                                          width: 1.0, color: Colors.white),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Participant',
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Text(
+                                  widget.eventName,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 25.0),
+                                child: Column(
+                                  children: <Widget>[
+                                    ticketDetailsWidget('Name',
+                                        snapshotuser.data.docs[0]["userName"], 'Date', "${widget.date.day} - ${widget.date.month} - ${widget.date.year} "),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 12.0, right: 40.0),
+                                      child: ticketDetailsWidget(
+                                          'Location', widget.location, 'TIME', "${widget.time.hour} : ${widget.time.minute} "),
+                                    ),
+                                    
                                   ],
-              )),
-            ),
-          ]),
-        ),
-      ),
-      floatingActionButton: Padding(
+                                ),
+                              ),
+                              SizedBox(height:20),
+                              FormSubmitButton(
+                        color: Colors.red,
+                        colortext: Colors.white,
+                        text: 'Save to Google Calender'.toUpperCase(),
+                        onPressed: (){
+                          Add2Calendar.addEvent2Cal(
+                  widget.buildEvent(),
+                );
+                        }),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );}
+                    
+                  } else
+                    return Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -396,55 +380,92 @@ class _EventDetailsState extends State<EventDetails> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => UpdateEvent(
+                          builder: (context) => RegisterEvent(
                                 widget.date,
                                 widget.time,
                                 widget.eventName,
                                 widget.location,
                                 widget.eventfee,
-                                widget.description,
-                                widget.lebel,
-                                widget.reg,
                                 widget.uid,
                               ),
                           fullscreenDialog: true));
                 },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red[600],
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  side: BorderSide(color: Colors.red[600]),
-                  fixedSize: Size(180, 40)
-                ),
-                child:
-                    Text('Edit'.toUpperCase(), style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            ButtonTheme(
-              minWidth: 180.0,
-              // height: 40.0,
-              child: ElevatedButton(
-                onPressed: () {
-                  DatabaseService().deleteEvent(widget.uid);
-                  Navigator.of(context).pop();
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red[600],
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  side: BorderSide(color: Colors.red[600]),
-                  fixedSize: Size(180, 40)
-                ),
-                child: Text('Delete'.toUpperCase(),
+                          style: ElevatedButton.styleFrom(
+                                primary: Colors.red[600],
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                side: BorderSide(color: Colors.red[600]),
+                                fixedSize: Size(280, 40)
+                              ),
+
+                child: Text('Register'.toUpperCase(),
                     style: TextStyle(fontSize: 20)),
               ),
             ),
           ],
         ),
+      );
+                })
+          ]),
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+     
     );
   }
+}
+
+Widget ticketDetailsWidget(String firstTitle, String firstDesc,
+    String secondTitle, String secondDesc) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: <Widget>[
+      Padding(
+        padding: const EdgeInsets.only(left: 12.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              firstTitle,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(
+                firstDesc,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(right: 20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              secondTitle,
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: Text(
+                secondDesc,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
+      )
+    ],
+  );
 }

@@ -1,15 +1,16 @@
 // import 'package:fiza/model/class.dart';
-import 'package:EMMA/pages/Organiser/eventDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:EMMA/Pages/Organiser/eventDetails.dart';
+import 'package:EMMA/Pages/Participants/eventView.dart';
 
-class Dashboard extends StatefulWidget {
+class DashboardParticipant extends StatefulWidget {
   @override
-  _DashboardState createState() => _DashboardState();
+  _DashboardParticipantState createState() => _DashboardParticipantState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _DashboardParticipantState extends State<DashboardParticipant> {
   final List<Set<Color>> newColor = [
     {Color(0xff6DC8F3), Color(0xff73A1F9)},
     {Color(0xffFFB157), Color(0xffFFA057)},
@@ -36,8 +37,7 @@ class _DashboardState extends State<Dashboard> {
                 return Center(child: Text("Loading"));
               }
               return new ListView(
-                
-                children: snapshot.data.docs.map((DocumentSnapshot document) {
+                  children: snapshot.data.docs.map((DocumentSnapshot document) {
                 DateTime myDateTime = (document.data()['Date']).toDate();
 
                 DateTime myTimeDate = (document.data()['Time']).toDate();
@@ -47,7 +47,7 @@ class _DashboardState extends State<Dashboard> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EventDetails(
+                            builder: (context) => EventView(
                                 myDateTime,
                                 myTimeDate,
                                 document.data()['EventName'],
@@ -56,7 +56,8 @@ class _DashboardState extends State<Dashboard> {
                                 document.data()['Description'],
                                 document.data()['lebel'],
                                 document.data()['Open_Registeration'],
-                                document.id),
+                                document.id,
+                                document.data()['participant']),
                             fullscreenDialog: true));
                   },
                   child: new Center(
@@ -98,7 +99,6 @@ class _DashboardState extends State<Dashboard> {
                                       ),
                                       Text(
                                         "${months[myDateTime.month-1]}",
-                                        // myDateTime.month.toString(),
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w600),
@@ -106,6 +106,10 @@ class _DashboardState extends State<Dashboard> {
                                     ],
                                   ),
                                 )
+                                // Image.asset(
+                                //   'assets/images/logo_white.png',
+                                //   height: 64,
+                                //   width: 64)
                                 ),
                             Expanded(
                               flex: 5,
@@ -139,7 +143,6 @@ class _DashboardState extends State<Dashboard> {
                   )),
                 );
               }).toList());
-            })
-            );
+            }));
   }
 }
