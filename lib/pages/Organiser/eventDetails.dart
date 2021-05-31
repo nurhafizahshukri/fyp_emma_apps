@@ -43,11 +43,11 @@ class EventDetails extends StatefulWidget {
 
 class _EventDetailsState extends State<EventDetails> {
   final FocusScopeNode _node = FocusScopeNode();
-  final newformat = DateFormat("yyyy-MM-dd");
+  final newformat = DateFormat("MMMM");
   final format1 = DateFormat("HH:mm");
   CollectionReference participant =
       FirebaseFirestore.instance.collection('participant');
-
+  final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   @override
   void dispose() {
     _node.dispose();
@@ -56,6 +56,7 @@ class _EventDetailsState extends State<EventDetails> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
     String eventName;
     return Scaffold(
       appBar: AppBar(
@@ -100,7 +101,8 @@ class _EventDetailsState extends State<EventDetails> {
                                       fontSize: 20, color: Colors.black),
                                 ),
                                 Text(
-                                   widget.date.month.toString(),
+                                  "${months[widget.date.month-1]}",
+                                  //  widget.date.month.toString(),
                                   style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
@@ -146,7 +148,8 @@ class _EventDetailsState extends State<EventDetails> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      'COMING SOON',
+                      // 'COMING SOON',
+                      widget.date.compareTo(now)>0 ? 'COMING SOON': 'ENDED',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,
@@ -403,12 +406,14 @@ class _EventDetailsState extends State<EventDetails> {
                               ),
                           fullscreenDialog: true));
                 },
-                // color: Colors.red[600],
-                // textColor: Colors.white,
-                // shape: RoundedRectangleBorder(
-                //   borderRadius: BorderRadius.circular(25.0),
-                //   side: BorderSide(color: Colors.red[600])
-                // ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red[600],
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  side: BorderSide(color: Colors.red[600]),
+                  fixedSize: Size(180, 40)
+                ),
                 child:
                     Text('Edit'.toUpperCase(), style: TextStyle(fontSize: 20)),
               ),
@@ -421,12 +426,14 @@ class _EventDetailsState extends State<EventDetails> {
                   DatabaseService().deleteEvent(widget.uid);
                   Navigator.of(context).pop();
                 },
-                // color: Colors.red[600],
-                // textColor: Colors.white,
-                // shape: RoundedRectangleBorder(
-                //   borderRadius: BorderRadius.circular(25.0),
-                //   side: BorderSide(color: Colors.red[600])
-                // ),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red[600],
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  side: BorderSide(color: Colors.red[600]),
+                  fixedSize: Size(180, 40)
+                ),
                 child: Text('Delete'.toUpperCase(),
                     style: TextStyle(fontSize: 20)),
               ),

@@ -70,7 +70,7 @@ dateController.text = widget.date.toString();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create event'),
+        title: Text('Register event'),
         backgroundColor: Colors.red[700],
       ),
       body: SingleChildScrollView(

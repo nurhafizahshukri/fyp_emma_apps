@@ -111,7 +111,7 @@ class _OnboardState extends State<Onboard> {
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Connect people\naround the world',
+                              'Manage your event\nsmoothly',
                               style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'CM Sans Serif',
@@ -121,7 +121,7 @@ class _OnboardState extends State<Onboard> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'No more hassle on promoting events or \ngenerate event report',
                               style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18.0,
@@ -147,7 +147,7 @@ class _OnboardState extends State<Onboard> {
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Live your life smarter\nwith us!',
+                              'Partipating in any event\nyou love!',
                               style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'CM Sans Serif',
@@ -157,7 +157,7 @@ class _OnboardState extends State<Onboard> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'You can simply browse all events that \nyou liked and register with one tap',
                               style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18.0,
@@ -183,7 +183,7 @@ class _OnboardState extends State<Onboard> {
                             ),
                             SizedBox(height: 30.0),
                             Text(
-                              'Get a new experience\nof imagination',
+                              'Get a new experience\nof event management',
                               style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'CM Sans Serif',
@@ -193,7 +193,7 @@ class _OnboardState extends State<Onboard> {
                             ),
                             SizedBox(height: 15.0),
                             Text(
-                              'Lorem ipsum dolor sit amet, consect adipiscing elit, sed do eiusmod tempor incididunt ut labore et.',
+                              'A one stop platform for organizers and participants',
                               style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 18.0,

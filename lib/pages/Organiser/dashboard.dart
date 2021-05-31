@@ -10,6 +10,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   @override
   Widget build(BuildContext context) {
     CollectionReference event = FirebaseFirestore.instance.collection('event');
@@ -87,7 +88,8 @@ class _DashboardState extends State<Dashboard> {
                                             fontSize: 20, color: Colors.black),
                                       ),
                                       Text(
-                                        myDateTime.month.toString(),
+                                        "${months[myDateTime.month-1]}",
+                                        // myDateTime.month.toString(),
                                         style: TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.w600),
