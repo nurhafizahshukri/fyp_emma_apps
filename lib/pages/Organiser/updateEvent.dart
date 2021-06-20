@@ -12,11 +12,11 @@ class UpdateEvent extends StatefulWidget {
   String location;
   String eventfee;
   String description;
-  String lebel;
+  String label;
   String reg;
   String uid;
   UpdateEvent(this.date, this.time, this.eventName, this.location,
-      this.eventfee, this.description, this.lebel, this.reg, this.uid);
+      this.eventfee, this.description, this.label, this.reg, this.uid);
 
   @override
   _UpdateEventState createState() => _UpdateEventState();
@@ -32,7 +32,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   String _location;
   String _eventfee;
   String _description;
-  String _lebel;
+  String _label;
   String _reg;
 
   final eventController = TextEditingController();
@@ -52,7 +52,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   final TextEditingController eventfeeController = new TextEditingController();
   final TextEditingController descriptionController =
       new TextEditingController();
-  final TextEditingController lebelController = new TextEditingController();
+  final TextEditingController labelController = new TextEditingController();
   final TextEditingController regController = new TextEditingController();
   @override
   void initState() {
@@ -62,7 +62,7 @@ class _UpdateEventState extends State<UpdateEvent> {
     locationController.text = widget.location;
     eventfeeController.text = widget.eventfee;
     descriptionController.text = widget.description;
-    lebelController.text = widget.lebel;
+    labelController.text = widget.label;
     regController.text = widget.reg;
     _date = widget.date;
     _time = widget.time;
@@ -70,7 +70,7 @@ class _UpdateEventState extends State<UpdateEvent> {
     _location = widget.location;
     _eventfee = widget.eventfee;
     _description = widget.description;
-    _lebel = widget.lebel;
+    _label = widget.label;
     _reg = widget.reg;
   }
 
@@ -206,9 +206,9 @@ class _UpdateEventState extends State<UpdateEvent> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
-                                controller: lebelController,
+                                controller: labelController,
                                 onChanged: (currentValue) =>
-                                    _lebel = currentValue,
+                                    _label = currentValue,
                                 decoration: InputDecoration(
                                     labelText: 'Label (Sports,Seminar etc)',
                                     fillColor: Colors.white,
@@ -241,12 +241,14 @@ class _UpdateEventState extends State<UpdateEvent> {
                                 onSubmit();
                                 Navigator.of(context).pop();
                               },
-                              // color: Colors.red[600],
-                              // textColor: Colors.white,
-                              // shape: RoundedRectangleBorder(
-                              //   borderRadius: BorderRadius.circular(25.0),
-                              //   side: BorderSide(color: Colors.red[600])
-                              // ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[600],
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                side: BorderSide(color: Colors.red[600]),
+                                fixedSize: Size(180, 40)
+                              ),
                               child: Text('Submit'.toUpperCase(),
                                   style: TextStyle(fontSize: 20)),
                             ),
@@ -257,12 +259,14 @@ class _UpdateEventState extends State<UpdateEvent> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () {},
-                              // color: Colors.white,
-                              // textColor: Colors.red[600],
-                              // shape: RoundedRectangleBorder(
-                              //   borderRadius: BorderRadius.circular(25.0),
-                              //   side: BorderSide(color: Colors.red[600])
-                              // ),
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.red[600],
+                                shape: new RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                ),
+                                side: BorderSide(color: Colors.red[600]),
+                                fixedSize: Size(180, 40)
+                              ),
                               child: Text('Reset'.toUpperCase(),
                                   style: TextStyle(fontSize: 20)),
                             ),
@@ -284,7 +288,7 @@ class _UpdateEventState extends State<UpdateEvent> {
       _location,
       _eventfee,
       _description,
-      _lebel,
+      _label,
       _reg,
       widget.uid,
     );

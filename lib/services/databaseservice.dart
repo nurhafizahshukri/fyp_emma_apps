@@ -17,7 +17,7 @@ class DatabaseService {
       String location,
       String eventfee,
       String description,
-      String lebel,
+      String label,
       String reg) async {
     // Call the user's CollectionReference to add a new user_
 
@@ -34,7 +34,7 @@ class DatabaseService {
           'Location': location,
           'Event_Fee': eventfee,
           'Description': description,
-          'lebel': lebel,
+          'label': label,
           'Open_Registeration': reg,
           'Creator_Uid': user.uid,
         })
@@ -81,7 +81,7 @@ Future<void> updatePayment(
       String location,
       String eventfee,
       String description,
-      String lebel,
+      String label,
       String reg,
       String uid) {
     // Call the user's CollectionReference to add a new user_
@@ -96,7 +96,7 @@ Future<void> updatePayment(
           'Location': location,
           'Event_Fee': eventfee,
           'Description': description,
-          'lebel': lebel,
+          'label': label,
           'Open_Registeration': reg
         })
         .then((value) => print("Event Updated"))

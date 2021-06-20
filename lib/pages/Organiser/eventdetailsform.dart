@@ -1,9 +1,10 @@
+import 'dart:typed_data';
+
+import 'package:EMMA/services/pdf_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-import 'package:EMMA/services/databaseservice.dart';
-import 'package:EMMA/services/pdf_services.dart';
 
 class EvenntDetailsForm extends StatefulWidget {
   DateTime date;
@@ -13,14 +14,14 @@ class EvenntDetailsForm extends StatefulWidget {
   String eventfee;
   String uid;
 
-  String _imageUrl1;
-  String _imageUrl2;
-  String _imageUrl3;
-  String _imageUrl4;
-  String _imageUrl5;
-  String _imageUrl6;
-  String _imageUrl7;
-  String _imageUrl8;
+  Uint8List _imageUrl1;
+  Uint8List _imageUrl2;
+  Uint8List _imageUrl3;
+  Uint8List _imageUrl4;
+  Uint8List _imageUrl5;
+  Uint8List _imageUrl6;
+  Uint8List _imageUrl7;
+  Uint8List _imageUrl8;
 
   EvenntDetailsForm(
       this.date,
@@ -238,16 +239,16 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () async {
-                                onSubmit();
-                              },
+                    onSubmit();
+                  },
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.red[600],
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                side: BorderSide(color: Colors.red[600]),
-                                fixedSize: Size(280, 40)
-                              ),
+                  primary: Colors.red[600],
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  side: BorderSide(color: Colors.red[600]),
+                  fixedSize: Size(180, 40)
+                ),
                               child: Text('Submit'.toUpperCase(),
                                   style: TextStyle(fontSize: 20)),
                             ),
@@ -259,13 +260,13 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
                             child: ElevatedButton(
                               onPressed: () {},
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.red[600],
-                                shape: new RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                ),
-                                side: BorderSide(color: Colors.red[600]),
-                                fixedSize: Size(280, 40)
-                              ),
+                  primary: Colors.red[600],
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  side: BorderSide(color: Colors.red[600]),
+                  fixedSize: Size(180, 40)
+                ),
                               child: Text('Reset'.toUpperCase(),
                                   style: TextStyle(fontSize: 20)),
                             ),

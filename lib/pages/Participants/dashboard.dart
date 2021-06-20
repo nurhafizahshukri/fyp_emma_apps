@@ -54,7 +54,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                 document.data()['Location'],
                                 document.data()['Event_Fee'],
                                 document.data()['Description'],
-                                document.data()['lebel'],
+                                document.data()['label'],
                                 document.data()['Open_Registeration'],
                                 document.id,
                                 document.data()['participant']),

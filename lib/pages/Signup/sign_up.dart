@@ -149,7 +149,6 @@ class _SignUpState extends State<SignUp> {
     final formState = _formKey.currentState;
     formState.save();
     if (formState.validate()) {
-      print(_email+"sadasdasd");
       Navigator.push(
           context,
           MaterialPageRoute(

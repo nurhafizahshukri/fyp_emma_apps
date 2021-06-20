@@ -28,7 +28,7 @@ class _RegisterEventState extends State<RegisterEvent> {
   String _location;
   String _eventfee;
   String _description;
-  String _lebel;
+  String _label;
   String _reg;
   String _name;
   String _contact;
@@ -64,6 +64,18 @@ dateController.text = widget.date.toString();
     _eventfee = widget.eventfee;
    }
 
+  // @override
+  // String mobileValidator(String value) {
+  //   if (value.isEmpty) {
+  //     return 'Mobile can\'t be empty';
+  //   } else if (value.isNotEmpty) {
+  //     //bool mobileValid = RegExp(r"^(?:\+88||01)?(?:\d{10}|\d{13})$").hasMatch(value);
+
+  //     bool mobileValid =
+  //         RegExp(r'^(?:\+?88|0088)?01[13-9]\d{8}$').hasMatch(value);
+  //     return mobileValid ? null : "Invalid mobile";
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -208,8 +220,20 @@ dateController.text = widget.date.toString();
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _contact = currentValue,
+                            keyboardType: TextInputType.number,
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Mobile can\'t be empty';
+                                } else if (value.isNotEmpty) {
+                                //bool mobileValid = RegExp(r"^(?:\+88||01)?(?:\d{10}|\d{13})$").hasMatch(value);
 
+                                bool mobileValid =
+                                RegExp(r'^(?:\+?88|0088)?01[13-9]\d{8}$').hasMatch(value);
+                                return mobileValid ? null : "Invalid mobile";
+                                }
+                                return null;
+                            },
+                            onChanged: (currentValue) => _contact = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Contact Number',
                               fillColor: Colors.white,

@@ -126,7 +126,7 @@ class MapScreenState extends State<UserDetailsForm>
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 new Text(
-                                  'Accont Type',
+                                  'Account Type',
                                   style: TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold),
@@ -223,7 +223,7 @@ class MapScreenState extends State<UserDetailsForm>
                                       child: new TextFormField(
                                         keyboardType: TextInputType.number,
                                         controller: ageController,
-                                        onChanged: (value) => {_mobile = value},
+                                        onChanged: (value) => {_age = value},
                                         decoration: InputDecoration(
                                         labelText: 'Age',
                                         labelStyle:

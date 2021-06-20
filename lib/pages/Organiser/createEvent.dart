@@ -1,6 +1,8 @@
+import 'package:EMMA/pages/interest.dart';
 import 'package:EMMA/services/databaseservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 class CreateEvent extends StatefulWidget {
@@ -19,7 +21,7 @@ class _CreateEventState extends State<CreateEvent> {
   String _location;
   String _eventfee;
   String _description;
-  String _lebel;
+  String _label;
   String _reg;
   final FocusScopeNode _node = FocusScopeNode();
 
@@ -64,12 +66,12 @@ class _CreateEventState extends State<CreateEvent> {
 
                             // onEditingComplete: _node.nextFocus,
                             // ignore: missing_return
-                            // validator: (input) {
-                            //   if(input.isEmpty || !input.contains('@')){
-                            //     return 'Invalid email!';
-                            //   }
-                            // },
-                            // onSaved: (input) => _email = input,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Invalid name!';
+                              }
+                            },
+                            onSaved: (input) => _eventName = input,
                             decoration: InputDecoration(
                               labelText: 'Event Name',
                               fillColor: Colors.white,
@@ -133,8 +135,11 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _eventfee = currentValue,
-
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d{0,2})')),
+                            ],
+                            onChanged: (currentValue) => _eventfee = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Event Fee (RM)',
                               fillColor: Colors.white,
@@ -161,20 +166,6 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _lebel = currentValue,
-
-                            decoration: InputDecoration(
-                              labelText: 'Label (Sports,Seminar etc)',
-                              fillColor: Colors.white,
-                              border: new OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(25.0),
-                              )
-                            )
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
                               onChanged: (currentValue) => _reg = currentValue,
 
                             decoration: InputDecoration(
@@ -186,6 +177,45 @@ class _CreateEventState extends State<CreateEvent> {
                             )
                           ),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            onChanged: (currentValue) => _label = currentValue,
+
+                            decoration: InputDecoration(
+                              labelText: 'Label (Sports,Seminar etc)',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                        // Padding(
+                        //       padding: EdgeInsets.only(
+                        //           left: 25.0, right: 25.0, top: 25.0, bottom: 25.0),
+                        //       child: new Row(
+                        //         mainAxisSize: MainAxisSize.max,
+                        //         children: <Widget>[
+                        //           new Column(
+                        //             mainAxisAlignment: MainAxisAlignment.start,
+                        //             mainAxisSize: MainAxisSize.min,
+                        //             children: <Widget>[
+                        //               new Text(
+                        //                 'Labels',
+                        //                 style: TextStyle(
+                        //                     fontSize: 16.0,
+                        //                     fontWeight: FontWeight.bold),
+                        //               ),
+                        //             ],
+                        //           ),
+                        //         ],
+                        //       )),
+                        // Padding(
+                        //       padding: EdgeInsets.only(
+                        //           left: 25.0, right: 25.0, top: 2.0),
+                        //       child: Interest()),
+                        
                         SizedBox(height: 20),
                         ButtonTheme(
                             minWidth: 338.0,
@@ -232,7 +262,7 @@ class _CreateEventState extends State<CreateEvent> {
   final formState = _formKey.currentState;
   
     formState.save();
-    DatabaseService().addEvent(_eventName,_date,_time,_location,_eventfee,_description,_lebel,_reg);
+    DatabaseService().addEvent(_eventName,_date,_time,_location,_eventfee,_description,_label,_reg);
 
 }
 
