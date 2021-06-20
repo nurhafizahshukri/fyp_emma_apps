@@ -71,45 +71,57 @@ class PdfApi {
   String location,
   String eventfee,
   String paragraph,
-  String _imageUrl1,
-  String _imageUrl2,
-  String _imageUrl3,
-  String _imageUrl4,
-  String _imageUrl5,
-  String _imageUrl6,
-  String _imageUrl7,
-  String _imageUrl8) async {
+  Uint8List _imageUrl1,
+  Uint8List _imageUrl2,
+  Uint8List _imageUrl3,
+  Uint8List _imageUrl4,
+  Uint8List _imageUrl5,
+  Uint8List _imageUrl6,
+  Uint8List _imageUrl7,
+  Uint8List _imageUrl8) async {
     final pdf = Document();
-Uint8List bytes = (await NetworkAssetBundle(Uri.parse("${_imageUrl1}")).load("${_imageUrl1}"))
-    .buffer
-    .asUint8List();
-Uint8List bytes1 = (await NetworkAssetBundle(Uri.parse("${_imageUrl2}")).load("${_imageUrl2}"))
-    .buffer
-    .asUint8List();
 
-Uint8List bytes2 = (await NetworkAssetBundle(Uri.parse("${_imageUrl3}")).load("${_imageUrl3}"))
-    .buffer
-    .asUint8List();
+print("_imageUrl1=$_imageUrl1");
+print("_imageUrl2=$_imageUrl2");
+print("_imageUrl3=$_imageUrl3");
+print("_imageUrl4=$_imageUrl4");
+print("_imageUrl5=$_imageUrl5");
+print("_imageUrl6=$_imageUrl6");
+print("_imageUrl7=$_imageUrl7");
+print("_imageUrl8=$_imageUrl8");
+    
+// Uint8List bytes = (await NetworkAssetBundle(Uri.parse("${_imageUrl1}")).load("${_imageUrl1}"))
+//     .buffer
+//     .asUint8List();
+// Uint8List bytes1 = (await NetworkAssetBundle(Uri.parse("${_imageUrl2}")).load("${_imageUrl2}"))
+//     .buffer
+//     .asUint8List();
 
-Uint8List bytes3 = (await NetworkAssetBundle(Uri.parse("${_imageUrl4}")).load("${_imageUrl4}"))
-    .buffer
-    .asUint8List();
+// Uint8List bytes2 = (await NetworkAssetBundle(Uri.parse("${_imageUrl3}")).load("${_imageUrl3}"))
+//     .buffer
+//     .asUint8List();
 
-Uint8List bytes4 = (await NetworkAssetBundle(Uri.parse("${_imageUrl5}")).load("${_imageUrl5}"))
-    .buffer
-    .asUint8List();
+// Uint8List bytes3 = (await NetworkAssetBundle(Uri.parse("${_imageUrl4}")).load("${_imageUrl4}"))
+//     .buffer
+//     .asUint8List();
 
-Uint8List bytes5 = (await NetworkAssetBundle(Uri.parse("${_imageUrl6}")).load("${_imageUrl6}"))
-    .buffer
-    .asUint8List();
+// Uint8List bytes4 = (await NetworkAssetBundle(Uri.parse("${_imageUrl5}")).load("${_imageUrl5}"))
+//     .buffer
+//     .asUint8List();
 
-Uint8List bytes6 = (await NetworkAssetBundle(Uri.parse("${_imageUrl7}")).load("${_imageUrl7}"))
-    .buffer
-    .asUint8List();
+// Uint8List bytes5 = (await NetworkAssetBundle(Uri.parse("${_imageUrl6}")).load("${_imageUrl6}"))
+//     .buffer
+//     .asUint8List();
 
-Uint8List bytes7 = (await NetworkAssetBundle(Uri.parse("${_imageUrl8}")).load("${_imageUrl8}"))
-    .buffer
-    .asUint8List();
+// Uint8List bytes6 = (await NetworkAssetBundle(Uri.parse("${_imageUrl7}")).load("${_imageUrl7}"))
+//     .buffer
+//     .asUint8List();
+
+// Uint8List bytes7 = (await NetworkAssetBundle(Uri.parse("${_imageUrl8}")).load("${_imageUrl8}"))
+//     .buffer
+//     .asUint8List();
+
+
 
     final pageTheme = PageTheme(
       pageFormat: PdfPageFormat.a4,
@@ -138,8 +150,8 @@ final headers = ['Name', 'Age'];
             mainAxisSpacing: 0,
             childAspectRatio: 0.3,
             children: [
-              Image(MemoryImage(bytes)),
-              Image(MemoryImage(bytes1))
+              Image(MemoryImage(_imageUrl1)),
+              Image(MemoryImage(_imageUrl2)),
               
             ],
 
@@ -151,9 +163,9 @@ final headers = ['Name', 'Age'];
             mainAxisSpacing: 0,
             childAspectRatio: 0.5,
             children: [
-            Image(MemoryImage(bytes2)),
-              Image(MemoryImage(bytes3)),
-                 Image(MemoryImage(bytes4)),
+            Image(MemoryImage(_imageUrl3)),
+              Image(MemoryImage(_imageUrl4)),
+                 Image(MemoryImage(_imageUrl5)),
               
             ],
             
@@ -180,7 +192,7 @@ Table.fromTextArray(
       ),
                 SizedBox(height:60),
 
-               Image(MemoryImage(bytes5)),
+               Image(MemoryImage(_imageUrl6)),
 
           SizedBox(height:30),
 
@@ -191,9 +203,9 @@ Table.fromTextArray(
             style: TextStyle( fontSize: 12,fontBold: Font.helveticaBold() , ),
           ),
 
-               Image(MemoryImage(bytes6)),
+               Image(MemoryImage(_imageUrl7)),
 
-              Image(MemoryImage(bytes7)),
+              Image(MemoryImage(_imageUrl8)),
               
         ],
       ),
@@ -221,4 +233,7 @@ Table.fromTextArray(
 
     await OpenFile.open(url);
   }
+  
 }
+
+

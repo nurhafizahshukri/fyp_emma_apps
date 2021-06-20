@@ -30,6 +30,7 @@ final List<String> _listSug =[
               "religious",
               "self improvement",
               "sport",
+              "volunteers"
             ];
 
   @override
@@ -106,7 +107,7 @@ final List<String> _listSug =[
 
   TagsTextField get _textField {
     return TagsTextField(
-      hintText: "Enter Your Interest",
+      // hintText: "Enter Your Interest",
       autofocus: false,
       hintTextColor: Colors.black,
       width: double.infinity,

@@ -1,12 +1,12 @@
-//Caution: Only works on Android & iOS platforms
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:EMMA/pages/Organiser/eventdetailsform.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:EMMA/Pages/Organiser/eventDetails.dart';
-import 'package:EMMA/Pages/Organiser/eventdetailsform.dart';
 
 //void main() => runApp(MyApp());
 
@@ -33,7 +33,6 @@ class UploadingImageToFirebaseStorage extends StatefulWidget {
   _UploadingImageToFirebaseStorageState createState() =>
       _UploadingImageToFirebaseStorageState();
 }
-
 class _UploadingImageToFirebaseStorageState
     extends State<UploadingImageToFirebaseStorage> {
   File _imageFile1;
@@ -44,14 +43,15 @@ class _UploadingImageToFirebaseStorageState
   File _imageFile6;
   File _imageFile7;
   File _imageFile8;
-  String _imageUrl1;
-  String _imageUrl2;
-  String _imageUrl3;
-  String _imageUrl4;
-  String _imageUrl5;
-  String _imageUrl6;
-  String _imageUrl7;
-  String _imageUrl8;
+    Uint8List _uintFile1;
+  Uint8List _uintFile2;
+  Uint8List _uintFile3;
+  Uint8List _uintFile4;
+  Uint8List _uintFile5;
+  Uint8List _uintFile6;
+  Uint8List _uintFile7;
+  Uint8List _uintFile8;
+  
   bool isload = false;
 
   ///NOTE: Only supported on Android & iOS
@@ -60,52 +60,43 @@ class _UploadingImageToFirebaseStorageState
 
   Future pickImage(File _imageFile) async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
+       if (_imageFile == _imageFile1) {
+        await pickedFile.readAsBytes().then((value) => _uintFile1 = value);
+      } else if (_imageFile == _imageFile2) {
+        await pickedFile.readAsBytes().then((value) => _uintFile2 = value);
+      } else if (_imageFile == _imageFile3) {
+        await pickedFile.readAsBytes().then((value) => _uintFile3 = value);
+      } else if (_imageFile == _imageFile4) {
+        await pickedFile.readAsBytes().then((value) => _uintFile4 = value);
+      } else if (_imageFile == _imageFile5) {
+        await pickedFile.readAsBytes().then((value) => _uintFile5 = value);
+      } else if (_imageFile == _imageFile6) {
+        await pickedFile.readAsBytes().then((value) => _uintFile6 = value);
+      } else if (_imageFile == _imageFile7) {
+        await pickedFile.readAsBytes().then((value) => _uintFile7 = value);
+      } else if (_imageFile == _imageFile8) {
+        await pickedFile.readAsBytes().then((value) => _uintFile8 = value);
+      }
+       setState(()  {
       if (_imageFile == _imageFile1)
-        _imageFile1 = File(pickedFile.path);
-      else if (_imageFile == _imageFile2)
-        _imageFile2 = File(pickedFile.path);
-      else if (_imageFile == _imageFile3)
-        _imageFile3 = File(pickedFile.path);
-      else if (_imageFile == _imageFile4)
-        _imageFile4 = File(pickedFile.path);
-      else if (_imageFile == _imageFile5)
-        _imageFile5 = File(pickedFile.path);
-      else if (_imageFile == _imageFile6)
-        _imageFile6 = File(pickedFile.path);
-      else if (_imageFile == _imageFile7)
-        _imageFile7 = File(pickedFile.path);
-      else if (_imageFile == _imageFile8) _imageFile8 = File(pickedFile.path);
-    });
-  }
-
-  Future uploadImageToFirebase(BuildContext context, File _imageFile) async {
-    String fileName = basename(_imageFile.path);
-    Reference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('uploads/$fileName');
-    UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-    TaskSnapshot taskSnapshot = await uploadTask;
-    taskSnapshot.ref.getDownloadURL().then(
-          (value) => {
-            if (_imageFile == _imageFile1)
-              {_imageUrl1 = value, print("image URL 1 : $_imageUrl1")}
-            else if (_imageFile == _imageFile2)
-              {_imageUrl2 = value, print("image URL 2 : $_imageFile2")}
-            else if (_imageFile == _imageFile3)
-              {_imageUrl3 = value, print("image URL 3 : $_imageUrl3")}
-            else if (_imageFile == _imageFile4)
-              {_imageUrl4 = value, print("image URL 4 : $_imageFile4")}
-            else if (_imageFile == _imageFile5)
-              {_imageUrl5 = value, print("image URL 5 : $_imageFile5")}
-            else if (_imageFile == _imageFile6)
-              {_imageUrl6 = value, print("image URL 6 : $_imageFile6")}
-            else if (_imageFile == _imageFile7)
-              {_imageUrl7 = value, print("image URL 7 : $_imageFile7")}
-            else if (_imageFile == _imageFile8)
-              {_imageUrl8 = value, print("image URL 8 : $_imageUrl8")}
-          },
-        );
+       { _imageFile1 = File(pickedFile.path);
+       }else if (_imageFile == _imageFile2)
+        {_imageFile2 = File(pickedFile.path);
+              }      else if (_imageFile == _imageFile3)
+        {_imageFile3 = File(pickedFile.path);
+              }      else if (_imageFile == _imageFile4)
+        {_imageFile4 = File(pickedFile.path);
+              }      else if (_imageFile == _imageFile5)
+       { _imageFile5 = File(pickedFile.path);
+              }      else if (_imageFile == _imageFile6)
+        {_imageFile6 = File(pickedFile.path);
+              }      else if (_imageFile == _imageFile7)
+        {_imageFile7 = File(pickedFile.path);
+              }      else if (_imageFile == _imageFile8) {_imageFile8 = File(pickedFile.path);
+              }    
+              });
+      
+  
   }
 
   @override
@@ -455,11 +446,7 @@ class _UploadingImageToFirebaseStorageState
             child: FlatButton(
               onPressed: () => isload
                   ? {
-                      uploadImageToFirebase(context, _imageFile6),
-                      uploadImageToFirebase(context, _imageFile7),
-                      uploadImageToFirebase(context, _imageFile8),
                       setState(() {
-                        print("$_imageFile6");
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -470,22 +457,17 @@ class _UploadingImageToFirebaseStorageState
                                     widget.location,
                                     widget.eventfee,
                                     widget.uid,
-                                    _imageUrl1,
-                                    _imageUrl2,
-                                    _imageUrl3,
-                                    _imageUrl4,
-                                    _imageUrl5,
-                                    _imageUrl6,
-                                    _imageUrl7,
-                                    _imageUrl8)));
+                                    _uintFile1,
+                                    _uintFile2,
+                                    _uintFile3,
+                                    _uintFile4,
+                                    _uintFile5,
+                                    _uintFile6,
+                                    _uintFile7,
+                                    _uintFile8)));
                       })
                     }
                   : {
-                      uploadImageToFirebase(context, _imageFile1),
-                      uploadImageToFirebase(context, _imageFile2),
-                      uploadImageToFirebase(context, _imageFile3),
-                      uploadImageToFirebase(context, _imageFile4),
-                      uploadImageToFirebase(context, _imageFile5),
                       setState(() {
                         isload = true;
                       })
@@ -501,3 +483,4 @@ class _UploadingImageToFirebaseStorageState
     );
   }
 }
+          

@@ -15,7 +15,7 @@ class EventView extends StatefulWidget {
   String location = "";
   String eventfee = "";
   String description = "";
-  String lebel = "";
+  String label = "";
   String reg = "";
   String uid = "";
   String puid = "";
@@ -26,7 +26,7 @@ class EventView extends StatefulWidget {
     this.location,
     this.eventfee,
     this.description,
-    this.lebel,
+    this.label,
     this.reg,
     this.uid,
     this.puid,
@@ -37,7 +37,7 @@ class EventView extends StatefulWidget {
     print(location);
     print(eventfee);
     print(description);
-    print(lebel);
+    print(label);
     print(reg);
   }
 
@@ -219,7 +219,7 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.label_important_outline_sharp),
                       SizedBox(width: 10),
-                      Text(widget.lebel != null ? widget.lebel : ''),
+                      Text(widget.label != null ? widget.label : ''),
                     ],
                   ),
                 ],

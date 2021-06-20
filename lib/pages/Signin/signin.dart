@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> {
     _node.dispose();
     super.dispose();
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                           onSaved: (input) => _email = input,
                           decoration: InputDecoration(
-                              hintText: 'test@test.com',
+                              hintText: 'email@address.com',
                               prefixIcon: Padding(
                                   padding:
                                       EdgeInsets.only(right: 7.0, left: 17.0),

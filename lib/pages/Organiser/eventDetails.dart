@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,9 +15,17 @@ class EventDetails extends StatefulWidget {
   String location = "";
   String eventfee = "";
   String description = "";
-  String lebel = "";
+  String label = "";
   String reg = "";
   String uid = "";
+  Uint8List _imageUrl1;
+  Uint8List _imageUrl2;
+  Uint8List _imageUrl3;
+  Uint8List _imageUrl4;
+  Uint8List _imageUrl5;
+  Uint8List _imageUrl6;
+  Uint8List _imageUrl7;
+  Uint8List _imageUrl8;
   EventDetails(
     this.date,
     this.time,
@@ -23,7 +33,7 @@ class EventDetails extends StatefulWidget {
     this.location,
     this.eventfee,
     this.description,
-    this.lebel,
+    this.label,
     this.reg,
     this.uid,
   ) {
@@ -33,7 +43,7 @@ class EventDetails extends StatefulWidget {
     print(location);
     print(eventfee);
     print(description);
-    print(lebel);
+    print(label);
     print(reg);
   }
 
@@ -202,7 +212,7 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.label_important_outline_sharp),
                       SizedBox(width: 10),
-                      Text(widget.lebel != null ? widget.lebel : ''),
+                      Text(widget.label != null ? widget.label : ''),
                     ],
                   ),
                 ],
@@ -403,7 +413,7 @@ class _EventDetailsState extends State<EventDetails> {
                                 widget.location,
                                 widget.eventfee,
                                 widget.description,
-                                widget.lebel,
+                                widget.label,
                                 widget.reg,
                                 widget.uid,
                               ),
