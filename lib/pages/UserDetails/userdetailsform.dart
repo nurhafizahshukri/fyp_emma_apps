@@ -80,10 +80,12 @@ class MapScreenState extends State<UserDetailsForm>
                                   
                                   new Flexible(
                                     child: new TextFormField(
+                                      textInputAction: TextInputAction.next,
                                       controller: nameController,
                                       onChanged: (value) => {_name = value},
                                       decoration: InputDecoration(
-                                        labelText: 'Name',
+                                        labelText: 'First name, last name',
+                                        floatingLabelBehavior: FloatingLabelBehavior.never,
                                         labelStyle:
                                             TextStyle(color: Colors.black),
                                         fillColor: Colors.white,
@@ -221,11 +223,13 @@ class MapScreenState extends State<UserDetailsForm>
                                     child: Padding(
                                       padding: EdgeInsets.only(right: 10.0),
                                       child: new TextFormField(
+                                        textInputAction: TextInputAction.next,
                                         keyboardType: TextInputType.number,
                                         controller: ageController,
                                         onChanged: (value) => {_age = value},
                                         decoration: InputDecoration(
-                                        labelText: 'Age',
+                                        labelText: 'e.g 22',
+                                        floatingLabelBehavior: FloatingLabelBehavior.never,
                                         labelStyle:
                                             TextStyle(color:Colors.black),
                                         fillColor: Colors.white,
@@ -321,11 +325,13 @@ class MapScreenState extends State<UserDetailsForm>
                                   left: 25.0, right: 25.0),
                               child: new Flexible(
                                 child: new TextFormField(
+                                  textInputAction: TextInputAction.next,
                                   controller: mobileController,
                                   onChanged: (value) => {_mobile = value},
                                   keyboardType: TextInputType.number,
                                   decoration:   InputDecoration(
-                                    labelText: 'Phone Number',
+                                    labelText: 'e.g 0123456789',
+                                    floatingLabelBehavior: FloatingLabelBehavior.never,
                                     labelStyle:
                                         TextStyle(color: Colors.black),
                                     fillColor: Colors.white,
