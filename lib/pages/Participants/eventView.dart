@@ -11,6 +11,8 @@ import 'package:EMMA/Pages/Participants/payment.dart';
 class EventView extends StatefulWidget {
   DateTime date = DateTime.now();
   DateTime time = DateTime.now();
+  DateTime endDate = DateTime.now();
+  DateTime endTime = DateTime.now();
   String eventName = "";
   String location = "";
   String eventfee = "";
@@ -22,6 +24,8 @@ class EventView extends StatefulWidget {
   EventView(
     this.date,
     this.time,
+    this.endDate,
+    this.endTime,
     this.eventName,
     this.location,
     this.eventfee,
@@ -76,6 +80,9 @@ class _EventViewState extends State<EventView> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    DateTime formattedDate = formatter.parse(now.toString());
     String eventName;
     return Scaffold(
       appBar: AppBar(
@@ -166,7 +173,7 @@ class _EventViewState extends State<EventView> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      'COMING SOON',
+                      widget.date.compareTo(formattedDate)>0 ? 'COMING SOON': widget.date.compareTo(formattedDate)<0 && widget.endDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,
@@ -196,9 +203,9 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
-                      Text(widget.date.toString() != null
-                          ? widget.date.toString()
-                          : ''),
+                      Text(widget.date.toString() == widget.endDate.toString()
+                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) "
+                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year} ( ${format1.format(widget.endTime)} ) "),
                     ],
                   ),
                   Row(
