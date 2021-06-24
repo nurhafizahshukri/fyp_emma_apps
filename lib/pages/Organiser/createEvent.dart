@@ -263,7 +263,24 @@ class _CreateEventState extends State<CreateEvent> {
                                       _label = newValue;
                                     });
                                   },
-                                  items: <String>['Sports', 'Seminar']
+                                  items: <String>[
+                                    "conferences",
+                                    "seminar",
+                                    "workshops",
+                                    "expo",
+                                    "award",
+                                    "festival",
+                                    "leadership",
+                                    "creative",
+                                    "cooking",
+                                    "foreign language",
+                                    "art",
+                                    "robotic",
+                                    "religious",
+                                    "self improvement",
+                                    "sport",
+                                    "volunteers"
+                                  ]
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
                                     return DropdownMenuItem<String>(
