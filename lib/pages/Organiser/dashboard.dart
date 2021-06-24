@@ -1,4 +1,5 @@
 // import 'package:fiza/model/class.dart';
+import 'package:EMMA/Comman_widget/Custom_card.dart';
 import 'package:EMMA/pages/Organiser/eventDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,9 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     CollectionReference event = FirebaseFirestore.instance.collection('event');
-
+    DateTime now = DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
             stream: event.snapshots(),
@@ -83,6 +86,16 @@ class _DashboardState extends State<Dashboard> {
                                     blurRadius: 12,
                                     offset: Offset(0, 6))
                               ])),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        top: 0,
+                        child: CustomPaint(
+                          size: Size(100, 150),
+                          painter: CustomCardShapePainter(24,
+                              newColor[index%4].first, newColor[index%4].last),
+                        ),
+                      ),
                       Positioned.fill(
                         child: Row(
                           children: <Widget>[
@@ -111,7 +124,7 @@ class _DashboardState extends State<Dashboard> {
                                 )
                                 ),
                             Expanded(
-                              flex: 5,
+                              flex: 3,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +134,7 @@ class _DashboardState extends State<Dashboard> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 30,
+                                      fontSize: 20,
                                     ),
                                   ),
                                   Text(
@@ -135,6 +148,21 @@ class _DashboardState extends State<Dashboard> {
                                 ],
                               ),
                             ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text(
+                                  myDateTime.compareTo(formattedDate)>0 ? 'Coming\nSoon': myDateTime.compareTo(formattedDate)<0 && myEndDateTime.compareTo(formattedDate)<0? 'Ended':'Ongoing',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Avenir',
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700),
+                                ),
+                                ],
+                              ),)
                           ],
                         ),
                       )

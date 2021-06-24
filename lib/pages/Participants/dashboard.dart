@@ -1,4 +1,5 @@
 // import 'package:fiza/model/class.dart';
+import 'package:EMMA/Comman_widget/Custom_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +23,10 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
   int index =-1; 
   @override
   Widget build(BuildContext context) {
+    
+    DateTime now = DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    DateTime formattedDate = formatter.parse(now.toString());
     CollectionReference event = FirebaseFirestore.instance.collection('event');
 
     return Scaffold(
@@ -84,6 +89,16 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                     blurRadius: 12,
                                     offset: Offset(0, 6))
                               ])),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        top: 0,
+                        child: CustomPaint(
+                          size: Size(100, 150),
+                          painter: CustomCardShapePainter(24,
+                              newColor[index%4].first, newColor[index%4].last),
+                        ),
+                      ),
                       Positioned.fill(
                         child: Row(
                           children: <Widget>[
@@ -115,7 +130,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                 //   width: 64)
                                 ),
                             Expanded(
-                              flex: 5,
+                              flex: 3,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,6 +154,21 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                 ],
                               ),
                             ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text(
+                                  myDateTime.compareTo(formattedDate)>0 ? 'Coming\nSoon': myDateTime.compareTo(formattedDate)<0 && myEndDateTime.compareTo(formattedDate)<0? 'Ended':'Ongoing',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Avenir',
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700),
+                                ),
+                                ],
+                              ),)
                           ],
                         ),
                       )
@@ -148,4 +178,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
               }).toList());
             }));
   }
+  
 }
+
+
