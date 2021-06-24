@@ -65,17 +65,6 @@ dateController.text = widget.date.toString();
    }
 
   // @override
-  // String mobileValidator(String value) {
-  //   if (value.isEmpty) {
-  //     return 'Mobile can\'t be empty';
-  //   } else if (value.isNotEmpty) {
-  //     //bool mobileValid = RegExp(r"^(?:\+88||01)?(?:\d{10}|\d{13})$").hasMatch(value);
-
-  //     bool mobileValid =
-  //         RegExp(r'^(?:\+?88|0088)?01[13-9]\d{8}$').hasMatch(value);
-  //     return mobileValid ? null : "Invalid mobile";
-  //   }
-  // }
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
@@ -101,11 +90,8 @@ dateController.text = widget.date.toString();
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             enabled: false,
-                                                        controller: eventNameController,
-
+                            controller: eventNameController,
                             style:TextStyle(color: Colors.grey),
-
-                            
                           onChanged: (currentValue) => _eventName = currentValue,
 
                             decoration: InputDecoration(
@@ -120,10 +106,8 @@ dateController.text = widget.date.toString();
                         ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child: DateTimeField(
-                        
-                                                        controller: dateController,
-
-                            style:TextStyle(color: Colors.grey),
+                        controller: dateController,
+                        style:TextStyle(color: Colors.grey),
                         enabled: false,
                         onChanged: (currentValue) => _date = currentValue,
                         decoration: InputDecoration(
@@ -145,10 +129,8 @@ dateController.text = widget.date.toString();
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
-                        
-                                                        controller: timeController,
-
-                            style:TextStyle(color: Colors.grey),
+                        controller: timeController,
+                        style:TextStyle(color: Colors.grey),
                         enabled: false,
                         onChanged: (currentValue) => _time = currentValue,
                         decoration: InputDecoration(
@@ -167,15 +149,11 @@ dateController.text = widget.date.toString();
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                            
-                                                        controller: locationController,
-
+                            controller: locationController,
                             style:TextStyle(color: Colors.grey),
                             enabled: false,
-                                                    onChanged: (currentValue) => _location = currentValue,
-
+                            onChanged: (currentValue) => _location = currentValue,
                             decoration: InputDecoration(
-
                               labelText: 'Event Location',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
@@ -187,13 +165,10 @@ dateController.text = widget.date.toString();
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                            
-                                                        controller:eventfeeController,
-
+                            controller:eventfeeController,
                             style:TextStyle(color: Colors.grey),
                             enabled: false,
-                                                    onChanged: (currentValue) => _eventfee = currentValue,
-
+                            onChanged: (currentValue) => _eventfee = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Event Fee (RM)',
                               fillColor: Colors.white,
@@ -206,8 +181,7 @@ dateController.text = widget.date.toString();
                          Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _name = currentValue,
-
+                            onChanged: (currentValue) => _name = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Name',
                               fillColor: Colors.white,

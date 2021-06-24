@@ -39,8 +39,9 @@ class _DashboardState extends State<Dashboard> {
                 
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
                 DateTime myDateTime = (document.data()['Date']).toDate();
-
+                DateTime myEndDateTime = (document.data()['End_Date']).toDate();
                 DateTime myTimeDate = (document.data()['Time']).toDate();
+                DateTime myEndTimeDate = (document.data()['End_Time']).toDate();
                 index += 1;
                 return GestureDetector(
                   onTap: () {
@@ -50,6 +51,8 @@ class _DashboardState extends State<Dashboard> {
                             builder: (context) => EventDetails(
                                 myDateTime,
                                 myTimeDate,
+                                myEndDateTime,
+                                myEndTimeDate,
                                 document.data()['EventName'],
                                 document.data()['Location'],
                                 document.data()['Event_Fee'],

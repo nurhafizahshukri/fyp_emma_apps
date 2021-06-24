@@ -1,4 +1,3 @@
-import 'package:EMMA/pages/interest.dart';
 import 'package:EMMA/services/databaseservice.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +16,8 @@ class _CreateEventState extends State<CreateEvent> {
   final format1 = DateFormat("HH:mm");
   DateTime _date;
   DateTime _time;
+  DateTime _endDate;
+  DateTime _endTime;
   String _eventName;
   String _location;
   String _eventfee;
@@ -32,11 +33,6 @@ class _CreateEventState extends State<CreateEvent> {
     eventController.dispose();
     _node.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-   // TODO
   }
 
   @override
@@ -88,7 +84,27 @@ class _CreateEventState extends State<CreateEvent> {
                           border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
                               ),
-                          labelText: 'Date Format: (${newformat.pattern})'
+                          labelText: 'Start Date Format: (${newformat.pattern})'
+                        ),
+                        format: newformat,
+                        onShowPicker: (context, currentValue) {
+                          return showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            initialDate: currentValue ?? DateTime.now(),
+                            lastDate: DateTime(2100)
+                            );
+                        },
+                      ),
+                    ),
+                        Padding(padding: const EdgeInsets.all(8.0),
+                      child: DateTimeField(
+                        onChanged: (currentValue) => {_endDate = currentValue, print('_endDate.toString()'),print(_endDate.toString())},
+                        decoration: InputDecoration(
+                          border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              ),
+                          labelText: 'End Date Format: (${newformat.pattern})'
                         ),
                         format: newformat,
                         onShowPicker: (context, currentValue) {
@@ -103,10 +119,26 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
-                        onChanged: (currentValue) => _time = currentValue,
+                        onChanged: (currentValue) => {_time = currentValue, print('_time.toString()'),print(_time.toString())},
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'Time Format: (${format1.pattern})'
+                          labelText: 'Start Time Format: (${format1.pattern})'
+                        ),
+                        format: format1,
+                        onShowPicker: (context, currentValue) async {
+                          final time = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                          );
+                          return DateTimeField.convert(time);
+                        },
+                      ), ),
+                        Padding(padding: const EdgeInsets.all(8.0),
+                      child:DateTimeField(
+                        onChanged: (currentValue) => {_endTime = currentValue, print('_endTime.toString()'),print(_endTime.toString())},
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
+                          labelText: 'End Time Format: (${format1.pattern})'
                         ),
                         format: format1,
                         onShowPicker: (context, currentValue) async {
@@ -121,7 +153,7 @@ class _CreateEventState extends State<CreateEvent> {
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                                                     onChanged: (currentValue) => _location = currentValue,
-
+                
                             decoration: InputDecoration(
 
                               labelText: 'Event Location',
@@ -165,57 +197,87 @@ class _CreateEventState extends State<CreateEvent> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                              onChanged: (currentValue) => _reg = currentValue,
-
-                            decoration: InputDecoration(
-                              labelText: 'Open for registration (Yes / No)',
-                              fillColor: Colors.white,
-                              border: new OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(25.0),
-                              )
-                            )
-                          ),
-                        ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    border: new OutlineInputBorder(
+                                      borderRadius: new BorderRadius.circular(25.0),
+                                    ),
+                                    labelText: 'Open for registration (Yes / No)',
+                                    ),
+                                  isExpanded: true,
+                                  value: _reg,
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.red,
+                                  ),
+                                  iconSize: 30,
+                                  elevation: 16,
+                                  style: const TextStyle(color: Colors.black),
+                                  // underline: SizedBox(),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      _reg = newValue;
+                                    });
+                                  },
+                                  items: <String>['Yes', 'No']
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(color: Colors.black, ),
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+                                ),
+                              ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            onChanged: (currentValue) => _label = currentValue,
-
-                            decoration: InputDecoration(
-                              labelText: 'Label (Sports,Seminar etc)',
-                              fillColor: Colors.white,
-                              border: new OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(25.0),
-                              )
-                            )
-                          ),
-                        ),
-                        // Padding(
-                        //       padding: EdgeInsets.only(
-                        //           left: 25.0, right: 25.0, top: 25.0, bottom: 25.0),
-                        //       child: new Row(
-                        //         mainAxisSize: MainAxisSize.max,
-                        //         children: <Widget>[
-                        //           new Column(
-                        //             mainAxisAlignment: MainAxisAlignment.start,
-                        //             mainAxisSize: MainAxisSize.min,
-                        //             children: <Widget>[
-                        //               new Text(
-                        //                 'Labels',
-                        //                 style: TextStyle(
-                        //                     fontSize: 16.0,
-                        //                     fontWeight: FontWeight.bold),
-                        //               ),
-                        //             ],
-                        //           ),
-                        //         ],
-                        //       )),
-                        // Padding(
-                        //       padding: EdgeInsets.only(
-                        //           left: 25.0, right: 25.0, top: 2.0),
-                        //       child: Interest()),
-                        
+                                child: Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: DropdownButtonFormField<String>(
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    border: new OutlineInputBorder(
+                                      borderRadius: new BorderRadius.circular(25.0),
+                                    ),
+                                    labelText: 'Categories',
+                                    ),
+                                  isExpanded: true,
+                                  value: _label,
+                                  icon: const Icon(
+                                    Icons.arrow_drop_down,
+                                    color: Colors.red,
+                                  ),
+                                  iconSize: 30,
+                                  elevation: 16,
+                                  style: const TextStyle(color: Colors.black),
+                                  // underline: SizedBox(),
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      _label = newValue;
+                                    });
+                                  },
+                                  items: <String>['Sports', 'Seminar']
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: TextStyle(color: Colors.black, ),
+                                      ),
+                                    );
+                                  }).toList(),
+                            ),
+                                ),
+                              ),
+                          
                         SizedBox(height: 20),
                         ButtonTheme(
                             minWidth: 338.0,
@@ -262,7 +324,7 @@ class _CreateEventState extends State<CreateEvent> {
   final formState = _formKey.currentState;
   
     formState.save();
-    DatabaseService().addEvent(_eventName,_date,_time,_location,_eventfee,_description,_label,_reg);
+    DatabaseService().addEvent(_eventName,_date, _time, _endDate, _endTime,_location,_eventfee,_description,_label,_reg);
 
 }
 

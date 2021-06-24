@@ -367,7 +367,7 @@ class _EventViewState extends State<EventView> {
                     
                   } else
                     return Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
+        padding: const EdgeInsets.only(bottom: 8.0, top: 20.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           // crossAxisAlignment: CrossAxisAlignment.center,
@@ -376,7 +376,7 @@ class _EventViewState extends State<EventView> {
               minWidth: 180.0,
               // height: 40.0,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: widget.reg =="Yes"? () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -389,13 +389,13 @@ class _EventViewState extends State<EventView> {
                                 widget.uid,
                               ),
                           fullscreenDialog: true));
-                },
+                } : null,
                           style: ElevatedButton.styleFrom(
                                 primary: Colors.red[600],
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
-                                side: BorderSide(color: Colors.red[600]),
+                                // side: BorderSide(color: Colors.red[600]),
                                 fixedSize: Size(280, 40)
                               ),
 
