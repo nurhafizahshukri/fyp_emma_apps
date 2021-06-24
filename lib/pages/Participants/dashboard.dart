@@ -31,7 +31,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
 
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-            stream: event.snapshots(),
+            stream: event.where('End_Date', isGreaterThanOrEqualTo: formattedDate).orderBy("End_Date",descending:true).snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -140,7 +140,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 30,
+                                      fontSize: 20,
                                     ),
                                   ),
                                   Text(
@@ -148,7 +148,21 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                     style: TextStyle(
                                       color: Colors.grey[100],
                                       fontWeight: FontWeight.w500,
+                                      fontStyle: FontStyle.italic,
                                       fontSize: 15,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      myDateTime.toString() == myEndDateTime.toString()
+                                        ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
+                                        : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                        style: TextStyle(
+                                        color: Colors.grey[100],
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                      ),
                                     ),
                                   ),
                                 ],

@@ -11,6 +11,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final format1 = DateFormat("HH:mm");
   final List<Set<Color>> newColor = [
     {Color(0xff6DC8F3), Color(0xff73A1F9)},
     {Color(0xffFFB157), Color(0xffFFA057)},
@@ -28,7 +29,7 @@ class _DashboardState extends State<Dashboard> {
     DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-            stream: event.snapshots(),
+            stream: event.orderBy("Date",descending:true).snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -142,7 +143,21 @@ class _DashboardState extends State<Dashboard> {
                                     style: TextStyle(
                                       color: Colors.grey[100],
                                       fontWeight: FontWeight.w500,
+                                      fontStyle: FontStyle.italic,
                                       fontSize: 15,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      myDateTime.toString() == myEndDateTime.toString()
+                                        ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
+                                        : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                        style: TextStyle(
+                                        color: Colors.grey[100],
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                      ),
                                     ),
                                   ),
                                 ],
