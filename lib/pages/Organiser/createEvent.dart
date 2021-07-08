@@ -99,7 +99,7 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child: DateTimeField(
-                        onChanged: (currentValue) => {_endDate = currentValue, print('_endDate.toString()'),print(_endDate.toString())},
+                        onChanged: (currentValue) => {_endDate = currentValue},
                         decoration: InputDecoration(
                           border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -119,7 +119,7 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
-                        onChanged: (currentValue) => {_time = currentValue, print('_time.toString()'),print(_time.toString())},
+                        onChanged: (currentValue) => {_time = currentValue},
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
                           labelText: 'Start Time Format: (${format1.pattern})'
@@ -135,7 +135,7 @@ class _CreateEventState extends State<CreateEvent> {
                       ), ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
-                        onChanged: (currentValue) => {_endTime = currentValue, print('_endTime.toString()'),print(_endTime.toString())},
+                        onChanged: (currentValue) => {_endTime = currentValue},
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
                           labelText: 'End Time Format: (${format1.pattern})'
