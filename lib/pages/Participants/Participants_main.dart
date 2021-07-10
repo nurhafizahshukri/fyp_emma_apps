@@ -26,12 +26,12 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-               Container(height: 45,),]
-                  // new Image.asset(
-                  //           "assets/images/logo_white.png",
-                  //           height: 45.0,
-                  //           fit: BoxFit.scaleDown,
-                  //         ) ],
+               Container(height: 45,),
+                  new Image.asset(
+                            "assets/images/logo_white.png",
+                            height: 45.0,
+                            fit: BoxFit.scaleDown,
+                          ) ],
         ),
         backgroundColor: Colors.red[700],
         actions: <Widget>[

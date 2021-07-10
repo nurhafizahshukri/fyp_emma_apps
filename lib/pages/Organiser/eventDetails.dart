@@ -11,6 +11,8 @@ import 'package:EMMA/services/databaseservice.dart';
 class EventDetails extends StatefulWidget {
   DateTime date = DateTime.now();
   DateTime time = DateTime.now();
+  DateTime endDate = DateTime.now();
+  DateTime endTime = DateTime.now();
   String eventName = "";
   String location = "";
   String eventfee = "";
@@ -29,6 +31,8 @@ class EventDetails extends StatefulWidget {
   EventDetails(
     this.date,
     this.time,
+    this.endDate,
+    this.endTime,
     this.eventName,
     this.location,
     this.eventfee,
@@ -39,6 +43,8 @@ class EventDetails extends StatefulWidget {
   ) {
     print(date);
     print(time);
+    print(endDate);
+    print(endTime);
     print(eventName);
     print(location);
     print(eventfee);
@@ -67,6 +73,8 @@ class _EventDetailsState extends State<EventDetails> {
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    DateTime formattedDate = formatter.parse(now.toString());
     String eventName;
     return Scaffold(
       appBar: AppBar(
@@ -159,7 +167,7 @@ class _EventDetailsState extends State<EventDetails> {
                   children: <Widget>[
                     Text(
                       // 'COMING SOON',
-                      widget.date.compareTo(now)>0 ? 'COMING SOON': 'ENDED',
+                      widget.date.compareTo(formattedDate)>0 ? 'COMING SOON': widget.date.compareTo(formattedDate)<0 && widget.endDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,
@@ -189,9 +197,9 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
-                      Text(widget.date.toString() != null
-                          ? "${widget.date.day} - ${widget.date.month} - ${widget.date.year} Time ${widget.time.hour} : ${widget.time.minute}  "
-                          : ''),
+                      Text(widget.date.toString() == widget.endDate.toString()
+                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) "
+                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year} ( ${format1.format(widget.endTime)} ) "),
                     ],
                   ),
                   Row(

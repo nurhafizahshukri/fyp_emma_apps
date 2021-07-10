@@ -1,4 +1,5 @@
 // import 'package:fiza/model/class.dart';
+import 'package:EMMA/Comman_widget/Custom_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,11 +23,15 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
   int index =-1; 
   @override
   Widget build(BuildContext context) {
+    
+    DateTime now = DateTime.now();
+    var formatter = new DateFormat('yyyy-MM-dd');
+    DateTime formattedDate = formatter.parse(now.toString());
     CollectionReference event = FirebaseFirestore.instance.collection('event');
 
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-            stream: event.snapshots(),
+            stream: event.where('End_Date', isGreaterThanOrEqualTo: formattedDate).orderBy("End_Date",descending:true).snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -39,8 +44,9 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
               return new ListView(
                   children: snapshot.data.docs.map((DocumentSnapshot document) {
                 DateTime myDateTime = (document.data()['Date']).toDate();
-
+                DateTime myEndDateTime = (document.data()['End_Date']).toDate();
                 DateTime myTimeDate = (document.data()['Time']).toDate();
+                DateTime myEndTimeDate = (document.data()['End_Time']).toDate();
                 index += 1;
                 return GestureDetector(
                   onTap: () {
@@ -50,6 +56,8 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             builder: (context) => EventView(
                                 myDateTime,
                                 myTimeDate,
+                                myEndDateTime,
+                                myEndTimeDate,
                                 document.data()['EventName'],
                                 document.data()['Location'],
                                 document.data()['Event_Fee'],
@@ -81,6 +89,16 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                     blurRadius: 12,
                                     offset: Offset(0, 6))
                               ])),
+                      Positioned(
+                        right: 0,
+                        bottom: 0,
+                        top: 0,
+                        child: CustomPaint(
+                          size: Size(100, 150),
+                          painter: CustomCardShapePainter(24,
+                              newColor[index%4].first, newColor[index%4].last),
+                        ),
+                      ),
                       Positioned.fill(
                         child: Row(
                           children: <Widget>[
@@ -112,7 +130,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                 //   width: 64)
                                 ),
                             Expanded(
-                              flex: 5,
+                              flex: 3,
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,7 +140,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: 30,
+                                      fontSize: 20,
                                     ),
                                   ),
                                   Text(
@@ -130,12 +148,41 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                     style: TextStyle(
                                       color: Colors.grey[100],
                                       fontWeight: FontWeight.w500,
+                                      fontStyle: FontStyle.italic,
                                       fontSize: 15,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Text(
+                                      myDateTime.toString() == myEndDateTime.toString()
+                                        ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
+                                        : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                        style: TextStyle(
+                                        color: Colors.grey[100],
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Text(
+                                  myDateTime.compareTo(formattedDate)>0 ? 'Coming\nSoon': myDateTime.compareTo(formattedDate)<0 && myEndDateTime.compareTo(formattedDate)<0? 'Ended':'Ongoing',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Avenir',
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700),
+                                ),
+                                ],
+                              ),)
                           ],
                         ),
                       )
@@ -145,4 +192,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
               }).toList());
             }));
   }
+  
 }
+
+

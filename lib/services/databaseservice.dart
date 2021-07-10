@@ -14,6 +14,8 @@ class DatabaseService {
       String eventName,
       DateTime date,
       DateTime time,
+      DateTime endDate,
+      DateTime endTime,
       String location,
       String eventfee,
       String description,
@@ -28,9 +30,11 @@ class DatabaseService {
     CollectionReference event = FirebaseFirestore.instance.collection('event');
     event
         .add({
-          'EventName': eventName, // John Doe
-          'Date': date, // Stokes and Sons
-          'Time': time, // 42
+          'EventName': eventName, 
+          'Date': date,
+          'Time': time, 
+          'End_Date': endDate,
+          'End_Time': endTime, 
           'Location': location,
           'Event_Fee': eventfee,
           'Description': description,
