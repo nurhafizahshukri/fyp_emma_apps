@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:EMMA/pages/Organiser/invitation.dart';
+import 'package:EMMA/pages/Organiser/sendInvitation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -331,16 +333,27 @@ class _EventDetailsState extends State<EventDetails> {
                   SizedBox(height: 10),
                   Row(
                     children: <Widget>[
-                      Text(
-                        'No invitation sent',
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Send one now',
-                        style: TextStyle(
-                          color: Colors.blue,
-                        ),
-                      )
+                      // Text(
+                      //   'No invitation sent',
+                      // ),
+                      // SizedBox(width: 5),
+                      Visibility(
+                     visible: widget.date.compareTo(now)<0 ? false : true,
+                     child: Flatbutton(
+                            fontsize: 15,
+                            icon: Icon(Icons.document_scanner, color:  Colors.red,),
+                            colortext: Colors.red,
+                            text: "Send Invitation",
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SendInvitation(widget.date, widget.time, widget.eventName, widget.location, widget.uid)
+                                )
+                                );
+                            },
+                          ),
+                   )
                     ],
                   ),
                 ],

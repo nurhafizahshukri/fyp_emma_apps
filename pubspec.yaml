@@ -30,10 +30,12 @@ dependencies:
   firebase_auth: ^1.0.3
   firebase_core: ^1.0.3
   firebase_storage: ^8.1.0
+  flutter_email_sender: ^5.0.2
   flutter_tags: ^0.4.9+1
   flutter_ticket_widget: ^0.0.1
   image_picker: ^0.7.5+2
   intl: ^0.17.0
+  mailer: ^5.0.1
   open_file: ^3.2.1
   path_provider: ^2.0.2
   pdf: ^3.3.0
