@@ -1,4 +1,3 @@
-// import 'package:fiza/model/class.dart';
 import 'package:EMMA/Comman_widget/Custom_card.dart';
 import 'package:EMMA/pages/Organiser/eventDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
