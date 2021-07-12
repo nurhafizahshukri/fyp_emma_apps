@@ -320,12 +320,37 @@ class _EventDetailsState extends State<EventDetails> {
                     ],
                   ),
                   SizedBox(height: 10),
+                  Container(
+                    height: 100,
+                    child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("invitee").snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasError) {
+                              return Center(child: Text('Something went wrong'));
+                            }
+                            if(!snapshot.hasData)
+                            return Center(child: Text('No Invitee'));
+                      
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return Center(child: Text("Loading"));
+                            }
+                            return new ListView(
+                              children:  snapshot.data.docs.map((DocumentSnapshot document) {
+                                return Row(
+                                  mainAxisAlignment:MainAxisAlignment.spaceBetween ,children:<Widget> [
+                                  Text(document.data()["userName"],style: TextStyle(color:Colors.black ),),
+                                  
+                                  Text(document.data()["email"],style: TextStyle(color:Colors.black ),),
+                                ],)
+                              ;}
+                              ).toList(),
+                            );
+                          }),
+                  ),
                   Row(
                     children: <Widget>[
-                      // Text(
-                      //   'No invitation sent',
-                      // ),
-                      // SizedBox(width: 5),
                       Visibility(
                      visible: widget.date.compareTo(now)<0 ? false : true,
                      child: Flatbutton(

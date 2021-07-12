@@ -1,3 +1,4 @@
+import 'package:EMMA/services/databaseservice.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
@@ -22,11 +23,14 @@ class SendInvitation extends StatefulWidget {
 }
 
 class _SendInvitationState extends State<SendInvitation> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _body;
   String _recipient;
+  String _recipientName;
   String _subject;
   final invitationController = TextEditingController();
   final TextEditingController _recipientController = TextEditingController();
+  final TextEditingController _recipientNameController = TextEditingController();
   final TextEditingController _subjectController = TextEditingController();
   final TextEditingController _bodyController = TextEditingController();
 
@@ -39,11 +43,13 @@ class _SendInvitationState extends State<SendInvitation> {
   @override
   void initState() { 
     _recipientController.text = 'example@gmail.com';
+    _recipientNameController.text = 'Full Name';
     _subjectController.text = 'Invitation to ${widget.eventName}';
-    _bodyController.text = 'Greetings, <invitee name>. \n\nYou are invited to our event called ${widget.eventName}.'+ 
+    _bodyController.text = 'Greetings. \n\nYou are invited to our event called ${widget.eventName}.'+ 
                             ' ${widget.eventName} will be conducted on ${widget.date.day.toString()}-${widget.date.month.toString()}-${widget.date.year.toString()} at ${widget.location}';
     _body = _bodyController.text;
     _recipient = _recipientController.text;
+    _recipientName = _recipientNameController.text;
     _subject = _subjectController.text;
   }
 
@@ -65,6 +71,8 @@ class _SendInvitationState extends State<SendInvitation> {
     // ..bccRecipients.add(Address('bccAddress@example.com'))
     ..subject = _subject
     ..text = _body;
+    print(_recipient);
+    print(_recipientName);
 
   try {
     final sendReport = await send(message, smtpServer);
@@ -91,62 +99,85 @@ class _SendInvitationState extends State<SendInvitation> {
         ),
       body: Padding(
         padding: EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _recipientController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Recipient',
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _subjectController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Subject',
-                ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
                 padding: EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: _bodyController,
-                  onChanged: (currentValue) => _body = currentValue,
-                  maxLines: null,
-                  expands: true,
-                  textAlignVertical: TextAlignVertical.top,
+                child: TextFormField(
+                  controller: _recipientNameController,
+                  onChanged: (currentValue) => _recipientName = currentValue,
                   decoration: InputDecoration(
-                      labelText: 'Body', border: OutlineInputBorder()),
+                    border: OutlineInputBorder(),
+                    labelText: 'Recipient Name',
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-                child:  ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red[600],
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                    ),
-                    side: BorderSide(color: Colors.red[600]),
-                    fixedSize: Size(380, 40)
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: _recipientController,
+                  onChanged: (currentValue) => _recipient = currentValue,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Recipient',
                   ),
-                  child:Text('Send Email') ,
-                  onPressed: sendMail ),
-            ),
-          ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: _subjectController,
+                  onChanged: (currentValue) => _subject = currentValue,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Subject',
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    controller: _bodyController,
+                    onChanged: (currentValue) => _body = currentValue,
+                    maxLines: null,
+                    expands: true,
+                    textAlignVertical: TextAlignVertical.top,
+                    decoration: InputDecoration(
+                        labelText: 'Body', border: OutlineInputBorder()),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                  child:  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red[600],
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      side: BorderSide(color: Colors.red[600]),
+                      fixedSize: Size(380, 40)
+                    ),
+                    child:Text('Send Email') ,
+                    onPressed: () {sendMail(); onSubmit();} ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+  Future <void> onSubmit() async {
+  final formState = _formKey.currentState;
+  
+    formState.save();
+    DatabaseService().addInvitation(_recipientName,_recipient,widget.uid);
+
+}
 }

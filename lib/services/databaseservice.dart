@@ -1,11 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:EMMA/Pages/Participants/Participants_main.dart';
-
-import 'package:EMMA/error_handler.dart';
-
-import '../pages/Organiser/mainpage.dart';
 
 class DatabaseService {
   //Determine if the user is authenticated.
@@ -116,5 +110,21 @@ Future<void> updatePayment(
         .delete()
         .then((value) => print("Event deleted"))
         .catchError((error) => print("Failed to Update user: $error"));
+  }
+
+  Future<void> addInvitation(
+      String name,
+      String email,
+      String eventuid,
+      ) async {
+    // Call the user's CollectionReference to add a new user_
+    User user= FirebaseAuth.instance.currentUser;
+    CollectionReference invitee =
+        FirebaseFirestore.instance.collection('event').doc(eventuid).collection("invitee");
+        invitee.add({
+        "userName":name,
+        "email":email,
+        "Creator_uid":user.uid,
+        });
   }
 }
