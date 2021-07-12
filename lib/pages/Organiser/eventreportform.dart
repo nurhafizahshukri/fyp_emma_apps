@@ -165,6 +165,14 @@ class _UploadingImageToFirebaseStorageState
                                 child: _imageFile6 != null
                                     ? Image.file(_imageFile6)
                                     : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(250, 170)
+                                      ),
                                         child: Icon(
                                           Icons.add_a_photo,
                                           color: Colors.red,
@@ -190,6 +198,14 @@ class _UploadingImageToFirebaseStorageState
                                 child: _imageFile7 != null
                                     ? Image.file(_imageFile7)
                                     : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(250, 170)
+                                      ),
                                         child: Icon(
                                           Icons.add_a_photo,
                                           color: Colors.red,
@@ -215,6 +231,14 @@ class _UploadingImageToFirebaseStorageState
                                 child: _imageFile8 != null
                                     ? Image.file(_imageFile8)
                                     : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(250, 170)
+                                      ),
                                         child: Icon(
                                           Icons.add_a_photo,
                                           size: 50,
@@ -231,7 +255,7 @@ class _UploadingImageToFirebaseStorageState
                 )
               : Column(mainAxisAlignment: MainAxisAlignment.start, children: <
                   Widget>[
-                                              SizedBox(width:double.infinity,height:30),
+                   SizedBox(width:double.infinity,height:30),
 
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -251,6 +275,14 @@ class _UploadingImageToFirebaseStorageState
                               child: _imageFile1 != null
                                   ? Image.file(_imageFile1)
                                   : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         color: Colors.red,
@@ -276,6 +308,14 @@ class _UploadingImageToFirebaseStorageState
                               child: _imageFile2 != null
                                   ? Image.file(_imageFile2)
                                   : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -305,6 +345,14 @@ class _UploadingImageToFirebaseStorageState
                               child: _imageFile3 != null
                                   ? Image.file(_imageFile3)
                                   : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         color: Colors.red,
@@ -330,6 +378,14 @@ class _UploadingImageToFirebaseStorageState
                               child: _imageFile4 != null
                                   ? Image.file(_imageFile4)
                                   : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -355,6 +411,14 @@ class _UploadingImageToFirebaseStorageState
                               child: _imageFile5 != null
                                   ? Image.file(_imageFile5)
                                   : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -439,9 +503,15 @@ class _UploadingImageToFirebaseStorageState
                 const EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
             margin: const EdgeInsets.only(
                 top: 30, left: 20.0, right: 20.0, bottom: 20.0),
-            decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(30.0)),
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red[600],
+                shape: new RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                side: BorderSide(color: Colors.red[600]),
+                fixedSize: Size(100, 40)
+              ),
               onPressed: () => isload
                   ? {
                       setState(() {
