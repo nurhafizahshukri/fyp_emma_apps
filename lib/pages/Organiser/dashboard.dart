@@ -2,6 +2,7 @@
 import 'package:EMMA/Comman_widget/Custom_card.dart';
 import 'package:EMMA/pages/Organiser/eventDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -23,14 +24,16 @@ class _DashboardState extends State<Dashboard> {
   int index =-1; 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
     CollectionReference event = FirebaseFirestore.instance.collection('event');
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-            stream: event.orderBy("Date",descending:true).snapshots(),
+            stream: event
+            .where('Creator_Uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            .orderBy("Date",descending:true)
+            .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
