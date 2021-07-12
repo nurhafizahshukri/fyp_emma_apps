@@ -1,36 +1,35 @@
 // import 'package:fiza/model/class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:EMMA/Comman_widget/Custom_card.dart';
-import 'package:EMMA/pages/Organiser/eventDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:EMMA/pages/Participants/eventView.dart';
 
 class Event {
-  final String Creator_Uid,
-      EventName,
-      Event_Fee,
-      Location,
-      Open_Registeration,
+  final String creatorUid,
+      eventName,
+      eventFee,
+      location,
+      openRegisteration,
       label,
-      Id;
-  final DateTime Date, End_Date, End_Time, Time;
-  final String Description;
+      id;
+  final DateTime date, endDate, endTime, time;
+  final String description;
 
   Event(
-      this.Creator_Uid,
-      this.EventName,
-      this.Event_Fee,
-      this.Location,
-      this.Open_Registeration,
+      this.creatorUid,
+      this.eventName,
+      this.eventFee,
+      this.location,
+      this.openRegisteration,
       this.label,
-      this.Date,
-      this.End_Date,
-      this.End_Time,
-      this.Time,
-      this.Description,
-      this.Id);
+      this.date,
+      this.endDate,
+      this.endTime,
+      this.time,
+      this.description,
+      this.id);
 }
 
 class DashboardParticipant extends StatefulWidget {
@@ -66,7 +65,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
   @override
   Widget build(BuildContext context) {
     List<Event> otherEvent = [];
-    List<Event> sugestedEvent = [];
+    List<Event> suggestedEvent = [];
     List<Event> allEvent = [];
     String username;
     String mobile;
@@ -113,7 +112,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                     snapshot.data.docs.forEach((DocumentSnapshot document) {
                       //interest.contains(document.data()["label"])?
                       if (interest.contains(document.data()["label"])) {
-                        sugestedEvent.add(Event(
+                        suggestedEvent.add(Event(
                             document.data()['Creator_Uid'],
                             document.data()['EventName'],
                             document.data()['Event_Fee'],
@@ -158,20 +157,20 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                     }
                     
                     );
-                      otherEvent.addAll(sugestedEvent);
+                      otherEvent.addAll(suggestedEvent);
                     
-                    return sugestedEvent.length==0? 
+                    return suggestedEvent.length==0? 
                    ListView.builder(
                             scrollDirection: Axis.vertical,
                             padding: const EdgeInsets.all(8),
                             itemCount: allEvent.length,
                             itemBuilder: (BuildContext context, int index) {
-                              DateTime myDateTime = allEvent[index].Date;
+                              DateTime myDateTime = allEvent[index].date;
                               DateTime myEndDateTime =
-                                  allEvent[index].End_Date;
-                              DateTime myTimeDate = allEvent[index].Time;
+                                  allEvent[index].endDate;
+                              DateTime myTimeDate = allEvent[index].time;
                               DateTime myEndTimeDate =
-                                  allEvent[index].End_Time;
+                                  allEvent[index].endTime;
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -186,18 +185,18 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       myEndDateTime,
                                                       myEndTimeDate,
                                                       allEvent[index]
-                                                          .EventName,
+                                                          .eventName,
                                                       allEvent[index]
-                                                          .Location,
+                                                          .location,
                                                       allEvent[index]
-                                                          .Event_Fee,
+                                                          .eventFee,
                                                       allEvent[index]
-                                                          .Description,
+                                                          .description,
                                                       allEvent[index]
                                                           .label,
                                                       allEvent[index]
-                                                          .Open_Registeration,
-                                                      allEvent[index].Id,
+                                                          .openRegisteration,
+                                                      allEvent[index].id,
                                                       username,
                                                       mobile,
                                                       ),
@@ -213,16 +212,35 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                 borderRadius:
                                                     BorderRadius.circular(24),
                                                 gradient: LinearGradient(
-                                                    colors: [
-                                                      newColor[index % 4].first,
-                                                      newColor[index % 4].last
+                                                    colors: (allEvent[index].label == 'conferences') || (allEvent[index].label == 'seminar') || (allEvent[index].label == 'workshops')? [
+                                                      newColor[0].first,
+                                                      newColor[0].last
+                                                    ] : (allEvent[index].label == 'expo') || (allEvent[index].label == 'award') || (allEvent[index].label == 'festival')? [
+                                                      newColor[1].first,
+                                                      newColor[1].last
+                                                    ] : (allEvent[index].label == 'leadership') || (allEvent[index].label == 'volunteers') || (allEvent[index].label == 'self improvement')? [
+                                                      newColor[2].first,
+                                                      newColor[2].last
+                                                    ] : (allEvent[index].label == 'creative') || (allEvent[index].label == 'cooking') || (allEvent[index].label == 'art')? [
+                                                      newColor[3].first,
+                                                      newColor[3].last
+                                                    ] : [
+                                                      newColor[4].first,
+                                                      newColor[4].last
                                                     ],
                                                     begin: Alignment.topLeft,
                                                     end: Alignment.bottomRight),
                                                 boxShadow: [
                                                   BoxShadow(
-                                                      color: newColor[index % 4]
-                                                          .last,
+                                                      color: (allEvent[index].label == 'conferences') || (allEvent[index].label == 'seminar') || (allEvent[index].label == 'workshops')?
+                                                       newColor[0].last
+                                                      : (allEvent[index].label == 'expo') || (allEvent[index].label == 'award') || (allEvent[index].label == 'festival')? 
+                                                       newColor[1].last
+                                                      : (allEvent[index].label == 'leadership') || (allEvent[index].label == 'volunteers') || (allEvent[index].label == 'self improvement')? 
+                                                       newColor[2].last
+                                                      : (allEvent[index].label == 'creative') || (allEvent[index].label == 'cooking') || (allEvent[index].label == 'art')? 
+                                                       newColor[3].last
+                                                      : newColor[4].last,
                                                       blurRadius: 12,
                                                       offset: Offset(0, 6))
                                                 ])),
@@ -234,8 +252,25 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                             size: Size(100, 150),
                                             painter: CustomCardShapePainter(
                                                 24,
-                                                newColor[index % 4].first,
-                                                newColor[index % 4].last),
+                                                (allEvent[index].label == 'conferences') || (allEvent[index].label == 'seminar') || (allEvent[index].label == 'workshops')?
+                                                 newColor[0].first
+                                                : (allEvent[index].label == 'expo') || (allEvent[index].label == 'award') || (allEvent[index].label == 'festival')? 
+                                                 newColor[1].first
+                                                : (allEvent[index].label == 'leadership') || (allEvent[index].label == 'volunteers') || (allEvent[index].label == 'self improvement')? 
+                                                 newColor[2].first
+                                                : (allEvent[index].label == 'creative') || (allEvent[index].label == 'cooking') || (allEvent[index].label == 'art')? 
+                                                 newColor[3].first
+                                                : newColor[4].first, 
+                                                
+                                                (allEvent[index].label == 'conferences') || (allEvent[index].label == 'seminar') || (allEvent[index].label == 'workshops')?
+                                                 newColor[0].last
+                                                : (allEvent[index].label == 'expo') || (allEvent[index].label == 'award') || (allEvent[index].label == 'festival')? 
+                                                 newColor[1].last
+                                                : (allEvent[index].label == 'leadership') || (allEvent[index].label == 'volunteers') || (allEvent[index].label == 'self improvement')? 
+                                                 newColor[2].last
+                                                : (allEvent[index].label == 'creative') || (allEvent[index].label == 'cooking') || (allEvent[index].label == 'art')? 
+                                                 newColor[3].last
+                                                : newColor[4].last,),
                                           ),
                                         ),
                                         Positioned.fill(
@@ -282,7 +317,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                   children: [
                                                     Text(
                                                       allEvent[index]
-                                                          .EventName,
+                                                          .eventName,
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -292,7 +327,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                     ),
                                                     Text(
                                                       allEvent[index]
-                                                          .Location,
+                                                          .location,
                                                       style: TextStyle(
                                                         color: Colors.grey[100],
                                                         fontWeight:
@@ -321,6 +356,24 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                         ),
                                                       ),
                                                     ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(top: 5.0),
+                                                      child: Container(
+                                                        padding: EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                                        ),
+                                                        child: Text( 
+                                                            allEvent[index].label.toUpperCase(),
+                                                            style: TextStyle(
+                                                            color: Colors.grey[100],
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 11,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      ),
                                                   ],
                                                 ),
                                               ),
@@ -379,14 +432,14 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             padding: const EdgeInsets.all(8),
-                            itemCount: sugestedEvent.length,
+                            itemCount: suggestedEvent.length,
                             itemBuilder: (BuildContext context, int index) {
-                              DateTime myDateTime = sugestedEvent[index].Date;
+                              DateTime myDateTime = suggestedEvent[index].date;
                               DateTime myEndDateTime =
-                                  sugestedEvent[index].End_Date;
-                              DateTime myTimeDate = sugestedEvent[index].Time;
+                                  suggestedEvent[index].endDate;
+                              DateTime myTimeDate = suggestedEvent[index].time;
                               DateTime myEndTimeDate =
-                                  sugestedEvent[index].End_Time;
+                                  suggestedEvent[index].endTime;
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -400,19 +453,19 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       myTimeDate,
                                                       myEndDateTime,
                                                       myEndTimeDate,
-                                                      sugestedEvent[index]
-                                                          .EventName,
-                                                      sugestedEvent[index]
-                                                          .Location,
-                                                      sugestedEvent[index]
-                                                          .Event_Fee,
-                                                      sugestedEvent[index]
-                                                          .Description,
-                                                      sugestedEvent[index]
+                                                      suggestedEvent[index]
+                                                          .eventName,
+                                                      suggestedEvent[index]
+                                                          .location,
+                                                      suggestedEvent[index]
+                                                          .eventFee,
+                                                      suggestedEvent[index]
+                                                          .description,
+                                                      suggestedEvent[index]
                                                           .label,
-                                                      sugestedEvent[index]
-                                                          .Open_Registeration,
-                                                      sugestedEvent[index].Id,
+                                                      suggestedEvent[index]
+                                                          .openRegisteration,
+                                                      suggestedEvent[index].id,
                                                         username,
                                                       mobile,),
                                               fullscreenDialog: true));
@@ -427,16 +480,35 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                 borderRadius:
                                                     BorderRadius.circular(24),
                                                 gradient: LinearGradient(
-                                                    colors: [
-                                                      newColor[index % 4].first,
-                                                      newColor[index % 4].last
+                                                    colors: (suggestedEvent[index].label == 'conferences') || (suggestedEvent[index].label == 'seminar') || (suggestedEvent[index].label == 'workshops')? [
+                                                      newColor[0].first,
+                                                      newColor[0].last
+                                                    ] : (suggestedEvent[index].label == 'expo') || (suggestedEvent[index].label == 'award') || (suggestedEvent[index].label == 'festival')? [
+                                                      newColor[1].first,
+                                                      newColor[1].last
+                                                    ] : (suggestedEvent[index].label == 'leadership') || (suggestedEvent[index].label == 'volunteers') || (suggestedEvent[index].label == 'self improvement')? [
+                                                      newColor[2].first,
+                                                      newColor[2].last
+                                                    ] : (suggestedEvent[index].label == 'creative') || (suggestedEvent[index].label == 'cooking') || (suggestedEvent[index].label == 'art')? [
+                                                      newColor[3].first,
+                                                      newColor[3].last
+                                                    ] : [
+                                                      newColor[4].first,
+                                                      newColor[4].last
                                                     ],
                                                     begin: Alignment.topLeft,
                                                     end: Alignment.bottomRight),
                                                 boxShadow: [
                                                   BoxShadow(
-                                                      color: newColor[index % 4]
-                                                          .last,
+                                                      color: (suggestedEvent[index].label == 'conferences') || (suggestedEvent[index].label == 'seminar') || (suggestedEvent[index].label == 'workshops')?
+                                                       newColor[0].last
+                                                      : (suggestedEvent[index].label == 'expo') || (suggestedEvent[index].label == 'award') || (suggestedEvent[index].label == 'festival')? 
+                                                       newColor[1].last
+                                                      : (suggestedEvent[index].label == 'leadership') || (suggestedEvent[index].label == 'volunteers') || (suggestedEvent[index].label == 'self improvement')? 
+                                                       newColor[2].last
+                                                      : (suggestedEvent[index].label == 'creative') || (suggestedEvent[index].label == 'cooking') || (suggestedEvent[index].label == 'art')? 
+                                                       newColor[3].last
+                                                      : newColor[4].last,
                                                       blurRadius: 12,
                                                       offset: Offset(0, 6))
                                                 ])),
@@ -448,8 +520,25 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                             size: Size(100, 150),
                                             painter: CustomCardShapePainter(
                                                 24,
-                                                newColor[index % 4].first,
-                                                newColor[index % 4].last),
+                                                (suggestedEvent[index].label == 'conferences') || (suggestedEvent[index].label == 'seminar') || (suggestedEvent[index].label == 'workshops')?
+                                                 newColor[0].first
+                                                : (suggestedEvent[index].label == 'expo') || (suggestedEvent[index].label == 'award') || (suggestedEvent[index].label == 'festival')? 
+                                                 newColor[1].first
+                                                : (suggestedEvent[index].label == 'leadership') || (suggestedEvent[index].label == 'volunteers') || (suggestedEvent[index].label == 'self improvement')? 
+                                                 newColor[2].first
+                                                : (suggestedEvent[index].label == 'creative') || (suggestedEvent[index].label == 'cooking') || (suggestedEvent[index].label == 'art')? 
+                                                 newColor[3].first
+                                                : newColor[4].first, 
+                                                
+                                                (suggestedEvent[index].label == 'conferences') || (suggestedEvent[index].label == 'seminar') || (suggestedEvent[index].label == 'workshops')?
+                                                 newColor[0].last
+                                                : (suggestedEvent[index].label == 'expo') || (suggestedEvent[index].label == 'award') || (suggestedEvent[index].label == 'festival')? 
+                                                 newColor[1].last
+                                                : (suggestedEvent[index].label == 'leadership') || (suggestedEvent[index].label == 'volunteers') || (suggestedEvent[index].label == 'self improvement')? 
+                                                 newColor[2].last
+                                                : (suggestedEvent[index].label == 'creative') || (suggestedEvent[index].label == 'cooking') || (suggestedEvent[index].label == 'art')? 
+                                                 newColor[3].last
+                                                : newColor[4].last,),
                                           ),
                                         ),
                                         Positioned.fill(
@@ -495,8 +584,8 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      sugestedEvent[index]
-                                                          .EventName,
+                                                      suggestedEvent[index]
+                                                          .eventName,
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -505,8 +594,8 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      sugestedEvent[index]
-                                                          .Location,
+                                                      suggestedEvent[index]
+                                                          .location,
                                                       style: TextStyle(
                                                         color: Colors.grey[100],
                                                         fontWeight:
@@ -535,6 +624,25 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                         ),
                                                       ),
                                                     ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(top: 5.0),
+                                                      child: Container(
+                                                        padding: EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                                        ),
+                                                        child: Text( 
+                                                            suggestedEvent[index]
+                                                          .label.toUpperCase(),
+                                                            style: TextStyle(
+                                                            color: Colors.grey[100],
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 11,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      ),
                                                   ],
                                                 ),
                                               ),
@@ -595,12 +703,12 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             padding: const EdgeInsets.fromLTRB(9, 8, 0, 8),
                             itemCount: otherEvent.length,
                             itemBuilder: (BuildContext context, int index) {
-                              DateTime myDateTime = otherEvent[index].Date;
+                              DateTime myDateTime = otherEvent[index].date;
                               DateTime myEndDateTime =
-                                  otherEvent[index].End_Date;
-                              DateTime myTimeDate = otherEvent[index].Time;
+                                  otherEvent[index].endDate;
+                              DateTime myTimeDate = otherEvent[index].time;
                               DateTime myEndTimeDate =
-                                  otherEvent[index].End_Time;
+                                  otherEvent[index].endTime;
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -615,18 +723,18 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       myEndDateTime,
                                                       myEndTimeDate,
                                                       otherEvent[index]
-                                                          .EventName,
+                                                          .eventName,
                                                       otherEvent[index]
-                                                          .Location,
+                                                          .location,
                                                       otherEvent[index]
-                                                          .Event_Fee,
+                                                          .eventFee,
                                                       otherEvent[index]
-                                                          .Description,
+                                                          .description,
                                                       otherEvent[index]
                                                           .label,
                                                       otherEvent[index]
-                                                          .Open_Registeration,
-                                                      otherEvent[index].Id,
+                                                          .openRegisteration,
+                                                      otherEvent[index].id,
                                                         username,
                                                       mobile,),
                                               fullscreenDialog: true));
@@ -641,16 +749,35 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                 borderRadius:
                                                     BorderRadius.circular(24),
                                                 gradient: LinearGradient(
-                                                    colors: [
-                                                      newColor[index % 4].first,
-                                                      newColor[index % 4].last
+                                                    colors: (otherEvent[index].label == 'conferences') || (otherEvent[index].label == 'seminar') || (otherEvent[index].label == 'workshops')? [
+                                                      newColor[0].first,
+                                                      newColor[0].last
+                                                    ] : (otherEvent[index].label == 'expo') || (otherEvent[index].label == 'award') || (otherEvent[index].label == 'festival')? [
+                                                      newColor[1].first,
+                                                      newColor[1].last
+                                                    ] : (otherEvent[index].label == 'leadership') || (otherEvent[index].label == 'volunteers') || (otherEvent[index].label == 'self improvement')? [
+                                                      newColor[2].first,
+                                                      newColor[2].last
+                                                    ] : (otherEvent[index].label == 'creative') || (otherEvent[index].label == 'cooking') || (otherEvent[index].label == 'art')? [
+                                                      newColor[3].first,
+                                                      newColor[3].last
+                                                    ] : [
+                                                      newColor[4].first,
+                                                      newColor[4].last
                                                     ],
                                                     begin: Alignment.topLeft,
                                                     end: Alignment.bottomRight),
                                                 boxShadow: [
                                                   BoxShadow(
-                                                      color: newColor[index % 4]
-                                                          .last,
+                                                      color: (otherEvent[index].label == 'conferences') || (otherEvent[index].label == 'seminar') || (otherEvent[index].label == 'workshops')?
+                                                       newColor[0].last
+                                                      : (otherEvent[index].label == 'expo') || (otherEvent[index].label == 'award') || (otherEvent[index].label == 'festival')? 
+                                                       newColor[1].last
+                                                      : (otherEvent[index].label == 'leadership') || (otherEvent[index].label == 'volunteers') || (otherEvent[index].label == 'self improvement')? 
+                                                       newColor[2].last
+                                                      : (otherEvent[index].label == 'creative') || (otherEvent[index].label == 'cooking') || (otherEvent[index].label == 'art')? 
+                                                       newColor[3].last
+                                                      : newColor[4].last,
                                                       blurRadius: 12,
                                                       offset: Offset(0, 6))
                                                 ])),
@@ -662,8 +789,25 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                             size: Size(100, 150),
                                             painter: CustomCardShapePainter(
                                                 24,
-                                                newColor[index % 4].first,
-                                                newColor[index % 4].last),
+                                                (otherEvent[index].label == 'conferences') || (otherEvent[index].label == 'seminar') || (otherEvent[index].label == 'workshops')?
+                                                 newColor[0].first
+                                                : (otherEvent[index].label == 'expo') || (otherEvent[index].label == 'award') || (otherEvent[index].label == 'festival')? 
+                                                 newColor[1].first
+                                                : (otherEvent[index].label == 'leadership') || (otherEvent[index].label == 'volunteers') || (otherEvent[index].label == 'self improvement')? 
+                                                 newColor[2].first
+                                                : (otherEvent[index].label == 'creative') || (otherEvent[index].label == 'cooking') || (otherEvent[index].label == 'art')? 
+                                                 newColor[3].first
+                                                : newColor[4].first, 
+                                                
+                                                (otherEvent[index].label == 'conferences') || (otherEvent[index].label == 'seminar') || (otherEvent[index].label == 'workshops')?
+                                                 newColor[0].last
+                                                : (otherEvent[index].label == 'expo') || (otherEvent[index].label == 'award') || (otherEvent[index].label == 'festival')? 
+                                                 newColor[1].last
+                                                : (otherEvent[index].label == 'leadership') || (otherEvent[index].label == 'volunteers') || (otherEvent[index].label == 'self improvement')? 
+                                                 newColor[2].last
+                                                : (otherEvent[index].label == 'creative') || (otherEvent[index].label == 'cooking') || (otherEvent[index].label == 'art')? 
+                                                 newColor[3].last
+                                                : newColor[4].last,),
                                           ),
                                         ),
                                         Positioned.fill(
@@ -710,7 +854,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                   children: [
                                                     Text(
                                                       otherEvent[index]
-                                                          .EventName,
+                                                          .eventName,
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontWeight:
@@ -720,7 +864,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                     ),
                                                     Text(
                                                       otherEvent[index]
-                                                          .Location,
+                                                          .location,
                                                       style: TextStyle(
                                                         color: Colors.grey[100],
                                                         fontWeight:
@@ -749,6 +893,25 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                         ),
                                                       ),
                                                     ),
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(top: 5.0),
+                                                      child: Container(
+                                                        padding: EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                                        decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                                        ),
+                                                        child: Text( 
+                                                            otherEvent[index]
+                                                          .label.toUpperCase(),
+                                                            style: TextStyle(
+                                                            color: Colors.grey[100],
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 11,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      ),
                                                   ],
                                                 ),
                                               ),

@@ -75,15 +75,35 @@ class _DashboardState extends State<Dashboard> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               gradient: LinearGradient(
-                                  colors: [
-                                    newColor[index%4].first,
-                                    newColor[index%4].last
+                                  colors: (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')? [
+                                    newColor[0].first,
+                                    newColor[0].last
+                                  ] : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? [
+                                    newColor[1].first,
+                                    newColor[1].last
+                                  ] : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? [
+                                    newColor[2].first,
+                                    newColor[2].last
+                                  ] : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? [
+                                    newColor[3].first,
+                                    newColor[3].last
+                                  ] : [
+                                    newColor[4].first,
+                                    newColor[4].last
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight),
                               boxShadow: [
                                 BoxShadow(
-                                    color: newColor[index%4].last,
+                                    color: (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')?
+                                    newColor[0].last
+                                   : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? 
+                                    newColor[1].last
+                                   : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? 
+                                    newColor[2].last
+                                   : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? 
+                                    newColor[3].last
+                                   : newColor[4].last,
                                     blurRadius: 12,
                                     offset: Offset(0, 6))
                               ])),
@@ -94,7 +114,25 @@ class _DashboardState extends State<Dashboard> {
                         child: CustomPaint(
                           size: Size(100, 150),
                           painter: CustomCardShapePainter(24,
-                              newColor[index%4].first, newColor[index%4].last),
+                              (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')?
+                                    newColor[0].first
+                                   : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? 
+                                    newColor[1].first
+                                   : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? 
+                                    newColor[2].first
+                                   : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? 
+                                    newColor[3].first
+                                   : newColor[4].first, 
+                                   
+                                   (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')?
+                                    newColor[0].last
+                                   : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? 
+                                    newColor[1].last
+                                   : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? 
+                                    newColor[2].last
+                                   : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? 
+                                    newColor[3].last
+                                   : newColor[4].last,),
                         ),
                       ),
                       Positioned.fill(
@@ -157,6 +195,24 @@ class _DashboardState extends State<Dashboard> {
                                         color: Colors.grey[100],
                                         fontWeight: FontWeight.w500,
                                         fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                      ),
+                                      child: Text( 
+                                          document.data()['label'].toUpperCase(),
+                                          style: TextStyle(
+                                          color: Colors.grey[100],
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 11,
+                                        ),
                                       ),
                                     ),
                                   ),
