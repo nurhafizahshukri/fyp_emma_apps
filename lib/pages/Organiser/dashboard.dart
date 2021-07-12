@@ -23,6 +23,7 @@ class _DashboardState extends State<Dashboard> {
   int index =-1; 
   @override
   Widget build(BuildContext context) {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
     CollectionReference event = FirebaseFirestore.instance.collection('event');
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');

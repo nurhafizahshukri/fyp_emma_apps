@@ -3,7 +3,6 @@ import 'package:EMMA/Comman_widget/Flat_button.dart';
 import 'package:EMMA/Comman_widget/Submit_button.dart';
 import 'package:EMMA/Pages/Signin/signin.dart';
 import 'package:EMMA/Pages/UserDetails/userdetailsform.dart';
-import 'package:EMMA/services/authservice.dart';
 
 class SignUp extends StatefulWidget {
   @override

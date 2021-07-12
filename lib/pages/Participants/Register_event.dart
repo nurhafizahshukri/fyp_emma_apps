@@ -1,8 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:EMMA/services/databaseservice.dart';
+
+// ignore: must_be_immutable
 class RegisterEvent extends StatefulWidget {
   DateTime date;
   DateTime time;
@@ -23,13 +24,21 @@ class _RegisterEventState extends State<RegisterEvent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final newformat = DateFormat("yyyy-MM-dd");
   final format1 = DateFormat("HH:mm");
+  // ignore: unused_field
   DateTime _date;
+  // ignore: unused_field
   DateTime _time;
+  // ignore: unused_field
   String _eventName;
+  // ignore: unused_field
   String _location;
+  // ignore: unused_field
   String _eventfee;
+  // ignore: unused_field
   String _description;
+  // ignore: unused_field
   String _label;
+  // ignore: unused_field
   String _reg;
   String _name;
   String _contact;
@@ -52,6 +61,7 @@ class _RegisterEventState extends State<RegisterEvent> {
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
 dateController.text = widget.date.toString();
     timeController.text = widget.time.toString();
@@ -74,7 +84,6 @@ dateController.text = widget.date.toString();
   // @override
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     return Scaffold(
       appBar: AppBar(

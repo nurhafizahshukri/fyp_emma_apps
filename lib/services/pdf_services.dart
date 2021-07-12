@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -22,14 +20,6 @@ class PdfApi {
   String eventfee;
   String uid;
   String paragraph;
-  String _imageUrl1;
-  String _imageUrl2;
-  String _imageUrl3;
-  String _imageUrl4;
-  String _imageUrl5;
-  String _imageUrl6;
-  String _imageUrl7;
-  String _imageUrl8;
 
   PdfApi(
       this.date,
@@ -45,15 +35,16 @@ class PdfApi {
 
     final headers = ['Name', 'Age'];
 
-    final Tabless = [
+    final tabless = [
       Tables(name: 'Privacy', content: "Public"),
       Tables(name: 'Date ', content: "${date.year.toString()}-${date.month.toString()}-${date.day.toString()}"),
       Tables(name: 'Time', content: "${time.hour.toString()}:${time.minute.toString()} "),
       Tables(name: 'Location', content: "${location}"),
-            Tables(name: 'Location', content: "${eventfee}"),
+      Tables(name: 'Location', content: "${eventfee}"),
 
       ];
-    final data = Tabless.map((Tables) => [Tables.name, Tables.content]).toList();
+    // ignore: non_constant_identifier_names
+    final data = tabless.map((Tables) => [Tables.name, Tables.content]).toList();
 
     pdf.addPage(Page(
       build: (context) => Table.fromTextArray(
@@ -130,7 +121,7 @@ print("_imageUrl8=$_imageUrl8");
 final headers = ['Name', 'Age'];
 
    
-    final Tabless = [
+    final tabless = [
       Tables(name: 'Privacy', content: "Public"),
       Tables(name: 'Date ', content: "${date.year.toString()}-${date.month.toString()}-${date.day.toString()}"),
       Tables(name: 'Time', content: "${time.hour.toString()}:${time.minute.toString()} "),
@@ -138,7 +129,8 @@ final headers = ['Name', 'Age'];
       Tables(name: 'Price', content: "${eventfee}"),
 
       ];
-    final data = Tabless.map((Tables) => [Tables.name, Tables.content]).toList();
+    // ignore: non_constant_identifier_names
+    final data = tabless.map((Tables) => [Tables.name, Tables.content]).toList();
     pdf.addPage(
       MultiPage(
         pageTheme: pageTheme,
@@ -175,6 +167,7 @@ final headers = ['Name', 'Age'];
           Center(child:Paragraph(
             textAlign: TextAlign.left,
             text:
+                // ignore: unnecessary_brace_in_string_interps
                 '${eventName}',
             style: TextStyle( fontSize: 20,fontBold: Font.helveticaBold() ,fontWeight:FontWeight.bold ),
           ), ),

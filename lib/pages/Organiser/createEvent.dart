@@ -1,5 +1,4 @@
 import 'package:EMMA/services/databaseservice.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -37,7 +36,6 @@ class _CreateEventState extends State<CreateEvent> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
       appBar: AppBar(
         title: Text('Create event'),

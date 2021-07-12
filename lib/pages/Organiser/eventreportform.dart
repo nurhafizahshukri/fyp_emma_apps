@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 final Color yellow = Color(0xfffbc31b);
 final Color orange = Color(0xfffb6900);
 
+// ignore: must_be_immutable
 class UploadingImageToFirebaseStorage extends StatefulWidget {
   DateTime date;
   DateTime time;
@@ -163,7 +164,7 @@ class _UploadingImageToFirebaseStorageState
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: _imageFile6 != null
                                     ? Image.file(_imageFile6)
-                                    : FlatButton(
+                                    : ElevatedButton(
                                         child: Icon(
                                           Icons.add_a_photo,
                                           color: Colors.red,
@@ -188,7 +189,7 @@ class _UploadingImageToFirebaseStorageState
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: _imageFile7 != null
                                     ? Image.file(_imageFile7)
-                                    : FlatButton(
+                                    : ElevatedButton(
                                         child: Icon(
                                           Icons.add_a_photo,
                                           color: Colors.red,
@@ -213,7 +214,7 @@ class _UploadingImageToFirebaseStorageState
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: _imageFile8 != null
                                     ? Image.file(_imageFile8)
-                                    : FlatButton(
+                                    : ElevatedButton(
                                         child: Icon(
                                           Icons.add_a_photo,
                                           size: 50,
@@ -249,7 +250,7 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile1 != null
                                   ? Image.file(_imageFile1)
-                                  : FlatButton(
+                                  : ElevatedButton(
                                       child: Icon(
                                         Icons.add_a_photo,
                                         color: Colors.red,
@@ -274,7 +275,7 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile2 != null
                                   ? Image.file(_imageFile2)
-                                  : FlatButton(
+                                  : ElevatedButton(
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -303,7 +304,7 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile3 != null
                                   ? Image.file(_imageFile3)
-                                  : FlatButton(
+                                  : ElevatedButton(
                                       child: Icon(
                                         Icons.add_a_photo,
                                         color: Colors.red,
@@ -328,7 +329,7 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile4 != null
                                   ? Image.file(_imageFile4)
-                                  : FlatButton(
+                                  : ElevatedButton(
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -353,7 +354,7 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile5 != null
                                   ? Image.file(_imageFile5)
-                                  : FlatButton(
+                                  : ElevatedButton(
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -440,7 +441,7 @@ class _UploadingImageToFirebaseStorageState
                 top: 30, left: 20.0, right: 20.0, bottom: 20.0),
             decoration: BoxDecoration(
                 color: Colors.red, borderRadius: BorderRadius.circular(30.0)),
-            child: FlatButton(
+            child: ElevatedButton(
               onPressed: () => isload
                   ? {
                       setState(() {

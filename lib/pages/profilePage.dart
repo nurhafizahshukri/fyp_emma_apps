@@ -14,7 +14,6 @@ class MapScreenState extends State<ProfilePage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -326,18 +325,22 @@ class MapScreenState extends State<ProfilePage>
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
               child: Container(
-                  child: new RaisedButton(
+                  child: new ElevatedButton(
                 child: new Text("Save"),
-                textColor: Colors.white,
-                color: Colors.green,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red[600],
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  side: BorderSide(color: Colors.red[600]),
+                  fixedSize: Size(180, 40)
+                ),
                 onPressed: () {
                   setState(() {
                     _status = true;
                     FocusScope.of(context).requestFocus(new FocusNode());
                   });
                 },
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20.0)),
               )),
             ),
             flex: 2,
@@ -346,18 +349,22 @@ class MapScreenState extends State<ProfilePage>
             child: Padding(
               padding: EdgeInsets.only(left: 10.0),
               child: Container(
-                  child: new RaisedButton(
+                  child: new ElevatedButton(
                 child: new Text("Cancel"),
-                textColor: Colors.white,
-                color: Colors.red,
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.red[600],
+                  shape: new RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                  side: BorderSide(color: Colors.red[600]),
+                  fixedSize: Size(180, 40)
+                ),
                 onPressed: () {
                   setState(() {
                     _status = true;
                     FocusScope.of(context).requestFocus(new FocusNode());
                   });
                 },
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20.0)),
               )),
             ),
             flex: 2,

@@ -1,11 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:EMMA/services/pdf_services.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
+// ignore: must_be_immutable
 class EvenntDetailsForm extends StatefulWidget {
   DateTime date;
   DateTime time;
@@ -72,6 +72,7 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
     dateController.text =
         "${widget.date.year.toString()}-${widget.date.month.toString()}-${widget.date.day.toString()}";
@@ -92,8 +93,6 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
-
     return Scaffold(
         appBar: AppBar(
           title: Text('Generate Report'),

@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:EMMA/services/databaseservice.dart';
 
+// ignore: must_be_immutable
 class UpdateEvent extends StatefulWidget {
  
   DateTime date;
@@ -55,6 +55,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   final TextEditingController labelController = new TextEditingController();
   final TextEditingController regController = new TextEditingController();
   @override
+  // ignore: must_call_super
   void initState() {
     dateController.text = widget.date.toString();
     timeController.text = widget.time.toString();

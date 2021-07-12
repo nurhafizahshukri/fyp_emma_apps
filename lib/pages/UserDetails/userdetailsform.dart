@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:EMMA/Pages/homepage.dart';
 
 import 'package:EMMA/Pages/interest.dart';
-import 'package:EMMA/services/authservice.dart';
 
 // ignore: must_be_immutable
 class UserDetailsForm extends StatefulWidget {
@@ -420,10 +419,16 @@ class MapScreenState extends State<UserDetailsForm>
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
               child: Container(
-                  child: new RaisedButton(
+                  child: new ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red[600],
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      side: BorderSide(color: Colors.red[600]),
+                      fixedSize: Size(380, 40)
+                    ),
                 child: new Text("Submit"),
-                textColor: Colors.white,
-                color: Colors.green,
                 onPressed: () async {
                   print(widget.email);
                   print(widget.password);
@@ -470,8 +475,6 @@ class MapScreenState extends State<UserDetailsForm>
                             fullscreenDialog: true));
                   }
                 },
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(20.0)),
               )),
             ),
             flex: 2,

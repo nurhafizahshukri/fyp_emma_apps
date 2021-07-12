@@ -7,6 +7,7 @@ import 'package:EMMA/Pages/Organiser/eventreportform.dart';
 import 'package:EMMA/Pages/Organiser/updateEvent.dart';
 import 'package:EMMA/services/databaseservice.dart';
 
+// ignore: must_be_immutable
 class EventDetails extends StatefulWidget {
   DateTime date = DateTime.now();
   DateTime time = DateTime.now();
@@ -66,7 +67,6 @@ class _EventDetailsState extends State<EventDetails> {
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     DateTime formattedDate = formatter.parse(now.toString());
-    String eventName;
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Details'),

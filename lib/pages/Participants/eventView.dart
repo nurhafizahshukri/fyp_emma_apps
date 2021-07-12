@@ -8,6 +8,7 @@ import 'package:EMMA/Pages/Participants/Register_event.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:EMMA/Pages/Participants/payment.dart';
 
+// ignore: must_be_immutable
 class EventView extends StatefulWidget {
   DateTime date = DateTime.now();
   DateTime time = DateTime.now();
@@ -36,9 +37,7 @@ class EventView extends StatefulWidget {
     this.uid,
     this.username,
     this.mobile,
-  ) {
-
-  }
+  ) ;
 
  Event buildEvent({Recurrence recurrence}) {
     return Event(
@@ -78,7 +77,6 @@ class _EventViewState extends State<EventView> {
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
     DateTime formattedDate = formatter.parse(now.toString());
-    String eventName;
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Details'),

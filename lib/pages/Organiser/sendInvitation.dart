@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 
+// ignore: must_be_immutable
 class SendInvitation extends StatefulWidget {
   // const SendInvitation({ Key? key }) : super(key: key);
   DateTime date = DateTime.now();
@@ -41,6 +42,7 @@ class _SendInvitationState extends State<SendInvitation> {
   }
 
   @override
+  // ignore: must_call_super
   void initState() { 
     _recipientController.text = 'example@gmail.com';
     _recipientNameController.text = 'Full Name';
@@ -57,6 +59,7 @@ class _SendInvitationState extends State<SendInvitation> {
     String username =' utmemma@gmail.com';
     String password = 'emmafyp123';
 
+    // ignore: deprecated_member_use
     final smtpServer = gmail(username, password);
   // Use the SmtpServer class to configure an SMTP server:
   // final smtpServer = SmtpServer('smtp.domain.com');

@@ -17,8 +17,6 @@ class DatabaseService {
       String reg) async {
     // Call the user's CollectionReference to add a new user_
 
-    CollectionReference participant =
-        FirebaseFirestore.instance.collection('participant');
     User user = FirebaseAuth.instance.currentUser;
 
     CollectionReference event = FirebaseFirestore.instance.collection('event');
@@ -40,6 +38,7 @@ class DatabaseService {
               
               }
             )
+        // ignore: invalid_return_type_for_catch_error
         .catchError((error) => print("Failed to add user: $error"));
   }
 

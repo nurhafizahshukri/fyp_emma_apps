@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_tags/flutter_tags.dart';
 
+// ignore: must_be_immutable
 class Interest extends StatefulWidget {
    List<String> Function(List<String>) callback;
 
