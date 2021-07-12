@@ -9,11 +9,12 @@ class RegisterEvent extends StatefulWidget {
   String eventName;
   String location;
   String eventfee;
-  
+  String username;
+  String mobile;
   String uid;
 
   RegisterEvent(this.date, this.time, this.eventName, this.location,
-      this.eventfee, this.uid,);
+      this.eventfee, this.uid,this.username,this.mobile);
   @override
   _RegisterEventState createState() => _RegisterEventState();
 }
@@ -40,7 +41,8 @@ class _RegisterEventState extends State<RegisterEvent> {
   final TextEditingController eventNameController = new TextEditingController();
   final TextEditingController locationController = new TextEditingController();
   final TextEditingController eventfeeController = new TextEditingController();
-  
+   final TextEditingController nameController = new TextEditingController();
+  final TextEditingController mobileController = new TextEditingController();
 
   @override
   void dispose() {
@@ -56,12 +58,17 @@ dateController.text = widget.date.toString();
     eventNameController.text = widget.eventName;
     locationController.text = widget.location;
     eventfeeController.text = widget.eventfee;
+ nameController.text=widget.username;
+ mobileController.text=widget.mobile;
  
     _date = widget.date;
     _time = widget.time;
     _eventName = widget.eventName;
     _location = widget.location;
     _eventfee = widget.eventfee;
+    _name=widget.username;
+        _name=widget.mobile;
+
    }
 
   // @override
@@ -181,6 +188,8 @@ dateController.text = widget.date.toString();
                          Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                                                        controller: nameController,
+
                             onChanged: (currentValue) => _name = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Name',
@@ -194,6 +203,7 @@ dateController.text = widget.date.toString();
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            controller: mobileController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value.isEmpty) {

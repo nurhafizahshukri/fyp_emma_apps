@@ -20,7 +20,8 @@ class EventView extends StatefulWidget {
   String label = "";
   String reg = "";
   String uid = "";
-  String puid = "";
+  String username="";
+  String mobile = "";
   EventView(
     this.date,
     this.time,
@@ -33,16 +34,10 @@ class EventView extends StatefulWidget {
     this.label,
     this.reg,
     this.uid,
-    this.puid,
+    this.username,
+    this.mobile,
   ) {
-    print(date);
-    print(time);
-    print(eventName);
-    print(location);
-    print(eventfee);
-    print(description);
-    print(label);
-    print(reg);
+
   }
 
  Event buildEvent({Recurrence recurrence}) {
@@ -394,6 +389,8 @@ class _EventViewState extends State<EventView> {
                                 widget.location,
                                 widget.eventfee,
                                 widget.uid,
+                                widget.username,
+                                widget.mobile,
                               ),
                           fullscreenDialog: true));
                 } : null,

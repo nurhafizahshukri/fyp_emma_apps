@@ -32,6 +32,7 @@ class MapScreenState extends State<UserDetailsForm>
   String _gender;
   String _mobile;
   String _role;
+  List<String> _interest;
 
   final FocusNode myFocusNode = FocusNode();
 
@@ -386,7 +387,9 @@ class MapScreenState extends State<UserDetailsForm>
                           Padding(
                               padding: EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 2.0),
-                              child: Interest()),
+                              child: Interest((value) {
+                                return _interest = value;
+                              }),),
                           _getActionButtons(),
                         ],
                       ),
@@ -429,6 +432,8 @@ class MapScreenState extends State<UserDetailsForm>
                   print(_gender);
                   print(_mobile);
                   print(_role);
+                  print(_interest);
+                    String a =_interest.join(",");
                   try {
                     await FirebaseAuth.instance.createUserWithEmailAndPassword(
                         email: widget.email, password: widget.password);
@@ -453,6 +458,7 @@ class MapScreenState extends State<UserDetailsForm>
                       "gender": _gender,
                       "mobile": _mobile,
                       "role": _role,
+                      "interest": a,
                       "createdAt": FieldValue
                           .serverTimestamp(), // https://stackoverflow.com/questions/50907151/flutter-firestore-server-side-timestamp
                       "updatedAt": FieldValue.serverTimestamp(),

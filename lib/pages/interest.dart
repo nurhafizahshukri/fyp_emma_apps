@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_tags/flutter_tags.dart';
 
 class Interest extends StatefulWidget {
+   List<String> Function(List<String>) callback;
 
+   Interest(this.callback);
   @override
   _InterestState createState() => _InterestState();
 }
@@ -88,7 +90,7 @@ final List<String> _listSug =[
                 setState(() {
                   _listSug.add(item);
                   _items.removeAt(index);
-
+                  widget.callback(_items);
                 });
                 return true;
               },
@@ -124,8 +126,10 @@ final List<String> _listSug =[
       onSubmitted: (String str) {
         setState(() {
           _items.add(str);
+          widget.callback(_items);
         });
       },
+      
     );
   }
 
@@ -153,6 +157,7 @@ Widget get _tags3 {
                setState(() {
           _items.add(item);
           _listSug.remove(item);
+          widget.callback(_items);
         })
             },
 
