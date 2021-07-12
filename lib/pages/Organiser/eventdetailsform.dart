@@ -51,9 +51,6 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
   String _eventName;
   String _location;
   String _eventfee;
-  String _description;
-  String _lebel;
-  String _reg;
   String _paragrapth;
 
   final FocusScopeNode _node = FocusScopeNode();
@@ -239,7 +236,8 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () async {
-                    onSubmit();
+                    onSubmit(); int count = 2;
+                    Navigator.of(context).popUntil((_) => count-- <= 0);
                   },
                               style: ElevatedButton.styleFrom(
                   primary: Colors.red[600],
@@ -258,7 +256,7 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
                             minWidth: 338.0,
                             height: 40.0,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {Navigator.of(context).pop();},
                               style: ElevatedButton.styleFrom(
                   primary: Colors.red[600],
                   shape: new RoundedRectangleBorder(
@@ -267,7 +265,7 @@ class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
                   side: BorderSide(color: Colors.red[600]),
                   fixedSize: Size(180, 40)
                 ),
-                              child: Text('Reset'.toUpperCase(),
+                              child: Text('Cancel'.toUpperCase(),
                                   style: TextStyle(fontSize: 20)),
                             ),
                           ),

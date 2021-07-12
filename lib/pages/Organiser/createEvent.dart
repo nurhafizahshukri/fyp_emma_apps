@@ -318,7 +318,7 @@ class _CreateEventState extends State<CreateEvent> {
                             minWidth: 338.0,
                             height: 40.0,
                             child: ElevatedButton(
-                              onPressed: () { },
+                              onPressed: () { Navigator.of(context).pop();},
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.red[600],
                                 shape: new RoundedRectangleBorder(
@@ -327,7 +327,7 @@ class _CreateEventState extends State<CreateEvent> {
                                 side: BorderSide(color: Colors.red[600]),
                                 fixedSize: Size(380, 40)
                               ),
-                              child: Text('Reset'.toUpperCase(), style: TextStyle(fontSize: 20)),
+                              child: Text('Cancel'.toUpperCase(), style: TextStyle(fontSize: 20)),
                             ),
                         ),
                       ])

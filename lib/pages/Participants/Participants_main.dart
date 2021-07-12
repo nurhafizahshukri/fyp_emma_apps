@@ -77,13 +77,13 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
           child: currentScreen,
           bucket: bucket,
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.deepOrange,
-          child: Icon(Icons.history),
-          onPressed: () {
-                      },
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: Colors.deepOrange,
+        //   child: Icon(Icons.history),
+        //   onPressed: () {
+        //               },
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color: Colors.red[700],
         shape: CircularNotchedRectangle(),
@@ -142,11 +142,11 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Icon(
-                          Icons.history,
+                          Icons.person,
                           color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                         ),
                         Text(
-                          'History',
+                          'Profile',
                           style: TextStyle(
                             color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                           ),

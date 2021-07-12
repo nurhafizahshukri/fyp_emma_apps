@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-
-import 'package:EMMA/pages/Organiser/invitation.dart';
 import 'package:EMMA/pages/Organiser/sendInvitation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -22,14 +19,6 @@ class EventDetails extends StatefulWidget {
   String label = "";
   String reg = "";
   String uid = "";
-  Uint8List _imageUrl1;
-  Uint8List _imageUrl2;
-  Uint8List _imageUrl3;
-  Uint8List _imageUrl4;
-  Uint8List _imageUrl5;
-  Uint8List _imageUrl6;
-  Uint8List _imageUrl7;
-  Uint8List _imageUrl8;
   EventDetails(
     this.date,
     this.time,
@@ -382,11 +371,7 @@ class _EventDetailsState extends State<EventDetails> {
                   ),
                   SizedBox(height: 10),
                   Row(
-                    children: <Widget>[
-                      Text(
-                        'Report not generate yet',
-                      ),
-                      
+                    children: <Widget>[                      
                    Visibility(
                      visible: widget.date.compareTo(now)>0 ? false : true,
                      child: Flatbutton(
