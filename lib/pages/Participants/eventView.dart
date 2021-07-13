@@ -14,12 +14,15 @@ class EventView extends StatefulWidget {
   DateTime time = DateTime.now();
   DateTime endDate = DateTime.now();
   DateTime endTime = DateTime.now();
+  DateTime regDate = DateTime.now();
   String eventName = "";
   String location = "";
   String eventfee = "";
   String description = "";
   String label = "";
   String reg = "";
+  String picName = "";
+  String picContact = "";
   String uid = "";
   String username="";
   String mobile = "";
@@ -28,16 +31,30 @@ class EventView extends StatefulWidget {
     this.time,
     this.endDate,
     this.endTime,
+    this.regDate,
     this.eventName,
     this.location,
     this.eventfee,
     this.description,
     this.label,
     this.reg,
+    this.picName,
+    this.picContact,
     this.uid,
     this.username,
     this.mobile,
-  ) ;
+  ) {
+    print(date);
+    print(time);
+    print(endDate);
+    print(endTime);
+    print(eventName);
+    print(location);
+    print(eventfee);
+    print(description);
+    print(label);
+    print(reg);
+  }
 
  Event buildEvent({Recurrence recurrence}) {
     return Event(
@@ -212,7 +229,7 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.attach_money_sharp),
                       SizedBox(width: 10),
-                      Text(widget.eventfee != null ? widget.eventfee : ''),
+                      Text(widget.eventfee != null ? 'RM ' + widget.eventfee : ''),
                     ],
                   ),
                   Row(
@@ -220,6 +237,13 @@ class _EventViewState extends State<EventView> {
                       Icon(Icons.label_important_outline_sharp),
                       SizedBox(width: 10),
                       Text(widget.label != null ? widget.label : ''),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.call),
+                      SizedBox(width: 10),
+                      Text(widget.picContact != null ? widget.picContact +' ( ' + widget.picName + ' )' : ''),
                     ],
                   ),
                 ],
@@ -238,7 +262,7 @@ class _EventViewState extends State<EventView> {
                         style: TextStyle(
                           color: Colors.grey[800],
                           fontWeight: FontWeight.w500,
-                          fontSize: 25,
+                          fontSize: 20,
                         ),
                       ),
                     ],
@@ -250,6 +274,29 @@ class _EventViewState extends State<EventView> {
                           child: Text(
                         widget.description != null ? widget.description : '',
                         textAlign: TextAlign.justify,
+                      )),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        'Registration Deadline',
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                          child: Text(
+                            "${widget.regDate.day} / ${widget.regDate.month} / ${widget.regDate.year} ( 23:59 )",
+                            textAlign: TextAlign.justify,
                       )),
                     ],
                   ),
@@ -376,7 +423,7 @@ class _EventViewState extends State<EventView> {
               minWidth: 180.0,
               // height: 40.0,
               child: ElevatedButton(
-                onPressed: widget.reg =="Yes"? () {
+                onPressed: (widget.reg =="Yes") && (widget.regDate.compareTo(formattedDate)<=0)? () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

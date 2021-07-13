@@ -11,10 +11,12 @@ class Event {
       eventName,
       eventFee,
       location,
-      openRegisteration,
+      openRegistration,
       label,
+      picName,
+      picContact,
       id;
-  final DateTime date, endDate, endTime, time;
+  final DateTime date, endDate, endTime, time, regDate;
   final String description;
 
   Event(
@@ -22,12 +24,15 @@ class Event {
       this.eventName,
       this.eventFee,
       this.location,
-      this.openRegisteration,
+      this.openRegistration,
       this.label,
+      this.picName,
+      this.picContact,
       this.date,
       this.endDate,
       this.endTime,
       this.time,
+      this.regDate,
       this.description,
       this.id);
 }
@@ -117,12 +122,15 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             document.data()['EventName'],
                             document.data()['Event_Fee'],
                             document.data()['Location'],
-                            document.data()['Open_Registeration'],
+                            document.data()['Open_Registration'],
                             document.data()['label'],
+                            document.data()['PIC_Name'],
+                            document.data()['PIC_Contact'],
                             (document.data()['Date']).toDate(),
                             (document.data()['End_Date']).toDate(),
                             (document.data()['End_Time']).toDate(),
                             (document.data()['Time']).toDate(),
+                            (document.data()['Registration']).toDate(),
                             document.data()['Description'],
                             document.id));
                            
@@ -132,26 +140,31 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             document.data()['EventName'],
                             document.data()['Event_Fee'],
                             document.data()['Location'],
-                            document.data()['Open_Registeration'],
+                            document.data()['Open_Registration'],
                             document.data()['label'],
+                            document.data()['PIC_Name'],
+                            document.data()['PIC_Contact'],
                             (document.data()['Date']).toDate(),
                             (document.data()['End_Date']).toDate(),
                             (document.data()['End_Time']).toDate(),
                             (document.data()['Time']).toDate(),
+                            (document.data()['Registration']).toDate(),
                             document.data()['Description'],
                             document.id));
-                      // :otherEvent.add(Event(document.data()['Creator_Uid'], document.data()['EventName'], document.data()['Event_Fee'], document.data()['Location'], document.data()['Open_Registeration'],document.data()['label'], (document.data()['Date']).toDate(), (document.data()['End_Date']).toDate(),(document.data()['End_Time']).toDate(), (document.data()['Time']).toDate(), document.data()['Description'],document.id));
                     allEvent.add(Event(
                             document.data()['Creator_Uid'],
                             document.data()['EventName'],
                             document.data()['Event_Fee'],
                             document.data()['Location'],
-                            document.data()['Open_Registeration'],
+                            document.data()['Open_Registration'],
                             document.data()['label'],
+                            document.data()['PIC_Name'],
+                            document.data()['PIC_Contact'],
                             (document.data()['Date']).toDate(),
                             (document.data()['End_Date']).toDate(),
                             (document.data()['End_Time']).toDate(),
                             (document.data()['Time']).toDate(),
+                            (document.data()['Registration']).toDate(),
                             document.data()['Description'],
                             document.id));
                     }
@@ -166,11 +179,10 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             itemCount: allEvent.length,
                             itemBuilder: (BuildContext context, int index) {
                               DateTime myDateTime = allEvent[index].date;
-                              DateTime myEndDateTime =
-                                  allEvent[index].endDate;
+                              DateTime myEndDateTime = allEvent[index].endDate;
                               DateTime myTimeDate = allEvent[index].time;
-                              DateTime myEndTimeDate =
-                                  allEvent[index].endTime;
+                              DateTime myEndTimeDate = allEvent[index].endTime;
+                              DateTime regDateTime = allEvent[index].regDate;
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -184,6 +196,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       myTimeDate,
                                                       myEndDateTime,
                                                       myEndTimeDate,
+                                                      regDateTime,
                                                       allEvent[index]
                                                           .eventName,
                                                       allEvent[index]
@@ -195,7 +208,11 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       allEvent[index]
                                                           .label,
                                                       allEvent[index]
-                                                          .openRegisteration,
+                                                          .openRegistration,
+                                                      allEvent[index]
+                                                          .picName,
+                                                      allEvent[index]
+                                                          .picContact,
                                                       allEvent[index].id,
                                                       username,
                                                       mobile,
@@ -435,11 +452,10 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             itemCount: suggestedEvent.length,
                             itemBuilder: (BuildContext context, int index) {
                               DateTime myDateTime = suggestedEvent[index].date;
-                              DateTime myEndDateTime =
-                                  suggestedEvent[index].endDate;
+                              DateTime myEndDateTime = suggestedEvent[index].endDate;
                               DateTime myTimeDate = suggestedEvent[index].time;
-                              DateTime myEndTimeDate =
-                                  suggestedEvent[index].endTime;
+                              DateTime myEndTimeDate = suggestedEvent[index].endTime;
+                              DateTime regDateTime = suggestedEvent[index].regDate;
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -453,6 +469,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       myTimeDate,
                                                       myEndDateTime,
                                                       myEndTimeDate,
+                                                      regDateTime,
                                                       suggestedEvent[index]
                                                           .eventName,
                                                       suggestedEvent[index]
@@ -464,10 +481,15 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       suggestedEvent[index]
                                                           .label,
                                                       suggestedEvent[index]
-                                                          .openRegisteration,
+                                                          .openRegistration,
+                                                      suggestedEvent[index]
+                                                          .picName,
+                                                      suggestedEvent[index]
+                                                          .picContact,
                                                       suggestedEvent[index].id,
                                                         username,
-                                                      mobile,),
+                                                      mobile,
+                                                      ),
                                               fullscreenDialog: true));
                                     },
                                     child: new Center(
@@ -704,11 +726,10 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             itemCount: otherEvent.length,
                             itemBuilder: (BuildContext context, int index) {
                               DateTime myDateTime = otherEvent[index].date;
-                              DateTime myEndDateTime =
-                                  otherEvent[index].endDate;
+                              DateTime myEndDateTime = otherEvent[index].endDate;
                               DateTime myTimeDate = otherEvent[index].time;
-                              DateTime myEndTimeDate =
-                                  otherEvent[index].endTime;
+                              DateTime myEndTimeDate = otherEvent[index].endTime;
+                              DateTime regDateTime = otherEvent[index].regDate;
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -722,6 +743,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       myTimeDate,
                                                       myEndDateTime,
                                                       myEndTimeDate,
+                                                      regDateTime,
                                                       otherEvent[index]
                                                           .eventName,
                                                       otherEvent[index]
@@ -733,7 +755,11 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       otherEvent[index]
                                                           .label,
                                                       otherEvent[index]
-                                                          .openRegisteration,
+                                                          .openRegistration,
+                                                      otherEvent[index]
+                                                          .picName,
+                                                      otherEvent[index]
+                                                          .picContact,
                                                       otherEvent[index].id,
                                                         username,
                                                       mobile,),

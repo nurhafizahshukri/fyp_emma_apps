@@ -23,6 +23,9 @@ class _CreateEventState extends State<CreateEvent> {
   String _description;
   String _label;
   String _reg;
+  DateTime _regDate;
+  String _picName;
+  String _contact;
   final FocusScopeNode _node = FocusScopeNode();
 
   final eventController = TextEditingController();
@@ -82,7 +85,7 @@ class _CreateEventState extends State<CreateEvent> {
                           border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
                               ),
-                          labelText: 'Start Date Format: (${newformat.pattern})'
+                          labelText: 'Start Date (${newformat.pattern})'
                         ),
                         format: newformat,
                         onShowPicker: (context, currentValue) {
@@ -102,7 +105,7 @@ class _CreateEventState extends State<CreateEvent> {
                           border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
                               ),
-                          labelText: 'End Date Format: (${newformat.pattern})'
+                          labelText: 'End Date (${newformat.pattern})'
                         ),
                         format: newformat,
                         onShowPicker: (context, currentValue) {
@@ -115,12 +118,12 @@ class _CreateEventState extends State<CreateEvent> {
                         },
                       ),
                     ),
-                        Padding(padding: const EdgeInsets.all(8.0),
+                      Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
                         onChanged: (currentValue) => {_time = currentValue},
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'Start Time Format: (${format1.pattern})'
+                          labelText: 'Start Time (${format1.pattern})'
                         ),
                         format: format1,
                         onShowPicker: (context, currentValue) async {
@@ -136,7 +139,7 @@ class _CreateEventState extends State<CreateEvent> {
                         onChanged: (currentValue) => {_endTime = currentValue},
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'End Time Format: (${format1.pattern})'
+                          labelText: 'End Time (${format1.pattern})'
                         ),
                         format: format1,
                         onShowPicker: (context, currentValue) async {
@@ -150,11 +153,35 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _location = currentValue,
-                
+                            onChanged: (currentValue) => _location = currentValue,
                             decoration: InputDecoration(
-
                               labelText: 'Event Location',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            onChanged: (currentValue) => _picName= currentValue,
+                            decoration: InputDecoration(
+                              labelText: 'PIC Name',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            onChanged: (currentValue) => _contact = currentValue,
+                            decoration: InputDecoration(
+                              labelText: 'PIC Contact Info',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -234,6 +261,26 @@ class _CreateEventState extends State<CreateEvent> {
                             ),
                                 ),
                               ),
+                        Padding(padding: const EdgeInsets.all(8.0),
+                      child: DateTimeField(
+                        onChanged: (currentValue) => _regDate = currentValue,
+                        decoration: InputDecoration(
+                          border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              ),
+                          labelText: 'Registration Deadline (${newformat.pattern})'
+                        ),
+                        format: newformat,
+                        onShowPicker: (context, currentValue) {
+                          return showDatePicker(
+                            context: context,
+                            firstDate: DateTime(1900),
+                            initialDate: currentValue ?? DateTime.now(),
+                            lastDate: DateTime(2100)
+                            );
+                        },
+                      ),
+                    ),   
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                                 child: Padding(
@@ -311,23 +358,24 @@ class _CreateEventState extends State<CreateEvent> {
                               child: Text('Submit'.toUpperCase(), style: TextStyle(fontSize: 20)),
                             ),
                         ),
-                        SizedBox(height: 15),
+                        SizedBox(height: 10),
                         ButtonTheme(
                             minWidth: 338.0,
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () { Navigator.of(context).pop();},
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.red[600],
+                                primary: Colors.white,
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 side: BorderSide(color: Colors.red[600]),
                                 fixedSize: Size(380, 40)
                               ),
-                              child: Text('Cancel'.toUpperCase(), style: TextStyle(fontSize: 20)),
+                              child: Text('Cancel'.toUpperCase(), style: TextStyle(color: Colors.red[600],fontSize: 20)),
                             ),
                         ),
+                        SizedBox(height: 15),
                       ])
               ),
             ),),
@@ -339,7 +387,7 @@ class _CreateEventState extends State<CreateEvent> {
   final formState = _formKey.currentState;
   
     formState.save();
-    DatabaseService().addEvent(_eventName,_date, _time, _endDate, _endTime,_location,_eventfee,_description,_label,_reg);
+    DatabaseService().addEvent(_eventName,_date, _time, _endDate, _endTime,_location,_eventfee,_description,_label,_reg,_regDate,_picName,_contact);
 
 }
 

@@ -73,7 +73,8 @@ class _OnboardState extends State<Onboard> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerRight,
-                  child: ElevatedButton(
+                  // ignore: deprecated_member_use
+                  child: FlatButton(
                     onPressed: () =>  _signInWithEmail(context),
                     child: Text(
                       'Skip',
@@ -214,7 +215,8 @@ class _OnboardState extends State<Onboard> {
                     ? Expanded(
                         child: Align(
                           alignment: FractionalOffset.bottomRight,
-                          child: ElevatedButton(
+                          // ignore: deprecated_member_use
+                          child: FlatButton(
                             onPressed: () {
                               _pageController.nextPage(
                                 duration: Duration(milliseconds: 500),

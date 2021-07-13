@@ -1,7 +1,6 @@
 
 import 'package:EMMA/Pages/Participants/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:EMMA/Pages/Participants/report.dart';
 import 'package:EMMA/services/authservice.dart';
 
 class MainpageParticipant extends StatefulWidget {
@@ -12,7 +11,6 @@ class MainpageParticipant extends StatefulWidget {
 int currentTab = 0; // to keep track of active tab index
   final List<Widget> screens = [
     DashboardParticipant(),
-    HistoryReport(),
   ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = DashboardParticipant(); // Our first view 
@@ -133,9 +131,6 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
                     minWidth: 40,
                     onPressed: () {
                       setState(() {
-                        currentScreen =
-                            HistoryReport(); // if user taps on this dashboard tab will be active
-                        currentTab = 1;
                       });
                     },
                     child: Column(

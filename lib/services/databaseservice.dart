@@ -14,7 +14,10 @@ class DatabaseService {
       String eventfee,
       String description,
       String label,
-      String reg) async {
+      String reg,
+      DateTime regDeadline,
+      String picName,
+      String contact) async {
     // Call the user's CollectionReference to add a new user_
 
     User user = FirebaseAuth.instance.currentUser;
@@ -31,7 +34,10 @@ class DatabaseService {
           'Event_Fee': eventfee,
           'Description': description,
           'label': label,
-          'Open_Registeration': reg,
+          'Open_Registration': reg,
+          'Registration': regDeadline,
+          'PIC_Name': picName,
+          'PIC_Contact': contact, 
           'Creator_Uid': user.uid,
         })
         .then((value) => {
@@ -94,7 +100,7 @@ Future<void> updatePayment(
           'Event_Fee': eventfee,
           'Description': description,
           'label': label,
-          'Open_Registeration': reg
+          'Open_Registration': reg
         })
         .then((value) => print("Event Updated"))
         .catchError((error) => print("Failed to Update user: $error"));
