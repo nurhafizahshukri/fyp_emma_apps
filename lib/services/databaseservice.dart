@@ -132,4 +132,28 @@ Future<void> updatePayment(
         "Creator_uid":user.uid,
         });
   }
+
+  Future<void> updateProfile(
+      String name,
+      String gender,
+      String age,
+      String mobile,
+      String interest,
+      String uid) {
+        
+    // Call the user's CollectionReference to add a new user_
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    return users
+        .doc(uid)
+        .update({
+          'name': name, 
+          'gender': gender, 
+          'age': age, 
+          'mobile': mobile, 
+          'interest': interest, 
+        })
+        .then((value) => print("users Updated"))
+        .catchError((error) => print("Failed to Update user: $error"));
+  }
 }
