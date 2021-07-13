@@ -68,8 +68,8 @@ dateController.text = widget.date.toString();
     eventNameController.text = widget.eventName;
     locationController.text = widget.location;
     eventfeeController.text = widget.eventfee;
- nameController.text=widget.username;
- mobileController.text=widget.mobile;
+    nameController.text=widget.username;
+    mobileController.text=widget.mobile;
  
     _date = widget.date;
     _time = widget.time;
@@ -77,7 +77,7 @@ dateController.text = widget.date.toString();
     _location = widget.location;
     _eventfee = widget.eventfee;
     _name=widget.username;
-        _name=widget.mobile;
+    _contact=widget.mobile;
 
    }
 
@@ -197,8 +197,7 @@ dateController.text = widget.date.toString();
                          Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                        controller: nameController,
-
+                            controller: nameController,
                             onChanged: (currentValue) => _name = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Name',
