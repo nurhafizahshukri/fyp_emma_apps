@@ -44,14 +44,16 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
-                      child: Text(
-                        'Hi, ' + snapshotuser.data['name'] + ' !',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 20),
+                        child: Text(
+                          'Hi, ' + snapshotuser.data['name'] + ' !',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),

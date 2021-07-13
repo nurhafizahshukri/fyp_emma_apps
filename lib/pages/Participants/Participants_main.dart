@@ -48,7 +48,7 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header'),
+              child: Text('Notification'),
               decoration: BoxDecoration(
                 color: Colors.red[700],
               ),
@@ -135,7 +135,7 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
                       setState(() {
                         currentScreen =
                             ProfilePage(); // if user taps on this dashboard tab will be active
-                        currentTab = 0;
+                        currentTab = 1;
                       });
                     },
                     child: Column(
