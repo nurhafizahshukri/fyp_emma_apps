@@ -39,6 +39,11 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _regDate = DateTime.now();
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -82,6 +87,12 @@ class _CreateEventState extends State<CreateEvent> {
                         ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child: DateTimeField(
+                        validator: (input) {
+                          if(input == null){
+                                return 'Please enter start date';
+                              }
+                              return null;
+                        },
                         onChanged: (currentValue) => _date = currentValue,
                         decoration: InputDecoration(
                           border: new OutlineInputBorder(
@@ -93,7 +104,7 @@ class _CreateEventState extends State<CreateEvent> {
                         onShowPicker: (context, currentValue) {
                           return showDatePicker(
                             context: context,
-                            firstDate: DateTime(1900),
+                            firstDate: DateTime.now().subtract(Duration(days: 0)),
                             initialDate: currentValue ?? DateTime.now(),
                             lastDate: DateTime(2100)
                             );
@@ -102,6 +113,12 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child: DateTimeField(
+                        validator: (input) {
+                          if(input == null){
+                                return 'Please enter end date';
+                              }
+                              return null;
+                        },
                         onChanged: (currentValue) => {_endDate = currentValue},
                         decoration: InputDecoration(
                           border: new OutlineInputBorder(
@@ -113,7 +130,7 @@ class _CreateEventState extends State<CreateEvent> {
                         onShowPicker: (context, currentValue) {
                           return showDatePicker(
                             context: context,
-                            firstDate: DateTime(1900),
+                            firstDate: DateTime.now().subtract(Duration(days: 0)),
                             initialDate: currentValue ?? DateTime.now(),
                             lastDate: DateTime(2100)
                             );
@@ -122,7 +139,14 @@ class _CreateEventState extends State<CreateEvent> {
                     ),
                       Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
+                        
                         onChanged: (currentValue) => {_time = currentValue},
+                        validator: (input) {
+                          if(input == null){
+                                return 'Please enter start time';
+                              }
+                              return null;
+                        },
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
                           labelText: 'Start Time (${format1.pattern})'
@@ -138,6 +162,12 @@ class _CreateEventState extends State<CreateEvent> {
                       ), ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
+                        validator: (input) {
+                          if(input == null){
+                                return 'Please enter end time';
+                              }
+                              return null;
+                        },
                         onChanged: (currentValue) => {_endTime = currentValue},
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
@@ -276,6 +306,12 @@ class _CreateEventState extends State<CreateEvent> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(0.0),
                                   child: DropdownButtonFormField<String>(
+                                    validator: (input) {
+                                     if(input.isEmpty){
+                                       return 'Please choose registration';
+                                     }
+                                     return null;
+                                   },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     border: new OutlineInputBorder(
@@ -312,31 +348,40 @@ class _CreateEventState extends State<CreateEvent> {
                             ),
                                 ),
                               ),
-                        Padding(padding: const EdgeInsets.all(8.0),
-                      child: DateTimeField(
-                        onChanged: (currentValue) => _regDate = currentValue,
-                        decoration: InputDecoration(
-                          border: new OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(25.0),
-                              ),
-                          labelText: 'Registration Deadline (${newformat.pattern})'
-                        ),
-                        format: newformat,
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(1900),
-                            initialDate: currentValue ?? DateTime.now(),
-                            lastDate: DateTime(2100)
-                            );
-                        },
-                      ),
-                    ),   
+                        Visibility(
+                          visible: _reg == 'Yes'? true : false,
+                          child: Padding(padding: const EdgeInsets.all(8.0),
+                                              child: DateTimeField(
+                          onChanged: (currentValue) => _regDate = currentValue,
+                          decoration: InputDecoration(
+                            border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(25.0),
+                                ),
+                            labelText: 'Registration Deadline (${newformat.pattern})'
+                          ),
+                          format: newformat,
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now().subtract(Duration(days: 0)),
+                              initialDate: currentValue ?? DateTime.now(),
+                              lastDate: DateTime(2100)
+                              );
+                          },
+                          ),
+                          ),
+                        ),   
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                                 child: Padding(
                                   padding: const EdgeInsets.all(0.0),
                                   child: DropdownButtonFormField<String>(
+                                  validator: (input) {
+                                    if(input.isEmpty){
+                                      return 'Please choose the event categories';
+                                    }
+                                    return null;
+                                  },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     border: new OutlineInputBorder(
@@ -397,7 +442,7 @@ class _CreateEventState extends State<CreateEvent> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () {onSubmit();
-                              Navigator.of(context).pop();},
+                              },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.red[600],
                                 shape: new RoundedRectangleBorder(
@@ -436,10 +481,12 @@ class _CreateEventState extends State<CreateEvent> {
   }
   Future <void> onSubmit() async {
   final formState = _formKey.currentState;
-  
+  if (formState.validate()) {
     formState.save();
     DatabaseService().addEvent(_eventName,_date, _time, _endDate, _endTime,_location,_eventfee,_description,_label,_reg,_regDate,_picName,_contact);
-
+    Navigator.of(context).pop();
+  }
+  
 }
 
 }

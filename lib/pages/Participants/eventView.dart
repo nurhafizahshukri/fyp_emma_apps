@@ -229,7 +229,7 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.attach_money_sharp),
                       SizedBox(width: 10),
-                      Text(widget.eventfee != null ? 'RM ' + widget.eventfee : ''),
+                      Text(widget.eventfee != null ? widget.eventfee : ''),
                     ],
                   ),
                   Row(
@@ -294,8 +294,8 @@ class _EventViewState extends State<EventView> {
                   Row(
                     children: <Widget>[
                       Flexible(
-                          child: Text(
-                            "${widget.regDate.day} / ${widget.regDate.month} / ${widget.regDate.year} ( 23:59 )",
+                          child: Text(widget.reg =="Yes" ?
+                            "${widget.regDate.day} / ${widget.regDate.month} / ${widget.regDate.year} ( 23:59 )" : "Registration Unavailable",
                             textAlign: TextAlign.justify,
                       )),
                     ],
