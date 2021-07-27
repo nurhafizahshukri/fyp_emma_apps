@@ -1,3 +1,4 @@
+import 'package:EMMA/Comman_widget/Email_input.dart';
 import 'package:EMMA/services/databaseservice.dart';
 import 'package:flutter/material.dart';
 import 'package:mailer/mailer.dart';
@@ -26,7 +27,7 @@ class SendInvitation extends StatefulWidget {
 class _SendInvitationState extends State<SendInvitation> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String _body;
-  String _recipient;
+  List<String> _recipient = [];
   String _recipientName;
   String _subject;
   final invitationController = TextEditingController();
@@ -45,12 +46,12 @@ class _SendInvitationState extends State<SendInvitation> {
   // ignore: must_call_super
   void initState() { 
     _recipientController.text = 'example@gmail.com';
-    _recipientNameController.text = 'Full Name';
+    _recipientNameController.text = 'Recipients';
     _subjectController.text = 'Invitation to ${widget.eventName}';
     _bodyController.text = 'Greetings. \n\nYou are invited to our event called ${widget.eventName}.'+ 
                             ' ${widget.eventName} will be conducted on ${widget.date.day.toString()}-${widget.date.month.toString()}-${widget.date.year.toString()} at ${widget.location}';
     _body = _bodyController.text;
-    _recipient = _recipientController.text;
+    // _recipient = _recipientController.text;
     _recipientName = _recipientNameController.text;
     _subject = _subjectController.text;
   }
@@ -69,7 +70,7 @@ class _SendInvitationState extends State<SendInvitation> {
   // Create our message.
   final message = Message()
     ..from = Address(username, 'EMMA Invitation')
-    ..recipients.add(_recipient)
+    ..recipients.addAll(_recipient)
     // ..ccRecipients.addAll(['destCc1@example.com', 'destCc2@example.com'])
     // ..bccRecipients.add(Address('bccAddress@example.com'))
     ..subject = _subject
@@ -121,16 +122,35 @@ class _SendInvitationState extends State<SendInvitation> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _recipientController,
-                  onChanged: (currentValue) => _recipient = currentValue,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Recipient',
-                  ),
-                ),
+                padding: const EdgeInsets.all(8.0),
+                child: EmailInput((value) {
+                  return _recipient = value;
+                }),
               ),
+      //         Padding(
+      //           padding: EdgeInsets.all(8.0),
+      //           child: TextFormField(
+      //             controller: _recipientController,
+      //             // onChanged: (currentValue) => _recipient = currentValue,
+      //             onChanged: (String value) {
+      //   if (value.substring(value.length - 1) == ',') {
+      //     print('>>>>>> value = $value : controller = ${_recipientController.hashCode}');
+      //     setState(() {
+      //       _recipient.add(value.substring(0, value.length - 1));
+      //     });
+      //     Future<void>.delayed(
+      //       const Duration(milliseconds: 10),
+      //       _recipientController.clear,
+      //     );
+      //     print(_recipient);
+      //   }
+      // },
+      //             decoration: InputDecoration(
+      //               border: OutlineInputBorder(),
+      //               labelText: 'Recipient',
+      //             ),
+      //           ),
+      //         ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TextFormField(

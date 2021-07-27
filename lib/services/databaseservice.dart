@@ -125,7 +125,7 @@ Future<void> updatePayment(
 
   Future<void> addInvitation(
       String name,
-      String email,
+      List<String> email,
       String eventuid,
       ) async {
     // Call the user's CollectionReference to add a new user_
