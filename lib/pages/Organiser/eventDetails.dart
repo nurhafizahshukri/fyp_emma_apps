@@ -1,3 +1,4 @@
+import 'package:EMMA/pages/Organiser/dashboard.dart';
 import 'package:EMMA/pages/Organiser/sendInvitation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -466,10 +467,8 @@ class _EventDetailsState extends State<EventDetails> {
               minWidth: 180.0,
               // height: 40.0,
               child: ElevatedButton(
-                onPressed: () {
-                  DatabaseService().deleteEvent(widget.uid);
-                  Navigator.of(context).pop();
-                },
+                onPressed: () => 
+                  _promptRemoveEvent() ,
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red[600],
                   shape: new RoundedRectangleBorder(
@@ -488,4 +487,31 @@ class _EventDetailsState extends State<EventDetails> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+  void _promptRemoveEvent() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return new AlertDialog(
+        title: new Text('Delete this event?'),
+        actions: <Widget>[
+          new TextButton(
+            child: new Text('CANCEL'),
+            onPressed: () => Navigator.of(context).pop()
+          ),
+          new TextButton(
+            child: new Text('DELETE'),
+            onPressed: () {
+              DatabaseService().deleteEvent(widget.uid);
+              int count = 2;
+              Navigator.of(context).popUntil((_) => count-- <= 0);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Event has been deleted"),
+              ));
+            }
+          )
+        ]
+      );
+    }
+  );
+}
 }
