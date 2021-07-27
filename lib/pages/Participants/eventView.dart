@@ -423,7 +423,7 @@ class _EventViewState extends State<EventView> {
               minWidth: 180.0,
               // height: 40.0,
               child: ElevatedButton(
-                onPressed: (widget.reg =="Yes") && (widget.regDate.compareTo(formattedDate)<=0)? () {
+                onPressed: (widget.reg =="Yes") && (formattedDate.compareTo(widget.regDate)<=0)? () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
