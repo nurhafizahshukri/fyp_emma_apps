@@ -1,4 +1,3 @@
-import 'package:EMMA/pages/Organiser/dashboard.dart';
 import 'package:EMMA/pages/Organiser/sendInvitation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,9 @@ class EventDetails extends StatefulWidget {
   String description = "";
   String label = "";
   String reg = "";
+  DateTime regDate = DateTime.now();
+  String picName = "";
+  String picContact = "";
   String uid = "";
   EventDetails(
     this.date,
@@ -32,6 +34,9 @@ class EventDetails extends StatefulWidget {
     this.description,
     this.label,
     this.reg,
+    this.regDate,
+    this.picName,
+    this.picContact,
     this.uid,
   ) {
     print(date);
@@ -44,6 +49,9 @@ class EventDetails extends StatefulWidget {
     print(description);
     print(label);
     print(reg);
+    print(regDate);
+    print(picName);
+    print(picContact);
   }
 
   @override
@@ -447,6 +455,9 @@ class _EventDetailsState extends State<EventDetails> {
                                 widget.description,
                                 widget.label,
                                 widget.reg,
+                                widget.regDate,
+                                widget.picName,
+                                widget.picContact,
                                 widget.uid,
                               ),
                           fullscreenDialog: true));

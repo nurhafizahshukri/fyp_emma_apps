@@ -14,9 +14,12 @@ class UpdateEvent extends StatefulWidget {
   String description;
   String label;
   String reg;
+  DateTime regDate;
+  String picName;
+  String contact;
   String uid;
   UpdateEvent(this.date, this.time, this.eventName, this.location,
-      this.eventfee, this.description, this.label, this.reg, this.uid);
+      this.eventfee, this.description, this.label, this.reg, this.regDate, this.picName, this.contact, this.uid);
 
   @override
   _UpdateEventState createState() => _UpdateEventState();
@@ -34,6 +37,9 @@ class _UpdateEventState extends State<UpdateEvent> {
   String _description;
   String _label;
   String _reg;
+  DateTime _regDate;
+  String _picName;
+  String _contact;
 
   final eventController = TextEditingController();
 
@@ -54,6 +60,9 @@ class _UpdateEventState extends State<UpdateEvent> {
       new TextEditingController();
   final TextEditingController labelController = new TextEditingController();
   final TextEditingController regController = new TextEditingController();
+  final TextEditingController regDateController = new TextEditingController();
+  final TextEditingController picNameController = new TextEditingController();
+  final TextEditingController contactController = new TextEditingController();
   @override
   // ignore: must_call_super
   void initState() {
@@ -65,6 +74,9 @@ class _UpdateEventState extends State<UpdateEvent> {
     descriptionController.text = widget.description;
     labelController.text = widget.label;
     regController.text = widget.reg;
+    regDateController.text = widget.regDate.toString();
+    picNameController.text = widget.picName;
+    contactController.text = widget.contact;
     _date = widget.date;
     _time = widget.time;
     _eventName = widget.eventName;
@@ -73,6 +85,9 @@ class _UpdateEventState extends State<UpdateEvent> {
     _description = widget.description;
     _label = widget.label;
     _reg = widget.reg;
+    _regDate = widget.regDate;
+    _picName = widget.picName;
+    _contact = widget.contact;
   }
 
   @override
@@ -177,6 +192,34 @@ class _UpdateEventState extends State<UpdateEvent> {
                                     ))),
                           ),
                           Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: picNameController,
+                            onChanged: (currentValue) => _picName= currentValue,
+                            decoration: InputDecoration(
+                              labelText: 'PIC Name',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            controller: contactController,
+                            onChanged: (currentValue) => _contact = currentValue,
+                            decoration: InputDecoration(
+                              labelText: 'PIC Contact Info',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: TextFormField(
                                 controller: eventfeeController,
@@ -233,6 +276,25 @@ class _UpdateEventState extends State<UpdateEvent> {
                                           new BorderRadius.circular(25.0),
                                     ))),
                           ),
+                          Padding(padding: const EdgeInsets.all(8.0),
+                            child: DateTimeField(
+                              controller: regDateController,
+                              onChanged: (currentValue) => _regDate = currentValue,
+                              decoration: InputDecoration(
+                                border: new OutlineInputBorder(
+                                      borderRadius: new BorderRadius.circular(25.0),
+                                    ),
+                                labelText: 'Registration Deadline (${newformat.pattern})'
+                              ),
+                              format: newformat,
+                              onShowPicker: (context, currentValue) {
+                                return showDatePicker(
+                                    context: context,
+                                    firstDate: DateTime(1900),
+                                    initialDate: currentValue ?? DateTime.now(),
+                                    lastDate: DateTime(2100));
+                              }),
+                          ),   
                           SizedBox(height: 20),
                           ButtonTheme(
                             minWidth: 338.0,
@@ -259,17 +321,17 @@ class _UpdateEventState extends State<UpdateEvent> {
                             minWidth: 338.0,
                             height: 40.0,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () => Navigator.of(context).pop(),
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.red[600],
+                                primary: Colors.white,
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 side: BorderSide(color: Colors.red[600]),
                                 fixedSize: Size(180, 40)
                               ),
-                              child: Text('Reset'.toUpperCase(),
-                                  style: TextStyle(fontSize: 20)),
+                              child: Text('Cancel'.toUpperCase(),
+                                  style: TextStyle(fontSize: 20, color: Colors.red[600])),
                             ),
                           ),
                         ])),
@@ -291,6 +353,9 @@ class _UpdateEventState extends State<UpdateEvent> {
       _description,
       _label,
       _reg,
+      _regDate,
+      _picName,
+      _contact,
       widget.uid,
     );
   }

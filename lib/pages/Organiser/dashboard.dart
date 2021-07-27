@@ -49,6 +49,7 @@ class _DashboardState extends State<Dashboard> {
                 DateTime myEndDateTime = (document.data()['End_Date']).toDate();
                 DateTime myTimeDate = (document.data()['Time']).toDate();
                 DateTime myEndTimeDate = (document.data()['End_Time']).toDate();
+                DateTime regDate = (document.data()['Registration']).toDate();
                 index += 1;
                 return GestureDetector(
                   onTap: () {
@@ -66,6 +67,9 @@ class _DashboardState extends State<Dashboard> {
                                 document.data()['Description'],
                                 document.data()['label'],
                                 document.data()['Open_Registration'],
+                                regDate,
+                                document.data()['PIC_Name'],
+                                document.data()['PIC_Contact'],
                                 document.id),
                             fullscreenDialog: true));
                   },

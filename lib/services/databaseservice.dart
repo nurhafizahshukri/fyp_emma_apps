@@ -86,6 +86,9 @@ Future<void> updatePayment(
       String description,
       String label,
       String reg,
+      DateTime regDeadline,
+      String picName,
+      String contact,
       String uid) {
     // Call the user's CollectionReference to add a new user_
     CollectionReference event = FirebaseFirestore.instance.collection('event');
@@ -100,7 +103,10 @@ Future<void> updatePayment(
           'Event_Fee': eventfee,
           'Description': description,
           'label': label,
-          'Open_Registration': reg
+          'Open_Registration': reg,
+          'Registration': regDeadline,
+          'PIC_Name': picName,
+          'PIC_Contact': contact, 
         })
         .then((value) => print("Event Updated"))
         .catchError((error) => print("Failed to Update user: $error"));
