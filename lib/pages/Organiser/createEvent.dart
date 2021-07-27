@@ -1,4 +1,5 @@
 import 'package:EMMA/services/databaseservice.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -59,13 +60,14 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (currentValue) => _eventName = currentValue,
 
                             // onEditingComplete: _node.nextFocus,
                             // ignore: missing_return
                             validator: (input) {
                               if(input.isEmpty){
-                                return 'Invalid name!';
+                                return 'Please type the event name';
                               }
                             },
                             onSaved: (input) => _eventName = input,
@@ -153,6 +155,13 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event location';
+                              }
+                              return null;
+                            },
                             onChanged: (currentValue) => _location = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Event Location',
@@ -166,9 +175,16 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             onChanged: (currentValue) => _picName= currentValue,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event PIC name';
+                              }
+                              return null;
+                            },
                             decoration: InputDecoration(
-                              labelText: 'PIC Name',
+                              labelText: 'Person In Charge Name',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -179,26 +195,54 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                            onChanged: (currentValue) => _contact = currentValue,
-                            decoration: InputDecoration(
-                              labelText: 'PIC Contact Info',
-                              fillColor: Colors.white,
-                              border: new OutlineInputBorder(
-                                borderRadius: new BorderRadius.circular(25.0),
-                              )
-                            )
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
                             keyboardType: TextInputType.numberWithOptions(decimal: true),
                             inputFormatters: [
-                              FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d{0,2})')),
+                              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                            ],
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Mobile can\'t be empty';
+                                } else if (value.isNotEmpty) {
+                                //bool mobileValid = RegExp(r"^(?:\+88||01)?(?:\d{10}|\d{13})$").hasMatch(value);
+
+                                bool mobileValid =
+                                RegExp(r'^(?:[+0]6)?[0-9]{10}$').hasMatch(value);
+                                return mobileValid ? null : "Invalid mobile";
+                                }
+                                return null;
+                            },
+                            onChanged: (currentValue) => _contact = currentValue,
+                            decoration: InputDecoration(
+                              labelText: 'Person In Charge Contact Info',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event fee';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: <TextInputFormatter>[
+                              CurrencyTextInputFormatter(
+                                // locale: 'ko',
+                                decimalDigits: 2,
+                                symbol: 'RM ',
+                              ),
                             ],
                             onChanged: (currentValue) => _eventfee = currentValue,
                             decoration: InputDecoration(
-                              labelText: 'Event Fee (RM)',
+                              labelText: 'Event Fee',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -209,7 +253,14 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _description = currentValue,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event description';
+                              }
+                              return null;
+                            },
+                             onChanged: (currentValue) => _description = currentValue,
 
                             decoration: InputDecoration(
                               labelText: 'Event Description',

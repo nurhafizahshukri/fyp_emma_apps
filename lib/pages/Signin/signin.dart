@@ -91,6 +91,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onEditingComplete: _node.nextFocus,
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.emailAddress,
@@ -98,9 +99,17 @@ class _LoginPageState extends State<LoginPage> {
 
                           // ignore: missing_return
                           validator: (input) {
-                            if (input.isEmpty || !input.contains('@')) {
-                              return 'Invalid email!';
-                            }
+                            // if (input.isEmpty || !input.contains('@')) {
+                            //   return 'Invalid email!';
+                            // }
+                            if (input.isEmpty) {
+                                return 'Please type an email';
+                                } else if (input.isNotEmpty) {
+                                bool mobileValid =
+                                RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(input);
+                                return mobileValid ? null : "Invalid email";
+                                }
+                                return null;
                           },
                           onSaved: (input) => _email = input,
                           decoration: InputDecoration(
@@ -125,6 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onEditingComplete: _node.nextFocus,
                           autofocus: false,
                           // ignore: missing_return

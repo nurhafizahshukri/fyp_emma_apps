@@ -81,11 +81,20 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           // ignore: missing_return
                           validator: (input) {
+                            // if (input.isEmpty) {
+                            //   return 'Please type an email';
+                            // }
                             if (input.isEmpty) {
-                              return 'Please type an email';
-                            }
+                                return 'Please type an email';
+                                } else if (input.isNotEmpty) {
+                                bool mobileValid =
+                                RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$').hasMatch(input);
+                                return mobileValid ? null : "Invalid email";
+                                }
+                                return null;
                           },
                           onSaved: (input) => _email = input,
                           decoration: InputDecoration(
@@ -99,6 +108,7 @@ class _SignUpState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           // ignore: missing_return
                           validator: (input) {
                             if (input.length < 6) {

@@ -38,6 +38,9 @@ class MapScreenState extends State<UserDetailsForm>
   @override
   void initState() {
     super.initState();
+    // _age = "";
+    // _gender = "";
+    // _interest = [];
   }
 
   @override
@@ -63,7 +66,7 @@ class MapScreenState extends State<UserDetailsForm>
                         children: <Widget>[
                             Padding(
                               padding: EdgeInsets.only(
-                                  left: 25.0, right: 25.0, top: 30.0),
+                                  left: 25.0, right: 25.0, top: 30.0, bottom: 10.0),
                              child: Text(
                                       'Name',
                                       style: TextStyle(
@@ -80,11 +83,18 @@ class MapScreenState extends State<UserDetailsForm>
                                   
                                   new Flexible(
                                     child: new TextFormField(
+                                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Please enter some text';
+                                        }
+                                          return null;
+                                      },
                                       textInputAction: TextInputAction.next,
                                       controller: nameController,
                                       onChanged: (value) => {_name = value},
                                       decoration: InputDecoration(
-                                        labelText: 'First name, last name',
+                                        labelText: 'Full name / Organization name',
                                         floatingLabelBehavior: FloatingLabelBehavior.never,
                                         labelStyle:
                                             TextStyle(color: Colors.black),
@@ -101,7 +111,7 @@ class MapScreenState extends State<UserDetailsForm>
                                           borderRadius:
                                               BorderRadius.circular(25.0),
                                           borderSide: BorderSide(
-                                            color: Colors.red,
+                                            color: Colors.grey,
                                             width: 2.0,
                                           ),
                                         ),
@@ -143,7 +153,7 @@ class MapScreenState extends State<UserDetailsForm>
                                     ),
                                     color: Colors.white,
                                     border: Border.all(
-                                      color: Colors.red,
+                                      color: Colors.grey,
                                       width: 2,
                                     ),
                                   ),
@@ -182,34 +192,37 @@ class MapScreenState extends State<UserDetailsForm>
                           ),
                           Padding(
                               padding: EdgeInsets.only(
-                                  left: 25.0, right: 25.0, top: 25.0),
-                              child: new Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                    Container(
-                                  child: new Text(
-                                    'Age',
-                                    style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                
-                                Expanded(child:SizedBox(),),
-                                  Container(
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 20.0),
-                                      child: new Text(
-                                        'Gender',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                  left: 25.0, right: 25.0, top: 25.0, bottom: 10.0),
+                              child: Visibility(
+                                visible: _role == "organizer" ? false : true,
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                      Container(
+                                    child: new Text(
+                                      'Age',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
-                                ],
+                                  
+                                  Expanded(child:SizedBox(),),
+                                    Container(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 20.0),
+                                        child: new Text(
+                                          'Gender',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               )),
                               
                           Padding(
@@ -219,100 +232,107 @@ class MapScreenState extends State<UserDetailsForm>
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Flexible(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(right: 10.0),
-                                      child: new TextFormField(
-                                        textInputAction: TextInputAction.next,
-                                        keyboardType: TextInputType.number,
-                                        controller: ageController,
-                                        onChanged: (value) => {_age = value},
-                                        decoration: InputDecoration(
-                                        labelText: 'e.g 22',
-                                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                                        labelStyle:
-                                            TextStyle(color:Colors.black),
-                                        fillColor: Colors.white,
-                                        border: new OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          borderSide: BorderSide(
-                                            width: 2.0,
-                                            color: Colors.white,
+                                  Visibility(
+                                    visible: _role == "organizer" ? false : true,
+                                    child: Flexible(
+                                      child: Padding(
+                                        padding: EdgeInsets.only(right: 10.0),
+                                        child: new TextFormField(
+                                           // enabled: _role == "organizer" ? false : true,
+                                          textInputAction: TextInputAction.next,
+                                          keyboardType: TextInputType.number,
+                                          controller: ageController,
+                                          onChanged: (value) => {_age = value},
+                                          decoration: InputDecoration(
+                                          labelText: 'e.g 22',
+                                          floatingLabelBehavior: FloatingLabelBehavior.never,
+                                          labelStyle:
+                                              TextStyle(color:Colors.black),
+                                          fillColor: Colors.white,
+                                          border: new OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            borderSide: BorderSide(
+                                              width: 2.0,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            borderSide: BorderSide(
+                                              color: Colors.grey,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25.0),
+                                            borderSide: BorderSide(
+                                              color: Colors.red,
+                                              width: 2.0,
+                                            ),
                                           ),
                                         ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          borderSide: BorderSide(
-                                            color: Colors.red,
-                                            width: 2.0,
-                                          ),
+                                          enabled: true,
+                                          autofocus: true,
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25.0),
-                                          borderSide: BorderSide(
-                                            color: Colors.red,
-                                            width: 2.0,
-                                          ),
-                                        ),
-                                      ),
-                                        enabled: true,
-                                        autofocus: true,
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                          right: 10),
-                                    child: Container(
-                                      height: 55,
-                                      
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      10.0,
-                                    ),
-                                    color: Colors.white,
-                                    border: Border.all(
-                                      color: Colors.red,
-                                      width: 2,
-                                    ),
-                                  ),
-                                      child: DropdownButton<String>(
-                                      value: _gender,
-                                      icon: const Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Colors.red,
+                                    child: Visibility(
+                                      visible: _role == "organizer" ? false : true,
+                                      child: Container(
+                                        height: 55,
+                                        
+                                      decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        10.0,
                                       ),
-                                      iconSize: 24,
-                                      elevation: 16,
-                                      style: const TextStyle(color: Colors.black),
-                                      underline: SizedBox(),
-                                      onChanged: (String newValue) {
-                                        setState(() {
-                                          _gender = newValue;
-                                        });
-                                      },
-                                      items: <String>['Male', 'Female']
-                                          .map<DropdownMenuItem<String>>(
-                                              (String value) {
-                                        return DropdownMenuItem<String>(
-                                          value: value,
-                                          child: Text(
-                                            value,
-                                            style: TextStyle(color: Colors.black, ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                  ),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                        width: 2,
+                                      ),
+                                      ),
+                                        child: DropdownButton<String>(
+                                        value: _gender,
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Colors.red,
+                                        ),
+                                        iconSize: 24,
+                                        elevation: 16,
+                                        style: const TextStyle(color: Colors.black),
+                                        underline: SizedBox(),
+                                        onChanged: (String newValue) {
+                                          setState(() {
+                                            _gender = newValue;
+                                          });
+                                        },
+                                        items: <String>['Male', 'Female']
+                                            .map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value,
+                                            child: Text(
+                                              value,
+                                              style: TextStyle(color: Colors.black, ),
+                                            ),
+                                          );
+                                        }).toList(),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               )),
                                Padding(
                           padding: EdgeInsets.only(
-                              left: 25.0, right: 25.0, top: 25.0),
+                              left: 25.0, right: 25.0, top: 25.0, bottom: 10.0),
 
                         child: Text(
                                     'Mobile',
@@ -325,6 +345,19 @@ class MapScreenState extends State<UserDetailsForm>
                                   left: 25.0, right: 25.0),
                               child: new Flexible(
                                 child: new TextFormField(
+                                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                                  validator: (value) {
+                                    if (value.isEmpty) {
+                                      return 'Mobile can\'t be empty';
+                                      } else if (value.isNotEmpty) {
+                                      //bool mobileValid = RegExp(r"^(?:\+88||01)?(?:\d{10}|\d{13})$").hasMatch(value);
+
+                                      bool mobileValid =
+                                      RegExp(r'^(?:[+0]6)?[0-9]{10}$').hasMatch(value);
+                                      return mobileValid ? null : "Invalid mobile";
+                                      }
+                                      return null;
+                                  },
                                   textInputAction: TextInputAction.next,
                                   controller: mobileController,
                                   onChanged: (value) => {_mobile = value},
@@ -347,7 +380,7 @@ class MapScreenState extends State<UserDetailsForm>
                                       borderRadius:
                                           BorderRadius.circular(25.0),
                                       borderSide: BorderSide(
-                                        color: Colors.red,
+                                        color: Colors.grey,
                                         width: 2.0,
                                       ),
                                     ),
@@ -366,29 +399,35 @@ class MapScreenState extends State<UserDetailsForm>
                           Padding(
                               padding: EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 25.0),
-                              child: new Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: <Widget>[
-                                  new Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      new Text(
-                                        'Interest',
-                                        style: TextStyle(
-                                            fontSize: 16.0,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              child: Visibility(
+                                visible: true,
+                                child: new Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: <Widget>[
+                                    new Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        new Text(
+                                          'Interest',
+                                          style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               )),
-                          Padding(
-                              padding: EdgeInsets.only(
-                                  left: 25.0, right: 25.0, top: 2.0),
-                              child: Interest((value) {
-                                return _interest = value;
-                              }),),
+                          Visibility(
+                            visible: true,
+                            child: Padding(
+                                padding: EdgeInsets.only(
+                                    left: 25.0, right: 25.0, top: 2.0),
+                                child: Interest((value) {
+                                  return _interest = value;
+                                }),),
+                          ),
                           _getActionButtons(),
                         ],
                       ),
