@@ -69,6 +69,7 @@ class _EventDetailsState extends State<EventDetails> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter2 = new DateFormat('dd-MM-yyyy (hh:mm a)');
     DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
       appBar: AppBar(
@@ -191,9 +192,10 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
-                      Text(widget.date.toString() == widget.endDate.toString()
-                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date} "
-                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year}  "),
+                      Text((widget.date.day.toString() == widget.endDate.day.toString()) && widget.date.month.toString() == widget.endDate.month.toString()
+                          ? formatter2.format(widget.date)
+                          : formatter2.format(widget.date) + ' - ' + formatter2.format(widget.endDate)),
+                          // : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year}  "),
                     ],
                   ),
                   Row(

@@ -338,7 +338,7 @@ class _CreateEventState extends State<CreateEvent> {
                         Visibility(
                           visible: _reg == 'Yes'? true : false,
                           child: Padding(padding: const EdgeInsets.all(8.0),
-                                              child: DateTimeField(
+                          child: DateTimeField(
                           onChanged: (currentValue) => _regDate = currentValue,
                           decoration: InputDecoration(
                             border: new OutlineInputBorder(

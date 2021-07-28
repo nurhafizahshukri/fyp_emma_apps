@@ -26,6 +26,7 @@ class _DashboardState extends State<Dashboard> {
     CollectionReference event = FirebaseFirestore.instance.collection('event');
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter2 = new DateFormat('dd-MM-yyyy');
     DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
@@ -47,8 +48,6 @@ class _DashboardState extends State<Dashboard> {
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
                 DateTime myDateTime = (document.data()['Date']).toDate();
                 DateTime myEndDateTime = (document.data()['End_Date']).toDate();
-                DateTime myTimeDate = (document.data()['Time']).toDate();
-                DateTime myEndTimeDate = (document.data()['End_Time']).toDate();
                 DateTime regDate = (document.data()['Registration']).toDate();
                 index += 1;
                 return GestureDetector(
@@ -193,9 +192,9 @@ class _DashboardState extends State<Dashboard> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 5.0),
                                     child: Text(
-                                      myDateTime.toString() == myEndDateTime.toString()
-                                        ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
-                                        : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                      (myDateTime.day.toString() == myEndDateTime.day.toString()) && (myDateTime.month.toString() == myEndDateTime.month.toString())
+                                        ? formatter2.format(myDateTime)
+                                        : formatter2.format(myDateTime) + " - " + formatter2.format(myEndDateTime),
                                         style: TextStyle(
                                         color: Colors.grey[100],
                                         fontWeight: FontWeight.w500,
