@@ -66,15 +66,15 @@ class _UpdateEventState extends State<UpdateEvent> {
   @override
   // ignore: must_call_super
   void initState() {
-    dateController.text = widget.date.toString();
-    endDateController.text = widget.endDate.toString();
+    dateController.text = newformat.format(widget.date);
+    endDateController.text = newformat.format(widget.endDate);
     eventNameController.text = widget.eventName;
     locationController.text = widget.location;
     eventfeeController.text = widget.eventfee;
     descriptionController.text = widget.description;
     labelController.text = widget.label;
     regController.text = widget.reg;
-    regDateController.text = widget.regDate.toString();
+    regDateController.text = newformat.format(widget.regDate);
     picNameController.text = widget.picName;
     contactController.text = widget.contact;
     _date = widget.date;
@@ -145,13 +145,23 @@ class _UpdateEventState extends State<UpdateEvent> {
                                   labelText:
                                       'Start Date Format: (${newformat.pattern})'),
                               format: newformat,
-                              onShowPicker: (context, currentValue) {
-                                return showDatePicker(
+                              onShowPicker: (context, currentValue) async {
+                                final date = await showDatePicker(
                                     context: context,
-                                    firstDate: DateTime(1900),
+                                    firstDate: DateTime.now().subtract(Duration(days: 0)),
                                     initialDate: currentValue ?? DateTime.now(),
                                     lastDate: DateTime(2100));
-                              },
+                                if (date != null) {
+                                  final time = await showTimePicker(
+                                    context: context,
+                                    initialTime:
+                                        TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                                  );
+                                  return DateTimeField.combine(date, time);
+                                } else {
+                                  return currentValue;
+                                }
+                              }
                             ),
                           ),
                           Padding(
@@ -166,15 +176,24 @@ class _UpdateEventState extends State<UpdateEvent> {
                                   ),
                                   labelText:
                                       'End Date Format: (${newformat.pattern})'),
-                              format: format1,
+                              format: newformat,
                               onShowPicker: (context, currentValue) async {
-                                final time = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.fromDateTime(
-                                      currentValue ?? DateTime.now()),
-                                );
-                                return DateTimeField.convert(time);
-                              },
+                                final date = await showDatePicker(
+                                    context: context,
+                                    firstDate: DateTime.now().subtract(Duration(days: 0)),
+                                    initialDate: currentValue ?? DateTime.now(),
+                                    lastDate: DateTime(2100));
+                                if (date != null) {
+                                  final time = await showTimePicker(
+                                    context: context,
+                                    initialTime:
+                                        TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
+                                  );
+                                  return DateTimeField.combine(date, time);
+                                } else {
+                                  return currentValue;
+                                }
+                              }
                             ),
                           ),
                           Padding(
