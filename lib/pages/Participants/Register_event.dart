@@ -6,7 +6,7 @@ import 'package:EMMA/services/databaseservice.dart';
 // ignore: must_be_immutable
 class RegisterEvent extends StatefulWidget {
   DateTime date;
-  DateTime time;
+  DateTime endDate;
   String eventName;
   String location;
   String eventfee;
@@ -14,7 +14,7 @@ class RegisterEvent extends StatefulWidget {
   String mobile;
   String uid;
 
-  RegisterEvent(this.date, this.time, this.eventName, this.location,
+  RegisterEvent(this.date, this.endDate, this.eventName, this.location,
       this.eventfee, this.uid,this.username,this.mobile);
   @override
   _RegisterEventState createState() => _RegisterEventState();
@@ -27,7 +27,7 @@ class _RegisterEventState extends State<RegisterEvent> {
   // ignore: unused_field
   DateTime _date;
   // ignore: unused_field
-  DateTime _time;
+  DateTime _endDate;
   // ignore: unused_field
   String _eventName;
   // ignore: unused_field
@@ -46,7 +46,7 @@ class _RegisterEventState extends State<RegisterEvent> {
 
   final eventController = TextEditingController();
   final TextEditingController dateController = new TextEditingController();
-  final TextEditingController timeController = new TextEditingController();
+  final TextEditingController endDateController = new TextEditingController();
   final TextEditingController eventNameController = new TextEditingController();
   final TextEditingController locationController = new TextEditingController();
   final TextEditingController eventfeeController = new TextEditingController();
@@ -64,7 +64,7 @@ class _RegisterEventState extends State<RegisterEvent> {
   // ignore: must_call_super
   void initState() {
 dateController.text = widget.date.toString();
-    timeController.text = widget.time.toString();
+    endDateController.text = widget.endDate.toString();
     eventNameController.text = widget.eventName;
     locationController.text = widget.location;
     eventfeeController.text = widget.eventfee;
@@ -72,7 +72,7 @@ dateController.text = widget.date.toString();
     mobileController.text=widget.mobile;
  
     _date = widget.date;
-    _time = widget.time;
+    _endDate = widget.endDate;
     _eventName = widget.eventName;
     _location = widget.location;
     _eventfee = widget.eventfee;
@@ -145,13 +145,13 @@ dateController.text = widget.date.toString();
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
-                        controller: timeController,
+                        controller: endDateController,
                         style:TextStyle(color: Colors.grey),
                         enabled: false,
-                        onChanged: (currentValue) => _time = currentValue,
+                        onChanged: (currentValue) => _endDate = currentValue,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'Time Format: (${format1.pattern})'
+                          labelText: 'End Date Format: (${format1.pattern})'
                         ),
                         format: format1,
                         onShowPicker: (context, currentValue) async {

@@ -11,9 +11,7 @@ import 'package:EMMA/Pages/Participants/payment.dart';
 // ignore: must_be_immutable
 class EventView extends StatefulWidget {
   DateTime date = DateTime.now();
-  DateTime time = DateTime.now();
   DateTime endDate = DateTime.now();
-  DateTime endTime = DateTime.now();
   DateTime regDate = DateTime.now();
   String eventName = "";
   String location = "";
@@ -28,9 +26,7 @@ class EventView extends StatefulWidget {
   String mobile = "";
   EventView(
     this.date,
-    this.time,
     this.endDate,
-    this.endTime,
     this.regDate,
     this.eventName,
     this.location,
@@ -45,9 +41,7 @@ class EventView extends StatefulWidget {
     this.mobile,
   ) {
     print(date);
-    print(time);
     print(endDate);
-    print(endTime);
     print(eventName);
     print(location);
     print(eventfee);
@@ -93,6 +87,7 @@ class _EventViewState extends State<EventView> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter2 = new DateFormat('dd-MM-yyyy (hh:mm a)');
     DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
       appBar: AppBar(
@@ -213,9 +208,11 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
-                      Text(widget.date.toString() == widget.endDate.toString()
-                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) "
-                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year} ( ${format1.format(widget.endTime)} ) "),
+                      Text(
+                        (widget.date.day.toString() == widget.endDate.day.toString()) && widget.date.month.toString() == widget.endDate.month.toString()
+                          ? formatter2.format(widget.date)
+                          : formatter2.format(widget.date) + ' - ' + formatter2.format(widget.endDate)
+                        ),
                     ],
                   ),
                   Row(
@@ -390,7 +387,7 @@ class _EventViewState extends State<EventView> {
                                       padding: const EdgeInsets.only(
                                           top: 12.0, right: 40.0),
                                       child: ticketDetailsWidget(
-                                          'Location', widget.location, 'TIME', "${widget.time.hour} : ${widget.time.minute} "),
+                                          'Location', widget.location, 'TIME', "${widget.date.hour} : ${widget.date.minute} "),
                                     ),
                                     
                                   ],
@@ -429,7 +426,7 @@ class _EventViewState extends State<EventView> {
                       MaterialPageRoute(
                           builder: (context) => RegisterEvent(
                                 widget.date,
-                                widget.time,
+                                widget.endDate,
                                 widget.eventName,
                                 widget.location,
                                 widget.eventfee,

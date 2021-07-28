@@ -16,7 +16,7 @@ class Event {
       picName,
       picContact,
       id;
-  final DateTime date, endDate, endTime, time, regDate;
+  final DateTime date, endDate, regDate;
   final String description;
 
   Event(
@@ -30,8 +30,6 @@ class Event {
       this.picContact,
       this.date,
       this.endDate,
-      this.endTime,
-      this.time,
       this.regDate,
       this.description,
       this.id);
@@ -82,6 +80,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
     DateTime now = DateTime.now();
     String interest;
     var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter2 = new DateFormat('dd-MM-yyyy');
     DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
         body: StreamBuilder<DocumentSnapshot>(
@@ -128,8 +127,6 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             document.data()['PIC_Contact'],
                             (document.data()['Date']).toDate(),
                             (document.data()['End_Date']).toDate(),
-                            (document.data()['End_Time']).toDate(),
-                            (document.data()['Time']).toDate(),
                             (document.data()['Registration']).toDate(),
                             document.data()['Description'],
                             document.id));
@@ -146,8 +143,6 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             document.data()['PIC_Contact'],
                             (document.data()['Date']).toDate(),
                             (document.data()['End_Date']).toDate(),
-                            (document.data()['End_Time']).toDate(),
-                            (document.data()['Time']).toDate(),
                             (document.data()['Registration']).toDate(),
                             document.data()['Description'],
                             document.id));
@@ -162,8 +157,6 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             document.data()['PIC_Contact'],
                             (document.data()['Date']).toDate(),
                             (document.data()['End_Date']).toDate(),
-                            (document.data()['End_Time']).toDate(),
-                            (document.data()['Time']).toDate(),
                             (document.data()['Registration']).toDate(),
                             document.data()['Description'],
                             document.id));
@@ -180,8 +173,6 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             itemBuilder: (BuildContext context, int index) {
                               DateTime myDateTime = allEvent[index].date;
                               DateTime myEndDateTime = allEvent[index].endDate;
-                              DateTime myTimeDate = allEvent[index].time;
-                              DateTime myEndTimeDate = allEvent[index].endTime;
                               DateTime regDateTime = allEvent[index].regDate;
                               return Container(
                                   width: 350,
@@ -193,9 +184,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                               builder: (context) =>
                                                   EventView(
                                                       myDateTime,
-                                                      myTimeDate,
                                                       myEndDateTime,
-                                                      myEndTimeDate,
                                                       regDateTime,
                                                       allEvent[index]
                                                           .eventName,
@@ -359,11 +348,9 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                           const EdgeInsets.only(
                                                               top: 5.0),
                                                       child: Text(
-                                                        myDateTime.toString() ==
-                                                                myEndDateTime
-                                                                    .toString()
-                                                            ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
-                                                            : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                                        (myDateTime.day.toString() == myEndDateTime.day.toString()) && (myDateTime.month.toString() == myEndDateTime.month.toString())
+                                                          ? formatter2.format(myDateTime)
+                                                          : formatter2.format(myDateTime) + "-" + formatter2.format(myEndDateTime),
                                                         style: TextStyle(
                                                           color:
                                                               Colors.grey[100],
@@ -453,8 +440,6 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             itemBuilder: (BuildContext context, int index) {
                               DateTime myDateTime = suggestedEvent[index].date;
                               DateTime myEndDateTime = suggestedEvent[index].endDate;
-                              DateTime myTimeDate = suggestedEvent[index].time;
-                              DateTime myEndTimeDate = suggestedEvent[index].endTime;
                               DateTime regDateTime = suggestedEvent[index].regDate;
                               return Container(
                                   width: 350,
@@ -466,9 +451,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                               builder: (context) =>
                                                   EventView(
                                                       myDateTime,
-                                                      myTimeDate,
                                                       myEndDateTime,
-                                                      myEndTimeDate,
                                                       regDateTime,
                                                       suggestedEvent[index]
                                                           .eventName,
@@ -632,11 +615,9 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                           const EdgeInsets.only(
                                                               top: 5.0),
                                                       child: Text(
-                                                        myDateTime.toString() ==
-                                                                myEndDateTime
-                                                                    .toString()
-                                                            ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
-                                                            : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                                        (myDateTime.day.toString() == myEndDateTime.day.toString()) && (myDateTime.month.toString() == myEndDateTime.month.toString())
+                                                          ? formatter2.format(myDateTime)
+                                                          : formatter2.format(myDateTime) + "-" + formatter2.format(myEndDateTime),
                                                         style: TextStyle(
                                                           color:
                                                               Colors.grey[100],
@@ -727,8 +708,6 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             itemBuilder: (BuildContext context, int index) {
                               DateTime myDateTime = otherEvent[index].date;
                               DateTime myEndDateTime = otherEvent[index].endDate;
-                              DateTime myTimeDate = otherEvent[index].time;
-                              DateTime myEndTimeDate = otherEvent[index].endTime;
                               DateTime regDateTime = otherEvent[index].regDate;
                               return Container(
                                   width: 350,
@@ -740,9 +719,7 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                               builder: (context) =>
                                                   EventView(
                                                       myDateTime,
-                                                      myTimeDate,
                                                       myEndDateTime,
-                                                      myEndTimeDate,
                                                       regDateTime,
                                                       otherEvent[index]
                                                           .eventName,
@@ -905,11 +882,9 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                           const EdgeInsets.only(
                                                               top: 5.0),
                                                       child: Text(
-                                                        myDateTime.toString() ==
-                                                                myEndDateTime
-                                                                    .toString()
-                                                            ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
-                                                            : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                                        (myDateTime.day.toString() == myEndDateTime.day.toString()) && (myDateTime.month.toString() == myEndDateTime.month.toString())
+                                                          ? formatter2.format(myDateTime)
+                                                          : formatter2.format(myDateTime) + "-" + formatter2.format(myEndDateTime),
                                                         style: TextStyle(
                                                           color:
                                                               Colors.grey[100],
