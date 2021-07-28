@@ -7,9 +7,7 @@ class DatabaseService {
   Future<void> addEvent(
       String eventName,
       DateTime date,
-      DateTime time,
       DateTime endDate,
-      DateTime endTime,
       String location,
       String eventfee,
       String description,
@@ -27,9 +25,7 @@ class DatabaseService {
         .add({
           'EventName': eventName, 
           'Date': date,
-          'Time': time, 
           'End_Date': endDate,
-          'End_Time': endTime, 
           'Location': location,
           'Event_Fee': eventfee,
           'Description': description,
@@ -80,7 +76,7 @@ Future<void> updatePayment(
   Future<void> updateEvent(
       String eventName,
       DateTime date,
-      DateTime time,
+      DateTime endDate,
       String location,
       String eventfee,
       String description,
@@ -96,9 +92,9 @@ Future<void> updatePayment(
     return event
         .doc(uid)
         .update({
-          'EventName': eventName, // John Doe
-          'Date': date, // Stokes and Sons
-          'Time': time, // 42
+          'EventName': eventName, 
+          'Date': date, 
+          'End_Date': endDate, 
           'Location': location,
           'Event_Fee': eventfee,
           'Description': description,

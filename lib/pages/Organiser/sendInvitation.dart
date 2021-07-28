@@ -8,14 +8,14 @@ import 'package:mailer/smtp_server/gmail.dart';
 class SendInvitation extends StatefulWidget {
   // const SendInvitation({ Key? key }) : super(key: key);
   DateTime date = DateTime.now();
-  DateTime time = DateTime.now();
+  DateTime endDate = DateTime.now();
   String eventName;
   String location;
   String uid;
 
   SendInvitation(
    this.date,
-   this.time,
+   this.endDate,
    this.eventName,
    this.location,
    this.uid);

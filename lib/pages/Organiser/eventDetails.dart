@@ -10,9 +10,7 @@ import 'package:EMMA/services/databaseservice.dart';
 // ignore: must_be_immutable
 class EventDetails extends StatefulWidget {
   DateTime date = DateTime.now();
-  DateTime time = DateTime.now();
   DateTime endDate = DateTime.now();
-  DateTime endTime = DateTime.now();
   String eventName = "";
   String location = "";
   String eventfee = "";
@@ -25,9 +23,7 @@ class EventDetails extends StatefulWidget {
   String uid = "";
   EventDetails(
     this.date,
-    this.time,
     this.endDate,
-    this.endTime,
     this.eventName,
     this.location,
     this.eventfee,
@@ -40,9 +36,7 @@ class EventDetails extends StatefulWidget {
     this.uid,
   ) {
     print(date);
-    print(time);
     print(endDate);
-    print(endTime);
     print(eventName);
     print(location);
     print(eventfee);
@@ -198,8 +192,8 @@ class _EventDetailsState extends State<EventDetails> {
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
                       Text(widget.date.toString() == widget.endDate.toString()
-                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) "
-                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year} ( ${format1.format(widget.endTime)} ) "),
+                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date} "
+                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year}  "),
                     ],
                   ),
                   Row(
@@ -371,7 +365,7 @@ class _EventDetailsState extends State<EventDetails> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SendInvitation(widget.date, widget.time, widget.eventName, widget.location, widget.uid)
+                                      builder: (context) => SendInvitation(widget.date, widget.endDate, widget.eventName, widget.location, widget.uid)
                                 )
                                 );
                             },
@@ -418,7 +412,7 @@ class _EventDetailsState extends State<EventDetails> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.time, widget.eventName, widget.location, widget.eventfee, widget.uid )
+                                      builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.endDate, widget.eventName, widget.location, widget.eventfee, widget.uid )
                                 )
                                 );
                             },
@@ -448,7 +442,7 @@ class _EventDetailsState extends State<EventDetails> {
                       MaterialPageRoute(
                           builder: (context) => UpdateEvent(
                                 widget.date,
-                                widget.time,
+                                widget.endDate,
                                 widget.eventName,
                                 widget.location,
                                 widget.eventfee,

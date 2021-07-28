@@ -58,9 +58,7 @@ class _DashboardState extends State<Dashboard> {
                         MaterialPageRoute(
                             builder: (context) => EventDetails(
                                 myDateTime,
-                                myTimeDate,
                                 myEndDateTime,
-                                myEndTimeDate,
                                 document.data()['EventName'],
                                 document.data()['Location'],
                                 document.data()['Event_Fee'],

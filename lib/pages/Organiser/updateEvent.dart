@@ -7,7 +7,7 @@ import 'package:EMMA/services/databaseservice.dart';
 class UpdateEvent extends StatefulWidget {
  
   DateTime date;
-  DateTime time;
+  DateTime endDate;
   String eventName;
   String location;
   String eventfee;
@@ -18,7 +18,7 @@ class UpdateEvent extends StatefulWidget {
   String picName;
   String contact;
   String uid;
-  UpdateEvent(this.date, this.time, this.eventName, this.location,
+  UpdateEvent(this.date, this.endDate, this.eventName, this.location,
       this.eventfee, this.description, this.label, this.reg, this.regDate, this.picName, this.contact, this.uid);
 
   @override
@@ -27,10 +27,10 @@ class UpdateEvent extends StatefulWidget {
 
 class _UpdateEventState extends State<UpdateEvent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final newformat = DateFormat("yyyy-MM-dd");
+  final newformat = DateFormat("yyyy-MM-dd hh:mm a");
   final format1 = DateFormat("HH:mm");
   DateTime _date;
-  DateTime _time;
+  DateTime _endDate;
   String _eventName;
   String _location;
   String _eventfee;
@@ -52,7 +52,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   }
 
   final TextEditingController dateController = new TextEditingController();
-  final TextEditingController timeController = new TextEditingController();
+  final TextEditingController endDateController = new TextEditingController();
   final TextEditingController eventNameController = new TextEditingController();
   final TextEditingController locationController = new TextEditingController();
   final TextEditingController eventfeeController = new TextEditingController();
@@ -67,7 +67,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   // ignore: must_call_super
   void initState() {
     dateController.text = widget.date.toString();
-    timeController.text = widget.time.toString();
+    endDateController.text = widget.endDate.toString();
     eventNameController.text = widget.eventName;
     locationController.text = widget.location;
     eventfeeController.text = widget.eventfee;
@@ -78,7 +78,7 @@ class _UpdateEventState extends State<UpdateEvent> {
     picNameController.text = widget.picName;
     contactController.text = widget.contact;
     _date = widget.date;
-    _time = widget.time;
+    _endDate = widget.endDate;
     _eventName = widget.eventName;
     _location = widget.location;
     _eventfee = widget.eventfee;
@@ -143,7 +143,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                                         new BorderRadius.circular(25.0),
                                   ),
                                   labelText:
-                                      'Date Format: (${newformat.pattern})'),
+                                      'Start Date Format: (${newformat.pattern})'),
                               format: newformat,
                               onShowPicker: (context, currentValue) {
                                 return showDatePicker(
@@ -157,15 +157,15 @@ class _UpdateEventState extends State<UpdateEvent> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: DateTimeField(
-                              controller: timeController,
-                              onChanged: (currentValue) => _time = currentValue,
+                              controller: endDateController,
+                              onChanged: (currentValue) => _endDate = currentValue,
                               decoration: InputDecoration(
                                   border: OutlineInputBorder(
                                     borderRadius:
                                         new BorderRadius.circular(25.0),
                                   ),
                                   labelText:
-                                      'Time Format: (${format1.pattern})'),
+                                      'End Date Format: (${newformat.pattern})'),
                               format: format1,
                               onShowPicker: (context, currentValue) async {
                                 final time = await showTimePicker(
@@ -347,7 +347,7 @@ class _UpdateEventState extends State<UpdateEvent> {
     DatabaseService().updateEvent(
       _eventName,
       _date,
-      _time,
+      _endDate,
       _location,
       _eventfee,
       _description,

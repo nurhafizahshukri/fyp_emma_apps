@@ -12,12 +12,10 @@ class CreateEvent extends StatefulWidget {
 
 class _CreateEventState extends State<CreateEvent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final newformat = DateFormat("yyyy-MM-dd");
+  final newformat = DateFormat("yyyy-MM-dd hh:mm a");
   final format1 = DateFormat("HH:mm");
   DateTime _date;
-  DateTime _time;
   DateTime _endDate;
-  DateTime _endTime;
   String _eventName;
   String _location;
   String _eventfee;
@@ -101,14 +99,31 @@ class _CreateEventState extends State<CreateEvent> {
                           labelText: 'Start Date (${newformat.pattern})'
                         ),
                         format: newformat,
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime.now().subtract(Duration(days: 0)),
-                            initialDate: currentValue ?? DateTime.now(),
-                            lastDate: DateTime(2100)
+                        onShowPicker: (context, currentValue) async {
+                          final date = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now().subtract(Duration(days: 0)),
+                              initialDate: currentValue ?? DateTime.now(),
+                              lastDate: DateTime(2100));
+                          if (date != null) {
+                            final time = await showTimePicker(
+                              context: context,
+                              initialTime:
+                                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
                             );
-                        },
+                            return DateTimeField.combine(date, time);
+                          } else {
+                            return currentValue;
+                          }
+                        }
+                        // onShowPicker: (context, currentValue) {
+                        //   return showDatePicker(
+                        //     context: context,
+                        //     firstDate: DateTime.now().subtract(Duration(days: 0)),
+                        //     initialDate: currentValue ?? DateTime.now(),
+                        //     lastDate: DateTime(2100)
+                        //     );
+                        // },
                       ),
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
@@ -127,61 +142,33 @@ class _CreateEventState extends State<CreateEvent> {
                           labelText: 'End Date (${newformat.pattern})'
                         ),
                         format: newformat,
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime.now().subtract(Duration(days: 0)),
-                            initialDate: currentValue ?? DateTime.now(),
-                            lastDate: DateTime(2100)
+                        onShowPicker: (context, currentValue) async {
+                          final date = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now().subtract(Duration(days: 0)),
+                              initialDate: currentValue ?? DateTime.now(),
+                              lastDate: DateTime(2100));
+                          if (date != null) {
+                            final time = await showTimePicker(
+                              context: context,
+                              initialTime:
+                                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
                             );
-                        },
+                            return DateTimeField.combine(date, time);
+                          } else {
+                            return currentValue;
+                          }
+                        }
+                        // onShowPicker: (context, currentValue) {
+                        //   return showDatePicker(
+                        //     context: context,
+                        //     firstDate: DateTime.now().subtract(Duration(days: 0)),
+                        //     initialDate: currentValue ?? DateTime.now(),
+                        //     lastDate: DateTime(2100)
+                        //     );
+                        // },
                       ),
                     ),
-                      Padding(padding: const EdgeInsets.all(8.0),
-                      child:DateTimeField(
-                        
-                        onChanged: (currentValue) => {_time = currentValue},
-                        validator: (input) {
-                          if(input == null){
-                                return 'Please enter start time';
-                              }
-                              return null;
-                        },
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'Start Time (${format1.pattern})'
-                        ),
-                        format: format1,
-                        onShowPicker: (context, currentValue) async {
-                          final time = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                          );
-                          return DateTimeField.convert(time);
-                        },
-                      ), ),
-                        Padding(padding: const EdgeInsets.all(8.0),
-                      child:DateTimeField(
-                        validator: (input) {
-                          if(input == null){
-                                return 'Please enter end time';
-                              }
-                              return null;
-                        },
-                        onChanged: (currentValue) => {_endTime = currentValue},
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'End Time (${format1.pattern})'
-                        ),
-                        format: format1,
-                        onShowPicker: (context, currentValue) async {
-                          final time = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                          );
-                          return DateTimeField.convert(time);
-                        },
-                      ), ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
@@ -483,7 +470,7 @@ class _CreateEventState extends State<CreateEvent> {
   final formState = _formKey.currentState;
   if (formState.validate()) {
     formState.save();
-    DatabaseService().addEvent(_eventName,_date, _time, _endDate, _endTime,_location,_eventfee,_description,_label,_reg,_regDate,_picName,_contact);
+    DatabaseService().addEvent(_eventName,_date, _endDate, _location,_eventfee,_description,_label,_reg,_regDate,_picName,_contact);
     Navigator.of(context).pop();
   }
   

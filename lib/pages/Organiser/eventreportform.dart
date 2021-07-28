@@ -13,14 +13,14 @@ final Color orange = Color(0xfffb6900);
 // ignore: must_be_immutable
 class UploadingImageToFirebaseStorage extends StatefulWidget {
   DateTime date;
-  DateTime time;
+  DateTime endDate;
   String eventName;
   String location;
   String eventfee;
   String uid;
   UploadingImageToFirebaseStorage(
     this.date,
-    this.time,
+    this.endDate,
     this.eventName,
     this.location,
     this.eventfee,
@@ -520,7 +520,7 @@ class _UploadingImageToFirebaseStorageState
                             MaterialPageRoute(
                                 builder: (context) => EvenntDetailsForm(
                                     widget.date,
-                                    widget.time,
+                                    widget.endDate,
                                     widget.eventName,
                                     widget.location,
                                     widget.eventfee,
