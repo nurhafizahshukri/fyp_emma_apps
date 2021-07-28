@@ -193,8 +193,6 @@ class MapScreenState extends State<UserDetailsForm>
                           Padding(
                               padding: EdgeInsets.only(
                                   left: 25.0, right: 25.0, top: 25.0, bottom: 10.0),
-                              child: Visibility(
-                                visible: _role == "organizer" ? false : true,
                                 child: new Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.start,
@@ -223,7 +221,7 @@ class MapScreenState extends State<UserDetailsForm>
                                     ),
                                   ],
                                 ),
-                              )),
+                              ),
                               
                           Padding(
                               padding: EdgeInsets.only(
@@ -232,13 +230,14 @@ class MapScreenState extends State<UserDetailsForm>
                                 mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
-                                  Visibility(
-                                    visible: _role == "organizer" ? false : true,
-                                    child: Flexible(
+                                  // Visibility(
+                                  //   visible: _role == "organizer" ? false : true,
+                                    // child: 
+                                    Flexible(
                                       child: Padding(
                                         padding: EdgeInsets.only(right: 10.0),
                                         child: new TextFormField(
-                                           // enabled: _role == "organizer" ? false : true,
+                                           enabled: _role == "organizer" ? false : true,
                                           textInputAction: TextInputAction.next,
                                           keyboardType: TextInputType.number,
                                           controller: ageController,
@@ -274,45 +273,49 @@ class MapScreenState extends State<UserDetailsForm>
                                             ),
                                           ),
                                         ),
-                                          enabled: true,
                                           autofocus: true,
                                         ),
                                       ),
-                                    ),
+                                    // ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                          right: 10),
-                                    child: Visibility(
-                                      visible: _role == "organizer" ? false : true,
+                                    // child: IgnorePointer(
+                                    //   ignoring: _role == "organizer" ? true : false,
                                       child: Container(
                                         height: 55,
-                                        
+                                        width: 100,
                                       decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(
                                         10.0,
                                       ),
                                       color: Colors.white,
-                                      border: Border.all(
+                                      border: _role == "organizer" ? Border.all(
+                                        color: Colors.grey[300],
+                                        width: 1,
+                                      ) : Border.all(
                                         color: Colors.grey,
                                         width: 2,
                                       ),
                                       ),
                                         child: DropdownButton<String>(
+                                        
                                         value: _gender,
                                         icon: const Icon(
                                           Icons.arrow_drop_down,
                                           color: Colors.red,
                                         ),
                                         iconSize: 24,
+                                        iconDisabledColor: Colors.grey,
                                         elevation: 16,
                                         style: const TextStyle(color: Colors.black),
                                         underline: SizedBox(),
-                                        onChanged: (String newValue) {
+                                        onChanged: _role == "organizer" ? null : (String newValue) {
                                           setState(() {
                                             _gender = newValue;
                                           });
-                                        },
+                                        } ,
                                         items: <String>['Male', 'Female']
                                             .map<DropdownMenuItem<String>>(
                                                 (String value) {
@@ -326,7 +329,7 @@ class MapScreenState extends State<UserDetailsForm>
                                         }).toList(),
                                         ),
                                       ),
-                                    ),
+                                    // ),
                                   ),
                                 ],
                               )),

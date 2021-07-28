@@ -335,10 +335,12 @@ class _CreateEventState extends State<CreateEvent> {
                             ),
                                 ),
                               ),
-                        Visibility(
-                          visible: _reg == 'Yes'? true : false,
-                          child: Padding(padding: const EdgeInsets.all(8.0),
+                        // Visibility(
+                        //   visible: _reg == 'Yes'? true : false,
+                        //   child: 
+                          Padding(padding: const EdgeInsets.all(8.0),
                           child: DateTimeField(
+                            enabled: _reg == 'Yes'? true : false,
                           onChanged: (currentValue) => _regDate = currentValue,
                           decoration: InputDecoration(
                             border: new OutlineInputBorder(
@@ -357,7 +359,7 @@ class _CreateEventState extends State<CreateEvent> {
                           },
                           ),
                           ),
-                        ),   
+                        // ),   
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                                 child: Padding(
