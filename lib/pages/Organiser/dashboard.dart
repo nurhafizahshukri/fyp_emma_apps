@@ -49,6 +49,8 @@ class _DashboardState extends State<Dashboard> {
                 DateTime myDateTime = (document.data()['Date']).toDate();
                 DateTime myEndDateTime = (document.data()['End_Date']).toDate();
                 DateTime regDate = (document.data()['Registration']).toDate();
+                DateTime formattedEventDate = formatter.parse(myDateTime.toString());
+                DateTime formattedEventEndDate = formatter.parse(myEndDateTime.toString());
                 index += 1;
                 return GestureDetector(
                   onTap: () {
@@ -229,7 +231,7 @@ class _DashboardState extends State<Dashboard> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Text(
-                                  myDateTime.compareTo(formattedDate)>0 ? 'Coming\nSoon': myDateTime.compareTo(formattedDate)<0 && myEndDateTime.compareTo(formattedDate)<0? 'Ended':'Ongoing',
+                                  formattedEventDate.compareTo(formattedDate)>0 ? 'Coming\nSoon': formattedEventDate.compareTo(formattedDate)<0 && formattedEventEndDate.compareTo(formattedDate)<0? 'Ended':'Ongoing',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Avenir',

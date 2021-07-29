@@ -89,6 +89,8 @@ class _EventViewState extends State<EventView> {
     var formatter = new DateFormat('yyyy-MM-dd');
     var formatter2 = new DateFormat('dd-MM-yyyy (hh:mm a)');
     DateTime formattedDate = formatter.parse(now.toString());
+    DateTime formattedEventDate = formatter.parse(widget.date.toString());
+    DateTime formattedEventEndDate = formatter.parse(widget.endDate.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Details'),
@@ -178,7 +180,7 @@ class _EventViewState extends State<EventView> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      widget.date.compareTo(formattedDate)>0 ? 'COMING SOON': widget.date.compareTo(formattedDate)<0 && widget.endDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
+                      formattedEventDate.compareTo(formattedDate)>0 ? 'COMING SOON': formattedEventDate.compareTo(formattedDate)<0 && formattedEventEndDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,
@@ -292,7 +294,7 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Flexible(
                           child: Text(widget.reg =="Yes" ?
-                            "${widget.regDate.day} / ${widget.regDate.month} / ${widget.regDate.year} ( 23:59 )" : "Registration Unavailable",
+                            formatter2.format(widget.regDate) : "Registration Unavailable",
                             textAlign: TextAlign.justify,
                       )),
                     ],

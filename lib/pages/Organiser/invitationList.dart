@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class InviteeList extends StatefulWidget {
 String uid;
 
@@ -48,13 +49,7 @@ class _InviteeListState extends State<InviteeList> {
                           width: 530,
                           decoration: BoxDecoration(
                             color: Colors.red[800],
-                              // border: Border.all(
-                              //   color: Colors.black,
-                              //   width: 1,
-                              // ),
-                              // borderRadius: BorderRadius.circular(12),
                           ),
-                          // color: Colors.blue,
                           child: Align(
                             alignment: Alignment.center,
                             child: Text(

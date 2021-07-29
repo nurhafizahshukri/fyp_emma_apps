@@ -73,6 +73,8 @@ class _EventDetailsState extends State<EventDetails> {
     var formatter = new DateFormat('yyyy-MM-dd');
     var formatter2 = new DateFormat('dd-MM-yyyy (hh:mm a)');
     DateTime formattedDate = formatter.parse(now.toString());
+    DateTime formattedEventDate = formatter.parse(widget.date.toString());
+    DateTime formattedEventEndDate = formatter.parse(widget.endDate.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Details'),
@@ -164,7 +166,7 @@ class _EventDetailsState extends State<EventDetails> {
                   children: <Widget>[
                     Text(
                       // 'COMING SOON',
-                      widget.date.compareTo(formattedDate)>0 ? 'COMING SOON': widget.date.compareTo(formattedDate)<0 && widget.endDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
+                      formattedEventDate.compareTo(formattedDate)>0 ? 'COMING SOON': formattedEventDate.compareTo(formattedDate)<0 && formattedEventEndDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,

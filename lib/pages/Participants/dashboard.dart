@@ -174,6 +174,8 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                               DateTime myDateTime = allEvent[index].date;
                               DateTime myEndDateTime = allEvent[index].endDate;
                               DateTime regDateTime = allEvent[index].regDate;
+                              DateTime formattedEventDate = formatter.parse(myDateTime.toString());
+                              DateTime formattedEventEndDate = formatter.parse(myEndDateTime.toString());
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -388,14 +390,14 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       MainAxisSize.min,
                                                   children: <Widget>[
                                                     Text(
-                                                      myDateTime.compareTo(
+                                                      formattedEventDate.compareTo(
                                                                   formattedDate) >
                                                               0
                                                           ? 'Coming\nSoon'
-                                                          : myDateTime.compareTo(
+                                                          : formattedEventDate.compareTo(
                                                                           formattedDate) <
                                                                       0 &&
-                                                                  myEndDateTime
+                                                                  formattedEventEndDate
                                                                           .compareTo(
                                                                               formattedDate) <
                                                                       0
@@ -441,6 +443,8 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                               DateTime myDateTime = suggestedEvent[index].date;
                               DateTime myEndDateTime = suggestedEvent[index].endDate;
                               DateTime regDateTime = suggestedEvent[index].regDate;
+                              DateTime formattedEventDate = formatter.parse(myDateTime.toString());
+                              DateTime formattedEventEndDate = formatter.parse(myEndDateTime.toString());
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -656,17 +660,10 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       MainAxisSize.min,
                                                   children: <Widget>[
                                                     Text(
-                                                      myDateTime.compareTo(
-                                                                  formattedDate) >
-                                                              0
+                                                      formattedEventDate.compareTo(formattedDate) > 0
                                                           ? 'Coming\nSoon'
-                                                          : myDateTime.compareTo(
-                                                                          formattedDate) <
-                                                                      0 &&
-                                                                  myEndDateTime
-                                                                          .compareTo(
-                                                                              formattedDate) <
-                                                                      0
+                                                          : formattedEventDate.compareTo(formattedDate) < 0 &&
+                                                                  formattedEventEndDate.compareTo(formattedDate) <0
                                                               ? 'Ended'
                                                               : 'Ongoing',
                                                       style: TextStyle(
@@ -696,7 +693,6 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                             fontWeight: FontWeight.w500,
                             fontSize: 25,
                           ),
-                          // textAlign: TextAlign.left,
                           ),
                       ),
                       Container(
@@ -709,6 +705,8 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                               DateTime myDateTime = otherEvent[index].date;
                               DateTime myEndDateTime = otherEvent[index].endDate;
                               DateTime regDateTime = otherEvent[index].regDate;
+                              DateTime formattedEventDate = formatter.parse(myDateTime.toString());
+                              DateTime formattedEventEndDate = formatter.parse(myEndDateTime.toString());
                               return Container(
                                   width: 350,
                                   child: GestureDetector(
@@ -923,17 +921,10 @@ class _DashboardParticipantState extends State<DashboardParticipant> {
                                                       MainAxisSize.min,
                                                   children: <Widget>[
                                                     Text(
-                                                      myDateTime.compareTo(
-                                                                  formattedDate) >
-                                                              0
+                                                      formattedEventDate.compareTo(formattedDate) > 0
                                                           ? 'Coming\nSoon'
-                                                          : myDateTime.compareTo(
-                                                                          formattedDate) <
-                                                                      0 &&
-                                                                  myEndDateTime
-                                                                          .compareTo(
-                                                                              formattedDate) <
-                                                                      0
+                                                          : formattedEventDate.compareTo(formattedDate) < 0 &&
+                                                                  formattedEventEndDate.compareTo(formattedDate) <0
                                                               ? 'Ended'
                                                               : 'Ongoing',
                                                       style: TextStyle(
