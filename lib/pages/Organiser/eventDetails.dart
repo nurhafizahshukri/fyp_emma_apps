@@ -1,3 +1,5 @@
+import 'package:EMMA/pages/Organiser/invitationList.dart';
+import 'package:EMMA/pages/Organiser/participantsList.dart';
 import 'package:EMMA/pages/Organiser/sendInvitation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -209,7 +211,7 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.attach_money_sharp),
                       SizedBox(width: 10),
-                      Text(widget.eventfee != null ? widget.eventfee : 'FOC'),
+                      Text(widget.eventfee != 'RM 0.00' ? widget.eventfee : 'FOC'),
                     ],
                   ),
                   Row(
@@ -261,55 +263,54 @@ class _EventDetailsState extends State<EventDetails> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(
-                        'Participant',
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 25,
+                      Visibility(
+                        visible: widget.reg == 'Yes'? true : false,
+                        child: Text(
+                          'Participant',
+                          style: TextStyle(
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.w500,
+                            fontSize: 25,
+                          ),
                         ),
                       ),
                     ],
-                    
                   ),
                   SizedBox(height: 10),
-                  Container(
-                    height: 100,
-                    child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("participant").snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(child: Text('Something went wrong'));
-                          }
-                          if(!snapshot.hasData)
-                          return Center(child: Text('No participant'));
-
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: Text("Loading"));
-                          }
-                          return new ListView(
-                            children:  snapshot.data.docs.map((DocumentSnapshot document) {
-                              return Row(
-                                mainAxisAlignment:MainAxisAlignment.spaceBetween ,children:<Widget> [
-                                Text(document.data()["userName"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
-                                
-                                Text(document.data()["userContact"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
-
-                              ],)
-                            ;}
-                            ).toList(),
-                          );
-                        }),
-                  )
+                  Visibility(
+                    visible: widget.reg == 'Yes'? true : false,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Participants(widget.uid),
+                                fullscreenDialog: true));
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.white,
+                          shape: new RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          side: BorderSide(color: Colors.red[600], width: 3),
+                          fixedSize: Size(140, 40)
+                        ),
+                        child: Text('View List'.toUpperCase(), 
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold, 
+                            color: Colors.red[600])),
+                      ),
+                    ),
+                  ),
                 ],
               )),
             ),
             Padding(
               padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
               child: Container(
-                  // constraints: BoxConstraints(minWidth: 100, maxWidth: 400),
                   child: Column(
                 children: <Widget>[
                   Row(
@@ -325,34 +326,30 @@ class _EventDetailsState extends State<EventDetails> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Container(
-                    height: 100,
-                    child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("invitee").snapshots(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (snapshot.hasError) {
-                              return Center(child: Text('Something went wrong'));
-                            }
-                            if(!snapshot.hasData)
-                            return Center(child: Text('No Invitee'));
-                      
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Center(child: Text("Loading"));
-                            }
-                            return new ListView(
-                              children:  snapshot.data.docs.map((DocumentSnapshot document) {
-                                return Row(
-                                  mainAxisAlignment:MainAxisAlignment.spaceBetween ,children:<Widget> [
-                                  Text(document.data()["userName"],style: TextStyle(color:Colors.black ),),
-                                  
-                                  Text(document.data()["email"],style: TextStyle(color:Colors.black ),),
-                                ],)
-                              ;}
-                              ).toList(),
-                            );
-                          }),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => InviteeList(widget.uid),
+                              fullscreenDialog: true));
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        side: BorderSide(color: Colors.red[600], width: 3),
+                        fixedSize: Size(140, 40)
+                      ),
+                      child: Text('Invitee List'.toUpperCase(), 
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold, 
+                          color: Colors.red[600])),
+                    ),
                   ),
                   Row(
                     children: <Widget>[
@@ -394,7 +391,6 @@ class _EventDetailsState extends State<EventDetails> {
                           color: Colors.grey[800],
                           fontWeight: FontWeight.w500,
                           fontSize: 25,
-
                         ),
                       ),
                     ],
@@ -402,9 +398,7 @@ class _EventDetailsState extends State<EventDetails> {
                   SizedBox(height: 10),
                   Row(
                     children: <Widget>[                      
-                   Visibility(
-                     visible: widget.date.compareTo(now)>0 ? false : true,
-                     child: Flatbutton(
+                     Flatbutton(
                             fontsize: 15,
                             icon: Icon(Icons.document_scanner, color:  Colors.red,),
                             colortext: Colors.red,
@@ -419,7 +413,6 @@ class _EventDetailsState extends State<EventDetails> {
                                 );
                             },
                           ),
-                   )
                       ],
                   ),
                                   ],
