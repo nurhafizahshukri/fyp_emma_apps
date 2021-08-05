@@ -471,7 +471,16 @@ class _UploadingImageToFirebaseStorageState
                                     _uintFile5,
                                     _uintFile6,
                                     _uintFile7,
-                                    _uintFile8)));
+                                    _uintFile8,
+                                    _imageFile1,
+                                    _imageFile2,
+                                    _imageFile3,
+                                    _imageFile4,
+                                    _imageFile5,
+                                    _imageFile6,
+                                    _imageFile7,
+                                    _imageFile8,
+                                    )));
                       })
                     }
                   : {

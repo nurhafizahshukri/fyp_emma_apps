@@ -228,7 +228,7 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.attach_money_sharp),
                       SizedBox(width: 10),
-                      Text(widget.eventfee != null ? widget.eventfee : ''),
+                      Text(widget.eventfee != 'RM 0.00' ? widget.eventfee : 'FREE'),
                     ],
                   ),
                   Row(

@@ -213,7 +213,7 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.attach_money_sharp),
                       SizedBox(width: 10),
-                      Text(widget.eventfee != 'RM 0.00' ? widget.eventfee : 'FOC'),
+                      Text(widget.eventfee != 'RM 0.00' ? widget.eventfee : 'FREE'),
                     ],
                   ),
                   Row(
