@@ -81,39 +81,6 @@ print("_imageUrl6=$_imageUrl6");
 print("_imageUrl7=$_imageUrl7");
 print("_imageUrl8=$_imageUrl8");
     
-// Uint8List bytes = (await NetworkAssetBundle(Uri.parse("${_imageUrl1}")).load("${_imageUrl1}"))
-//     .buffer
-//     .asUint8List();
-// Uint8List bytes1 = (await NetworkAssetBundle(Uri.parse("${_imageUrl2}")).load("${_imageUrl2}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes2 = (await NetworkAssetBundle(Uri.parse("${_imageUrl3}")).load("${_imageUrl3}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes3 = (await NetworkAssetBundle(Uri.parse("${_imageUrl4}")).load("${_imageUrl4}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes4 = (await NetworkAssetBundle(Uri.parse("${_imageUrl5}")).load("${_imageUrl5}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes5 = (await NetworkAssetBundle(Uri.parse("${_imageUrl6}")).load("${_imageUrl6}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes6 = (await NetworkAssetBundle(Uri.parse("${_imageUrl7}")).load("${_imageUrl7}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes7 = (await NetworkAssetBundle(Uri.parse("${_imageUrl8}")).load("${_imageUrl8}"))
-//     .buffer
-//     .asUint8List();
-
-
-
     final pageTheme = PageTheme(
       pageFormat: PdfPageFormat.a4,
       

@@ -1,3 +1,4 @@
+import 'package:EMMA/error_handler.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -489,6 +490,7 @@ class MapScreenState extends State<UserDetailsForm>
                       print('The password provided is too weak.');
                     } else if (e.code == 'email-already-in-use') {
                       print('The account already exists for that email.');
+                      ErrorHandler().errorDialog(context, e);
                     }
                   } catch (e) {
                     print(e);

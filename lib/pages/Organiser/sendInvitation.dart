@@ -75,8 +75,6 @@ class _SendInvitationState extends State<SendInvitation> {
     // ..bccRecipients.add(Address('bccAddress@example.com'))
     ..subject = _subject
     ..text = _body;
-    print(_recipient);
-    print(_recipientName);
 
   try {
     final sendReport = await send(message, smtpServer);
@@ -127,30 +125,6 @@ class _SendInvitationState extends State<SendInvitation> {
                   return _recipient = value;
                 }),
               ),
-      //         Padding(
-      //           padding: EdgeInsets.all(8.0),
-      //           child: TextFormField(
-      //             controller: _recipientController,
-      //             // onChanged: (currentValue) => _recipient = currentValue,
-      //             onChanged: (String value) {
-      //   if (value.substring(value.length - 1) == ',') {
-      //     print('>>>>>> value = $value : controller = ${_recipientController.hashCode}');
-      //     setState(() {
-      //       _recipient.add(value.substring(0, value.length - 1));
-      //     });
-      //     Future<void>.delayed(
-      //       const Duration(milliseconds: 10),
-      //       _recipientController.clear,
-      //     );
-      //     print(_recipient);
-      //   }
-      // },
-      //             decoration: InputDecoration(
-      //               border: OutlineInputBorder(),
-      //               labelText: 'Recipient',
-      //             ),
-      //           ),
-      //         ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: TextFormField(

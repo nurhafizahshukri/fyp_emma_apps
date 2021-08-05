@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 // ignore: must_be_immutable
-class EvenntDetailsForm extends StatefulWidget {
+class EventContentForm extends StatefulWidget {
   DateTime date;
   DateTime time;
   String eventName;
@@ -23,7 +23,7 @@ class EvenntDetailsForm extends StatefulWidget {
   Uint8List _imageUrl7;
   Uint8List _imageUrl8;
 
-  EvenntDetailsForm(
+  EventContentForm(
       this.date,
       this.time,
       this.eventName,
@@ -39,10 +39,10 @@ class EvenntDetailsForm extends StatefulWidget {
       this._imageUrl7,
       this._imageUrl8);
   @override
-  _EvenntDetailsFormState createState() => _EvenntDetailsFormState();
+  _EventContentFormState createState() => _EventContentFormState();
 }
 
-class _EvenntDetailsFormState extends State<EvenntDetailsForm> {
+class _EventContentFormState extends State<EventContentForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final newformat = DateFormat("yyyy-MM-dd");
   final format1 = DateFormat("HH:mm");

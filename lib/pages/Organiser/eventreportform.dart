@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:EMMA/pages/Organiser/eventdetailsform.dart';
+import 'package:EMMA/pages/Organiser/eventContentform.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -458,7 +457,7 @@ class _UploadingImageToFirebaseStorageState
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EvenntDetailsForm(
+                                builder: (context) => EventContentForm(
                                     widget.date,
                                     widget.endDate,
                                     widget.eventName,
