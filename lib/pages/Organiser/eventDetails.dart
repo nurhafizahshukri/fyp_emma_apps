@@ -1,5 +1,6 @@
 import 'package:EMMA/pages/Organiser/invitationList.dart';
 import 'package:EMMA/pages/Organiser/participantsList.dart';
+import 'package:EMMA/pages/Organiser/reportList.dart';
 import 'package:EMMA/pages/Organiser/sendInvitation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -279,33 +280,63 @@ class _EventDetailsState extends State<EventDetails> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Visibility(
-                    visible: widget.reg == 'Yes'? true : false,
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Participants(widget.uid),
-                                fullscreenDialog: true));
-                        },
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("participant").snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('Something went wrong'));
+                        }
+                        if(!snapshot.hasData)
+                        return Center(child: Text(''));
+        
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: Text(""));
+                        }
+                        if (snapshot.data.size ==
+                            0) {
+                          return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: null,
+                          style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            fixedSize: Size(140, 40)
                           ),
-                          side: BorderSide(color: Colors.red[600], width: 3),
-                          fixedSize: Size(140, 40)
+                          child: Text('View List'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15)),
                         ),
-                        child: Text('View List'.toUpperCase(), 
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.bold, 
-                            color: Colors.red[600])),
-                      ),
-                    ),
+                      );
+                        }
+                      return Align(
+                          alignment: Alignment.centerLeft,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Participants(widget.uid),
+                                    fullscreenDialog: true));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              side: BorderSide(color: Colors.red[600], width: 3),
+                              fixedSize: Size(140, 40)
+                            ),
+                            child: Text('View List'.toUpperCase(), 
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold, 
+                                color: Colors.red[600])),
+                          ),
+                        );
+                    }
                   ),
                 ],
               )),
@@ -328,30 +359,63 @@ class _EventDetailsState extends State<EventDetails> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => InviteeList(widget.uid),
-                              fullscreenDialog: true));
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("invitee").snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('Something went wrong'));
+                        }
+                        if(!snapshot.hasData)
+                        return Center(child: Text(''));
+        
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: Text(""));
+                        }
+                        if (snapshot.data.size ==
+                            0) {
+                          return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: null,
+                          style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            fixedSize: Size(140, 40)
+                          ),
+                          child: Text('View Invitee'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15)),
                         ),
-                        side: BorderSide(color: Colors.red[600], width: 3),
-                        fixedSize: Size(140, 40)
-                      ),
-                      child: Text('Invitee List'.toUpperCase(), 
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold, 
-                          color: Colors.red[600])),
-                    ),
+                      );
+                        }
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => InviteeList(widget.uid),
+                                  fullscreenDialog: true));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.red[600], width: 3),
+                            fixedSize: Size(140, 40)
+                          ),
+                          child: Text('View Invitee'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold, 
+                              color: Colors.red[600])),
+                        ),
+                      );
+                    }
                   ),
                   Row(
                     children: <Widget>[
@@ -398,26 +462,91 @@ class _EventDetailsState extends State<EventDetails> {
                     ],
                   ),
                   SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[                      
-                     Flatbutton(
-                            fontsize: 15,
-                            icon: Icon(Icons.document_scanner, color:  Colors.red,),
-                            colortext: Colors.red,
-                   
-                            text: "create a report",
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.endDate, widget.eventName, widget.location, widget.eventfee, widget.uid )
-                                )
-                                );
-                            },
-                          ),
-                      ],
-                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("report").snapshots(),
+                    builder: (context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('Something went wrong'));
+                        }
+                        if(!snapshot.hasData)
+                        return Center(child: Text(''));
+        
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: Text(""));
+                        }
+                        if (snapshot.data.size ==
+                            0) {
+                          return Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: ElevatedButton(
+                                      onPressed: null,
+                                      style: ElevatedButton.styleFrom(
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        fixedSize: Size(140, 40)
+                                      ),
+                                      child: Text('View Report'.toUpperCase(), 
+                                        style: TextStyle(
+                                          fontSize: 15)),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: <Widget>[ 
+                                 Flatbutton(
+                                        fontsize: 15,
+                                        icon: Icon(Icons.document_scanner, color:  Colors.red,),
+                                        colortext: Colors.red,
+                                        text: "create a report",
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.endDate, widget.eventName, widget.location, widget.eventfee, widget.uid )
+                                            )
+                                            );
+                                        },
+                                      ),
                                   ],
+                              ),
+                            ],
+                          );
+                        }
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            List<String> logoImage = List.from( snapshot.data.docs[0]['LogoImage']);
+                            List<String> eventImage = List.from( snapshot.data.docs[0]['EventImage']);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ReportList(widget.uid, snapshot.data.docs[0]['Content'], logoImage, eventImage, widget.date, widget.endDate, widget.eventName, widget.location, widget.eventfee, snapshot.data.docs[0].id),
+                                  fullscreenDialog: true));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.red[600], width: 3),
+                            fixedSize: Size(140, 40)
+                          ),
+                          child: Text('View Report'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold, 
+                              color: Colors.red[600])),
+                        ),
+                      );
+                    }
+                  ),
+                ],
               )),
             ),
           ]),

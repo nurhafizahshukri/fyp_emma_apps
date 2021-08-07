@@ -235,4 +235,16 @@ Future<void> updatePayment(
         "Creator_uid":user.uid,
         });
   }
+  Future<void> deleteReport(
+      String uid,
+      String reportId) {
+    // Call the user's CollectionReference to add a new user_
+    CollectionReference report = FirebaseFirestore.instance.collection('event').doc(uid).collection('report');
+
+    return report
+        .doc(reportId)
+        .delete()
+        .then((value) => print("Report deleted"))
+        .catchError((error) => print("Failed to delete report: $error"));
+  }
 }

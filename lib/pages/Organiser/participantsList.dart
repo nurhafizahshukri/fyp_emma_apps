@@ -103,22 +103,6 @@ class _ParticipantsState extends State<Participants> {
                                   trailing: Text(document.data()["payment"]? "Paid" : "Unpaid",style: TextStyle(color:Colors.black, fontSize: 18, fontStyle: FontStyle.italic ),),
                                 ),
                               )
-                              // Container(
-                              //   padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
-                              //   // height: 35,
-                              //   color: document.data()["payment"]? Colors.green[300]:Colors.red[100],
-                              //   child: Row(
-                              //     mainAxisAlignment:MainAxisAlignment.spaceBetween ,children:<Widget> [
-                              //     Column(
-                              //       children: [
-                              //         Text(document.data()["userName"] + " (" +document.data()["userContact"] +")",style: TextStyle(color:Colors.black, fontSize: 18 ),),
-                              //       ],
-                              //     ),
-                                  // Text(document.data()["userContact"],style: TextStyle(color:Colors.black, fontSize: 18 ),),
-                              //     Text(document.data()["payment"]? "Paid" : "Unpaid",style: TextStyle(color:Colors.black, fontSize: 18, fontStyle: FontStyle.italic ),),
-        
-                              //   ],),
-                              // )
                             ;}
                             ).toList(),
                           )

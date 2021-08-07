@@ -254,8 +254,10 @@ class _EventContentFormState extends State<EventContentForm> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () async {
-                                onSubmit(); int count = 2;
-                                  Navigator.of(context).popUntil((_) => count-- <= 0);
+                                onSubmit();
+                                onSave(); 
+                                int count = 2;
+                                Navigator.of(context).popUntil((_) => count-- <= 0);
                               },
                               style: ElevatedButton.styleFrom(
                               primary: Colors.red[600],

@@ -32,7 +32,7 @@ class _DashboardState extends State<Dashboard> {
         body: StreamBuilder<QuerySnapshot>(
             stream: event
             .where('Creator_Uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
-            // .orderBy("Date",descending:true)
+            // .orderBy('Date',descending:false)
             .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
