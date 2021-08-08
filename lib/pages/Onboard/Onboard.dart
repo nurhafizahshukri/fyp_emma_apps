@@ -11,7 +11,7 @@ class Onboard extends StatefulWidget {
 }
 
 class _OnboardState extends State<Onboard> {
-  @override
+ 
  final int _numPages = 3;
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
@@ -73,6 +73,7 @@ class _OnboardState extends State<Onboard> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerRight,
+                  // ignore: deprecated_member_use
                   child: FlatButton(
                     onPressed: () =>  _signInWithEmail(context),
                     child: Text(
@@ -214,6 +215,7 @@ class _OnboardState extends State<Onboard> {
                     ? Expanded(
                         child: Align(
                           alignment: FractionalOffset.bottomRight,
+                          // ignore: deprecated_member_use
                           child: FlatButton(
                             onPressed: () {
                               _pageController.nextPage(

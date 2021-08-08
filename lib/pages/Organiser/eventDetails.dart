@@ -1,6 +1,6 @@
-import 'dart:typed_data';
-
-import 'package:EMMA/pages/Organiser/invitation.dart';
+import 'package:EMMA/pages/Organiser/invitationList.dart';
+import 'package:EMMA/pages/Organiser/participantsList.dart';
+import 'package:EMMA/pages/Organiser/reportList.dart';
 import 'package:EMMA/pages/Organiser/sendInvitation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -10,49 +10,45 @@ import 'package:EMMA/Pages/Organiser/eventreportform.dart';
 import 'package:EMMA/Pages/Organiser/updateEvent.dart';
 import 'package:EMMA/services/databaseservice.dart';
 
+// ignore: must_be_immutable
 class EventDetails extends StatefulWidget {
   DateTime date = DateTime.now();
-  DateTime time = DateTime.now();
   DateTime endDate = DateTime.now();
-  DateTime endTime = DateTime.now();
   String eventName = "";
   String location = "";
   String eventfee = "";
   String description = "";
   String label = "";
   String reg = "";
+  DateTime regDate = DateTime.now();
+  String picName = "";
+  String picContact = "";
   String uid = "";
-  Uint8List _imageUrl1;
-  Uint8List _imageUrl2;
-  Uint8List _imageUrl3;
-  Uint8List _imageUrl4;
-  Uint8List _imageUrl5;
-  Uint8List _imageUrl6;
-  Uint8List _imageUrl7;
-  Uint8List _imageUrl8;
   EventDetails(
     this.date,
-    this.time,
     this.endDate,
-    this.endTime,
     this.eventName,
     this.location,
     this.eventfee,
     this.description,
     this.label,
     this.reg,
+    this.regDate,
+    this.picName,
+    this.picContact,
     this.uid,
   ) {
     print(date);
-    print(time);
     print(endDate);
-    print(endTime);
     print(eventName);
     print(location);
     print(eventfee);
     print(description);
     print(label);
     print(reg);
+    print(regDate);
+    print(picName);
+    print(picContact);
   }
 
   @override
@@ -76,8 +72,10 @@ class _EventDetailsState extends State<EventDetails> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter2 = new DateFormat('dd-MM-yyyy (hh:mm a)');
     DateTime formattedDate = formatter.parse(now.toString());
-    String eventName;
+    DateTime formattedEventDate = formatter.parse(widget.date.toString());
+    DateTime formattedEventEndDate = formatter.parse(widget.endDate.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Details'),
@@ -169,7 +167,7 @@ class _EventDetailsState extends State<EventDetails> {
                   children: <Widget>[
                     Text(
                       // 'COMING SOON',
-                      widget.date.compareTo(formattedDate)>0 ? 'COMING SOON': widget.date.compareTo(formattedDate)<0 && widget.endDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
+                      formattedEventDate.compareTo(formattedDate)>0 ? 'COMING SOON': formattedEventDate.compareTo(formattedDate)<0 && formattedEventEndDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,
@@ -199,9 +197,10 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
-                      Text(widget.date.toString() == widget.endDate.toString()
-                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) "
-                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year} ( ${format1.format(widget.endTime)} ) "),
+                      Text((widget.date.day.toString() == widget.endDate.day.toString()) && widget.date.month.toString() == widget.endDate.month.toString()
+                          ? formatter2.format(widget.date)
+                          : formatter2.format(widget.date) + ' - ' + formatter2.format(widget.endDate)),
+                          // : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year}  "),
                     ],
                   ),
                   Row(
@@ -215,14 +214,14 @@ class _EventDetailsState extends State<EventDetails> {
                     children: <Widget>[
                       Icon(Icons.attach_money_sharp),
                       SizedBox(width: 10),
-                      Text(widget.eventfee != null ? widget.eventfee : ''),
+                      Text(widget.eventfee != 'RM 0.00' ? widget.eventfee : 'FREE'),
                     ],
                   ),
                   Row(
                     children: <Widget>[
                       Icon(Icons.label_important_outline_sharp),
                       SizedBox(width: 10),
-                      Text(widget.label != null ? widget.label : ''),
+                      Text(widget.label != null ? widget.label.toUpperCase() : ''),
                     ],
                   ),
                 ],
@@ -267,55 +266,84 @@ class _EventDetailsState extends State<EventDetails> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Text(
-                        'Participant',
-                        style: TextStyle(
-                          color: Colors.grey[800],
-                          fontWeight: FontWeight.w500,
-                          fontSize: 25,
+                      Visibility(
+                        visible: widget.reg == 'Yes'? true : false,
+                        child: Text(
+                          'Participant',
+                          style: TextStyle(
+                            color: Colors.grey[800],
+                            fontWeight: FontWeight.w500,
+                            fontSize: 25,
+                          ),
                         ),
                       ),
                     ],
-                    
                   ),
                   SizedBox(height: 10),
-                  Container(
-                    height: 100,
-                    child: StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("participant").snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (snapshot.hasError) {
-                            return Center(child: Text('Something went wrong'));
-                          }
-                          if(!snapshot.hasData)
-                          return Center(child: Text('No participant'));
-
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Center(child: Text("Loading"));
-                          }
-                          return new ListView(
-                            children:  snapshot.data.docs.map((DocumentSnapshot document) {
-                              return Row(
-                                mainAxisAlignment:MainAxisAlignment.spaceBetween ,children:<Widget> [
-                                Text(document.data()["userName"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
-                                
-                                Text(document.data()["userContact"],style: TextStyle(color:document.data()["payment"]? Colors.green:Colors.black ),),
-
-                              ],)
-                            ;}
-                            ).toList(),
-                          );
-                        }),
-                  )
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("participant").snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('Something went wrong'));
+                        }
+                        if(!snapshot.hasData)
+                        return Center(child: Text(''));
+        
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: Text(""));
+                        }
+                        if (snapshot.data.size ==
+                            0) {
+                          return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: null,
+                          style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            fixedSize: Size(140, 40)
+                          ),
+                          child: Text('View List'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15)),
+                        ),
+                      );
+                        }
+                      return Align(
+                          alignment: Alignment.centerLeft,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Participants(widget.uid),
+                                    fullscreenDialog: true));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.white,
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              side: BorderSide(color: Colors.red[600], width: 3),
+                              fixedSize: Size(140, 40)
+                            ),
+                            child: Text('View List'.toUpperCase(), 
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold, 
+                                color: Colors.red[600])),
+                          ),
+                        );
+                    }
+                  ),
                 ],
               )),
             ),
             Padding(
               padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
               child: Container(
-                  // constraints: BoxConstraints(minWidth: 100, maxWidth: 400),
                   child: Column(
                 children: <Widget>[
                   Row(
@@ -331,12 +359,66 @@ class _EventDetailsState extends State<EventDetails> {
                     ],
                   ),
                   SizedBox(height: 10),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("invitee").snapshots(),
+                    builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('Something went wrong'));
+                        }
+                        if(!snapshot.hasData)
+                        return Center(child: Text(''));
+        
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: Text(""));
+                        }
+                        if (snapshot.data.size ==
+                            0) {
+                          return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: null,
+                          style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            fixedSize: Size(140, 40)
+                          ),
+                          child: Text('View Invitee'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15)),
+                        ),
+                      );
+                        }
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => InviteeList(widget.uid),
+                                  fullscreenDialog: true));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.red[600], width: 3),
+                            fixedSize: Size(140, 40)
+                          ),
+                          child: Text('View Invitee'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold, 
+                              color: Colors.red[600])),
+                        ),
+                      );
+                    }
+                  ),
                   Row(
                     children: <Widget>[
-                      // Text(
-                      //   'No invitation sent',
-                      // ),
-                      // SizedBox(width: 5),
                       Visibility(
                      visible: widget.date.compareTo(now)<0 ? false : true,
                      child: Flatbutton(
@@ -348,7 +430,7 @@ class _EventDetailsState extends State<EventDetails> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => SendInvitation(widget.date, widget.time, widget.eventName, widget.location, widget.uid)
+                                      builder: (context) => SendInvitation(widget.date, widget.endDate, widget.eventName, widget.location, widget.uid)
                                 )
                                 );
                             },
@@ -375,39 +457,96 @@ class _EventDetailsState extends State<EventDetails> {
                           color: Colors.grey[800],
                           fontWeight: FontWeight.w500,
                           fontSize: 25,
-
                         ),
                       ),
                     ],
                   ),
                   SizedBox(height: 10),
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Report not generate yet',
-                      ),
-                      
-                   Visibility(
-                     visible: widget.date.compareTo(now)>0 ? false : true,
-                     child: Flatbutton(
-                            fontsize: 15,
-                            icon: Icon(Icons.document_scanner, color:  Colors.red,),
-                            colortext: Colors.red,
-                   
-                            text: "create a report",
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.time, widget.eventName, widget.location, widget.eventfee, widget.uid )
-                                )
-                                );
-                            },
-                          ),
-                   )
-                      ],
-                  ),
+                  StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance.collection('event').doc(widget.uid).collection("report").snapshots(),
+                    builder: (context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.hasError) {
+                          return Center(child: Text('Something went wrong'));
+                        }
+                        if(!snapshot.hasData)
+                        return Center(child: Text(''));
+        
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(child: Text(""));
+                        }
+                        if (snapshot.data.size ==
+                            0) {
+                          return Column(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: ElevatedButton(
+                                      onPressed: null,
+                                      style: ElevatedButton.styleFrom(
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10.0),
+                                        ),
+                                        fixedSize: Size(140, 40)
+                                      ),
+                                      child: Text('View Report'.toUpperCase(), 
+                                        style: TextStyle(
+                                          fontSize: 15)),
+                                ),
+                              ),
+                              SizedBox(height: 10),
+                              Row(
+                                children: <Widget>[ 
+                                 Flatbutton(
+                                        fontsize: 15,
+                                        icon: Icon(Icons.document_scanner, color:  Colors.red,),
+                                        colortext: Colors.red,
+                                        text: "create a report",
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => UploadingImageToFirebaseStorage(widget.date, widget.endDate, widget.eventName, widget.location, widget.eventfee, widget.uid )
+                                            )
+                                            );
+                                        },
+                                      ),
                                   ],
+                              ),
+                            ],
+                          );
+                        }
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            List<String> logoImage = List.from( snapshot.data.docs[0]['LogoImage']);
+                            List<String> eventImage = List.from( snapshot.data.docs[0]['EventImage']);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ReportList(widget.uid, snapshot.data.docs[0]['Content'], logoImage, eventImage, widget.date, widget.endDate, widget.eventName, widget.location, widget.eventfee, snapshot.data.docs[0].id),
+                                  fullscreenDialog: true));
+                          },
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            side: BorderSide(color: Colors.red[600], width: 3),
+                            fixedSize: Size(140, 40)
+                          ),
+                          child: Text('View Report'.toUpperCase(), 
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold, 
+                              color: Colors.red[600])),
+                        ),
+                      );
+                    }
+                  ),
+                ],
               )),
             ),
           ]),
@@ -429,13 +568,16 @@ class _EventDetailsState extends State<EventDetails> {
                       MaterialPageRoute(
                           builder: (context) => UpdateEvent(
                                 widget.date,
-                                widget.time,
+                                widget.endDate,
                                 widget.eventName,
                                 widget.location,
                                 widget.eventfee,
                                 widget.description,
                                 widget.label,
                                 widget.reg,
+                                widget.regDate,
+                                widget.picName,
+                                widget.picContact,
                                 widget.uid,
                               ),
                           fullscreenDialog: true));
@@ -456,10 +598,8 @@ class _EventDetailsState extends State<EventDetails> {
               minWidth: 180.0,
               // height: 40.0,
               child: ElevatedButton(
-                onPressed: () {
-                  DatabaseService().deleteEvent(widget.uid);
-                  Navigator.of(context).pop();
-                },
+                onPressed: () => 
+                  _promptRemoveEvent() ,
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red[600],
                   shape: new RoundedRectangleBorder(
@@ -478,4 +618,31 @@ class _EventDetailsState extends State<EventDetails> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
+  void _promptRemoveEvent() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return new AlertDialog(
+        title: new Text('Delete this event?'),
+        actions: <Widget>[
+          new TextButton(
+            child: new Text('CANCEL'),
+            onPressed: () => Navigator.of(context).pop()
+          ),
+          new TextButton(
+            child: new Text('DELETE'),
+            onPressed: () {
+              DatabaseService().deleteEvent(widget.uid);
+              int count = 2;
+              Navigator.of(context).popUntil((_) => count-- <= 0);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Event has been deleted"),
+              ));
+            }
+          )
+        ]
+      );
+    }
+  );
+}
 }

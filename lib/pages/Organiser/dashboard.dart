@@ -1,7 +1,7 @@
-// import 'package:fiza/model/class.dart';
 import 'package:EMMA/Comman_widget/Custom_card.dart';
 import 'package:EMMA/pages/Organiser/eventDetails.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -26,10 +26,14 @@ class _DashboardState extends State<Dashboard> {
     CollectionReference event = FirebaseFirestore.instance.collection('event');
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter2 = new DateFormat('dd-MM-yyyy');
     DateTime formattedDate = formatter.parse(now.toString());
     return Scaffold(
         body: StreamBuilder<QuerySnapshot>(
-            stream: event.orderBy("Date",descending:true).snapshots(),
+            stream: event
+            .where('Creator_Uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+            // .orderBy('Date',descending:false)
+            .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasError) {
@@ -44,8 +48,9 @@ class _DashboardState extends State<Dashboard> {
                 children: snapshot.data.docs.map((DocumentSnapshot document) {
                 DateTime myDateTime = (document.data()['Date']).toDate();
                 DateTime myEndDateTime = (document.data()['End_Date']).toDate();
-                DateTime myTimeDate = (document.data()['Time']).toDate();
-                DateTime myEndTimeDate = (document.data()['End_Time']).toDate();
+                DateTime regDate = (document.data()['Registration']).toDate();
+                DateTime formattedEventDate = formatter.parse(myDateTime.toString());
+                DateTime formattedEventEndDate = formatter.parse(myEndDateTime.toString());
                 index += 1;
                 return GestureDetector(
                   onTap: () {
@@ -54,15 +59,16 @@ class _DashboardState extends State<Dashboard> {
                         MaterialPageRoute(
                             builder: (context) => EventDetails(
                                 myDateTime,
-                                myTimeDate,
                                 myEndDateTime,
-                                myEndTimeDate,
                                 document.data()['EventName'],
                                 document.data()['Location'],
                                 document.data()['Event_Fee'],
                                 document.data()['Description'],
                                 document.data()['label'],
-                                document.data()['Open_Registeration'],
+                                document.data()['Open_Registration'],
+                                regDate,
+                                document.data()['PIC_Name'],
+                                document.data()['PIC_Contact'],
                                 document.id),
                             fullscreenDialog: true));
                   },
@@ -75,15 +81,35 @@ class _DashboardState extends State<Dashboard> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(24),
                               gradient: LinearGradient(
-                                  colors: [
-                                    newColor[index%4].first,
-                                    newColor[index%4].last
+                                  colors: (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')? [
+                                    newColor[0].first,
+                                    newColor[0].last
+                                  ] : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? [
+                                    newColor[1].first,
+                                    newColor[1].last
+                                  ] : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? [
+                                    newColor[2].first,
+                                    newColor[2].last
+                                  ] : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? [
+                                    newColor[3].first,
+                                    newColor[3].last
+                                  ] : [
+                                    newColor[4].first,
+                                    newColor[4].last
                                   ],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight),
                               boxShadow: [
                                 BoxShadow(
-                                    color: newColor[index%4].last,
+                                    color: (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')?
+                                    newColor[0].last
+                                   : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? 
+                                    newColor[1].last
+                                   : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? 
+                                    newColor[2].last
+                                   : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? 
+                                    newColor[3].last
+                                   : newColor[4].last,
                                     blurRadius: 12,
                                     offset: Offset(0, 6))
                               ])),
@@ -94,7 +120,25 @@ class _DashboardState extends State<Dashboard> {
                         child: CustomPaint(
                           size: Size(100, 150),
                           painter: CustomCardShapePainter(24,
-                              newColor[index%4].first, newColor[index%4].last),
+                              (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')?
+                                    newColor[0].first
+                                   : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? 
+                                    newColor[1].first
+                                   : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? 
+                                    newColor[2].first
+                                   : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? 
+                                    newColor[3].first
+                                   : newColor[4].first, 
+                                   
+                                   (document.data()['label'] == 'conferences') || (document.data()['label'] == 'seminar') || (document.data()['label'] == 'workshops')?
+                                    newColor[0].last
+                                   : (document.data()['label'] == 'expo') || (document.data()['label'] == 'award') || (document.data()['label'] == 'festival')? 
+                                    newColor[1].last
+                                   : (document.data()['label'] == 'leadership') || (document.data()['label'] == 'volunteers') || (document.data()['label'] == 'self improvement')? 
+                                    newColor[2].last
+                                   : (document.data()['label'] == 'creative') || (document.data()['label'] == 'cooking') || (document.data()['label'] == 'art')? 
+                                    newColor[3].last
+                                   : newColor[4].last,),
                         ),
                       ),
                       Positioned.fill(
@@ -150,13 +194,31 @@ class _DashboardState extends State<Dashboard> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 5.0),
                                     child: Text(
-                                      myDateTime.toString() == myEndDateTime.toString()
-                                        ? "${myDateTime.day}/${myDateTime.month}/${myDateTime.year}"
-                                        : "${myDateTime.day}/${myDateTime.month}/${myDateTime.year} - ${myEndDateTime.day}/${myEndDateTime.month}/${myEndDateTime.year}",
+                                      (myDateTime.day.toString() == myEndDateTime.day.toString()) && (myDateTime.month.toString() == myEndDateTime.month.toString())
+                                        ? formatter2.format(myDateTime)
+                                        : formatter2.format(myDateTime) + " - " + formatter2.format(myEndDateTime),
                                         style: TextStyle(
                                         color: Colors.grey[100],
                                         fontWeight: FontWeight.w500,
                                         fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5.0),
+                                    child: Container(
+                                      padding: EdgeInsets.fromLTRB(12, 4, 12, 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        borderRadius: BorderRadius.all(Radius.circular(10.0))
+                                      ),
+                                      child: Text( 
+                                          document.data()['label'].toUpperCase(),
+                                          style: TextStyle(
+                                          color: Colors.grey[100],
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 11,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -169,7 +231,7 @@ class _DashboardState extends State<Dashboard> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   Text(
-                                  myDateTime.compareTo(formattedDate)>0 ? 'Coming\nSoon': myDateTime.compareTo(formattedDate)<0 && myEndDateTime.compareTo(formattedDate)<0? 'Ended':'Ongoing',
+                                  formattedEventDate.compareTo(formattedDate)>0 ? 'Coming\nSoon': formattedEventDate.compareTo(formattedDate)<0 && formattedEventEndDate.compareTo(formattedDate)<0? 'Ended':'Ongoing',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: 'Avenir',

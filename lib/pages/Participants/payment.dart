@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:EMMA/services/databaseservice.dart';
 
+// ignore: must_be_immutable
 class PaymentInfo extends StatefulWidget {
   String amount;
    String eventuid;

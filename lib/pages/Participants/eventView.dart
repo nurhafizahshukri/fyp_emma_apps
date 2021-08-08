@@ -8,35 +8,40 @@ import 'package:EMMA/Pages/Participants/Register_event.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:EMMA/Pages/Participants/payment.dart';
 
+// ignore: must_be_immutable
 class EventView extends StatefulWidget {
   DateTime date = DateTime.now();
-  DateTime time = DateTime.now();
   DateTime endDate = DateTime.now();
-  DateTime endTime = DateTime.now();
+  DateTime regDate = DateTime.now();
   String eventName = "";
   String location = "";
   String eventfee = "";
   String description = "";
   String label = "";
   String reg = "";
+  String picName = "";
+  String picContact = "";
   String uid = "";
-  String puid = "";
+  String username="";
+  String mobile = "";
   EventView(
     this.date,
-    this.time,
     this.endDate,
-    this.endTime,
+    this.regDate,
     this.eventName,
     this.location,
     this.eventfee,
     this.description,
     this.label,
     this.reg,
+    this.picName,
+    this.picContact,
     this.uid,
-    this.puid,
+    this.username,
+    this.mobile,
   ) {
     print(date);
-    print(time);
+    print(endDate);
     print(eventName);
     print(location);
     print(eventfee);
@@ -82,8 +87,10 @@ class _EventViewState extends State<EventView> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     var formatter = new DateFormat('yyyy-MM-dd');
+    var formatter2 = new DateFormat('dd-MM-yyyy (hh:mm a)');
     DateTime formattedDate = formatter.parse(now.toString());
-    String eventName;
+    DateTime formattedEventDate = formatter.parse(widget.date.toString());
+    DateTime formattedEventEndDate = formatter.parse(widget.endDate.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text('Event Details'),
@@ -173,7 +180,7 @@ class _EventViewState extends State<EventView> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Text(
-                      widget.date.compareTo(formattedDate)>0 ? 'COMING SOON': widget.date.compareTo(formattedDate)<0 && widget.endDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
+                      formattedEventDate.compareTo(formattedDate)>0 ? 'COMING SOON': formattedEventDate.compareTo(formattedDate)<0 && formattedEventEndDate.compareTo(formattedDate)<0? 'ENDED':'ONGOING',
                       style: TextStyle(
                         color: Colors.pink[800],
                         fontStyle: FontStyle.italic,
@@ -203,9 +210,11 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.calendar_today),
                       SizedBox(width: 10),
-                      Text(widget.date.toString() == widget.endDate.toString()
-                          ? "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) "
-                          : "${widget.date.day} / ${widget.date.month} / ${widget.date.year} ( ${format1.format(widget.time)} ) - ${widget.endDate.day} / ${widget.endDate.month} / ${widget.endDate.year} ( ${format1.format(widget.endTime)} ) "),
+                      Text(
+                        (widget.date.day.toString() == widget.endDate.day.toString()) && widget.date.month.toString() == widget.endDate.month.toString()
+                          ? formatter2.format(widget.date)
+                          : formatter2.format(widget.date) + ' - ' + formatter2.format(widget.endDate)
+                        ),
                     ],
                   ),
                   Row(
@@ -219,7 +228,7 @@ class _EventViewState extends State<EventView> {
                     children: <Widget>[
                       Icon(Icons.attach_money_sharp),
                       SizedBox(width: 10),
-                      Text(widget.eventfee != null ? widget.eventfee : ''),
+                      Text(widget.eventfee != 'RM 0.00' ? widget.eventfee : 'FREE'),
                     ],
                   ),
                   Row(
@@ -227,6 +236,13 @@ class _EventViewState extends State<EventView> {
                       Icon(Icons.label_important_outline_sharp),
                       SizedBox(width: 10),
                       Text(widget.label != null ? widget.label : ''),
+                    ],
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Icon(Icons.call),
+                      SizedBox(width: 10),
+                      Text(widget.picContact != null ? widget.picContact +' ( ' + widget.picName + ' )' : ''),
                     ],
                   ),
                 ],
@@ -245,7 +261,7 @@ class _EventViewState extends State<EventView> {
                         style: TextStyle(
                           color: Colors.grey[800],
                           fontWeight: FontWeight.w500,
-                          fontSize: 25,
+                          fontSize: 20,
                         ),
                       ),
                     ],
@@ -257,6 +273,29 @@ class _EventViewState extends State<EventView> {
                           child: Text(
                         widget.description != null ? widget.description : '',
                         textAlign: TextAlign.justify,
+                      )),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        'Registration Deadline',
+                        style: TextStyle(
+                          color: Colors.grey[800],
+                          fontWeight: FontWeight.w500,
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      Flexible(
+                          child: Text(widget.reg =="Yes" ?
+                            formatter2.format(widget.regDate) : "Registration Unavailable",
+                            textAlign: TextAlign.justify,
                       )),
                     ],
                   ),
@@ -350,7 +389,7 @@ class _EventViewState extends State<EventView> {
                                       padding: const EdgeInsets.only(
                                           top: 12.0, right: 40.0),
                                       child: ticketDetailsWidget(
-                                          'Location', widget.location, 'TIME', "${widget.time.hour} : ${widget.time.minute} "),
+                                          'Location', widget.location, 'TIME', "${widget.date.hour} : ${widget.date.minute} "),
                                     ),
                                     
                                   ],
@@ -383,17 +422,19 @@ class _EventViewState extends State<EventView> {
               minWidth: 180.0,
               // height: 40.0,
               child: ElevatedButton(
-                onPressed: widget.reg =="Yes"? () {
+                onPressed: (widget.reg =="Yes") && (formattedDate.compareTo(widget.regDate)<=0)? () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => RegisterEvent(
                                 widget.date,
-                                widget.time,
+                                widget.endDate,
                                 widget.eventName,
                                 widget.location,
                                 widget.eventfee,
                                 widget.uid,
+                                widget.username,
+                                widget.mobile,
                               ),
                           fullscreenDialog: true));
                 } : null,

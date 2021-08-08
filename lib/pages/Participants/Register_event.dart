@@ -1,19 +1,21 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:EMMA/services/databaseservice.dart';
+
+// ignore: must_be_immutable
 class RegisterEvent extends StatefulWidget {
   DateTime date;
-  DateTime time;
+  DateTime endDate;
   String eventName;
   String location;
   String eventfee;
-  
+  String username;
+  String mobile;
   String uid;
 
-  RegisterEvent(this.date, this.time, this.eventName, this.location,
-      this.eventfee, this.uid,);
+  RegisterEvent(this.date, this.endDate, this.eventName, this.location,
+      this.eventfee, this.uid,this.username,this.mobile);
   @override
   _RegisterEventState createState() => _RegisterEventState();
 }
@@ -22,13 +24,21 @@ class _RegisterEventState extends State<RegisterEvent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final newformat = DateFormat("yyyy-MM-dd");
   final format1 = DateFormat("HH:mm");
+  // ignore: unused_field
   DateTime _date;
-  DateTime _time;
+  // ignore: unused_field
+  DateTime _endDate;
+  // ignore: unused_field
   String _eventName;
+  // ignore: unused_field
   String _location;
+  // ignore: unused_field
   String _eventfee;
+  // ignore: unused_field
   String _description;
+  // ignore: unused_field
   String _label;
+  // ignore: unused_field
   String _reg;
   String _name;
   String _contact;
@@ -36,11 +46,12 @@ class _RegisterEventState extends State<RegisterEvent> {
 
   final eventController = TextEditingController();
   final TextEditingController dateController = new TextEditingController();
-  final TextEditingController timeController = new TextEditingController();
+  final TextEditingController endDateController = new TextEditingController();
   final TextEditingController eventNameController = new TextEditingController();
   final TextEditingController locationController = new TextEditingController();
   final TextEditingController eventfeeController = new TextEditingController();
-  
+   final TextEditingController nameController = new TextEditingController();
+  final TextEditingController mobileController = new TextEditingController();
 
   @override
   void dispose() {
@@ -50,24 +61,29 @@ class _RegisterEventState extends State<RegisterEvent> {
   }
 
   @override
+  // ignore: must_call_super
   void initState() {
 dateController.text = widget.date.toString();
-    timeController.text = widget.time.toString();
+    endDateController.text = widget.endDate.toString();
     eventNameController.text = widget.eventName;
     locationController.text = widget.location;
     eventfeeController.text = widget.eventfee;
+    nameController.text=widget.username;
+    mobileController.text=widget.mobile;
  
     _date = widget.date;
-    _time = widget.time;
+    _endDate = widget.endDate;
     _eventName = widget.eventName;
     _location = widget.location;
     _eventfee = widget.eventfee;
+    _name=widget.username;
+    _contact=widget.mobile;
+
    }
 
   // @override
   @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     return Scaffold(
       appBar: AppBar(
@@ -129,13 +145,13 @@ dateController.text = widget.date.toString();
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child:DateTimeField(
-                        controller: timeController,
+                        controller: endDateController,
                         style:TextStyle(color: Colors.grey),
                         enabled: false,
-                        onChanged: (currentValue) => _time = currentValue,
+                        onChanged: (currentValue) => _endDate = currentValue,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'Time Format: (${format1.pattern})'
+                          labelText: 'End Date Format: (${format1.pattern})'
                         ),
                         format: format1,
                         onShowPicker: (context, currentValue) async {
@@ -181,6 +197,7 @@ dateController.text = widget.date.toString();
                          Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            controller: nameController,
                             onChanged: (currentValue) => _name = currentValue,
                             decoration: InputDecoration(
                               labelText: 'Name',
@@ -194,6 +211,7 @@ dateController.text = widget.date.toString();
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                            controller: mobileController,
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value.isEmpty) {

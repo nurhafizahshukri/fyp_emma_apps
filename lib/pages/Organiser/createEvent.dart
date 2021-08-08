@@ -1,5 +1,5 @@
 import 'package:EMMA/services/databaseservice.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -12,18 +12,19 @@ class CreateEvent extends StatefulWidget {
 
 class _CreateEventState extends State<CreateEvent> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final newformat = DateFormat("yyyy-MM-dd");
+  final newformat = DateFormat("yyyy-MM-dd hh:mm a");
   final format1 = DateFormat("HH:mm");
   DateTime _date;
-  DateTime _time;
   DateTime _endDate;
-  DateTime _endTime;
   String _eventName;
   String _location;
   String _eventfee;
   String _description;
   String _label;
   String _reg;
+  DateTime _regDate;
+  String _picName;
+  String _contact;
   final FocusScopeNode _node = FocusScopeNode();
 
   final eventController = TextEditingController();
@@ -36,8 +37,12 @@ class _CreateEventState extends State<CreateEvent> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _regDate = DateTime.now();
+  }
+  @override
   Widget build(BuildContext context) {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
     return Scaffold(
       appBar: AppBar(
         title: Text('Create event'),
@@ -58,13 +63,14 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           onChanged: (currentValue) => _eventName = currentValue,
 
                             // onEditingComplete: _node.nextFocus,
                             // ignore: missing_return
                             validator: (input) {
                               if(input.isEmpty){
-                                return 'Invalid name!';
+                                return 'Please type the event name';
                               }
                             },
                             onSaved: (input) => _eventName = input,
@@ -79,83 +85,102 @@ class _CreateEventState extends State<CreateEvent> {
                         ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child: DateTimeField(
+                        validator: (input) {
+                          if(input == null){
+                                return 'Please enter start date';
+                              }
+                              return null;
+                        },
                         onChanged: (currentValue) => _date = currentValue,
                         decoration: InputDecoration(
                           border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
                               ),
-                          labelText: 'Start Date Format: (${newformat.pattern})'
+                          labelText: 'Start Date (${newformat.pattern})'
                         ),
                         format: newformat,
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(1900),
-                            initialDate: currentValue ?? DateTime.now(),
-                            lastDate: DateTime(2100)
+                        onShowPicker: (context, currentValue) async {
+                          final date = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now().subtract(Duration(days: 0)),
+                              initialDate: currentValue ?? DateTime.now(),
+                              lastDate: DateTime(2100));
+                          if (date != null) {
+                            final time = await showTimePicker(
+                              context: context,
+                              initialTime:
+                                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
                             );
-                        },
+                            return DateTimeField.combine(date, time);
+                          } else {
+                            return currentValue;
+                          }
+                        }
+                        // onShowPicker: (context, currentValue) {
+                        //   return showDatePicker(
+                        //     context: context,
+                        //     firstDate: DateTime.now().subtract(Duration(days: 0)),
+                        //     initialDate: currentValue ?? DateTime.now(),
+                        //     lastDate: DateTime(2100)
+                        //     );
+                        // },
                       ),
                     ),
                         Padding(padding: const EdgeInsets.all(8.0),
                       child: DateTimeField(
+                        validator: (input) {
+                          if(input == null){
+                                return 'Please enter end date';
+                              }
+                              return null;
+                        },
                         onChanged: (currentValue) => {_endDate = currentValue},
                         decoration: InputDecoration(
                           border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
                               ),
-                          labelText: 'End Date Format: (${newformat.pattern})'
+                          labelText: 'End Date (${newformat.pattern})'
                         ),
                         format: newformat,
-                        onShowPicker: (context, currentValue) {
-                          return showDatePicker(
-                            context: context,
-                            firstDate: DateTime(1900),
-                            initialDate: currentValue ?? DateTime.now(),
-                            lastDate: DateTime(2100)
+                        onShowPicker: (context, currentValue) async {
+                          final date = await showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now().subtract(Duration(days: 0)),
+                              initialDate: currentValue ?? DateTime.now(),
+                              lastDate: DateTime(2100));
+                          if (date != null) {
+                            final time = await showTimePicker(
+                              context: context,
+                              initialTime:
+                                  TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
                             );
-                        },
+                            return DateTimeField.combine(date, time);
+                          } else {
+                            return currentValue;
+                          }
+                        }
+                        // onShowPicker: (context, currentValue) {
+                        //   return showDatePicker(
+                        //     context: context,
+                        //     firstDate: DateTime.now().subtract(Duration(days: 0)),
+                        //     initialDate: currentValue ?? DateTime.now(),
+                        //     lastDate: DateTime(2100)
+                        //     );
+                        // },
                       ),
                     ),
-                        Padding(padding: const EdgeInsets.all(8.0),
-                      child:DateTimeField(
-                        onChanged: (currentValue) => {_time = currentValue},
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'Start Time Format: (${format1.pattern})'
-                        ),
-                        format: format1,
-                        onShowPicker: (context, currentValue) async {
-                          final time = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                          );
-                          return DateTimeField.convert(time);
-                        },
-                      ), ),
-                        Padding(padding: const EdgeInsets.all(8.0),
-                      child:DateTimeField(
-                        onChanged: (currentValue) => {_endTime = currentValue},
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(borderRadius: new BorderRadius.circular(25.0),),
-                          labelText: 'End Time Format: (${format1.pattern})'
-                        ),
-                        format: format1,
-                        onShowPicker: (context, currentValue) async {
-                          final time = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                          );
-                          return DateTimeField.convert(time);
-                        },
-                      ), ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _location = currentValue,
-                
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event location';
+                              }
+                              return null;
+                            },
+                            onChanged: (currentValue) => _location = currentValue,
                             decoration: InputDecoration(
-
                               labelText: 'Event Location',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
@@ -167,13 +192,16 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                            keyboardType: TextInputType.numberWithOptions(decimal: true),
-                            inputFormatters: [
-                              FilteringTextInputFormatter.allow(RegExp(r'(^\d*\.?\d{0,2})')),
-                            ],
-                            onChanged: (currentValue) => _eventfee = currentValue,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            onChanged: (currentValue) => _picName= currentValue,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event PIC name';
+                              }
+                              return null;
+                            },
                             decoration: InputDecoration(
-                              labelText: 'Event Fee (RM)',
+                              labelText: 'Person In Charge Name',
                               fillColor: Colors.white,
                               border: new OutlineInputBorder(
                                 borderRadius: new BorderRadius.circular(25.0),
@@ -184,7 +212,72 @@ class _CreateEventState extends State<CreateEvent> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
-                                                    onChanged: (currentValue) => _description = currentValue,
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                            ],
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return 'Mobile can\'t be empty';
+                                } else if (value.isNotEmpty) {
+                                //bool mobileValid = RegExp(r"^(?:\+88||01)?(?:\d{10}|\d{13})$").hasMatch(value);
+
+                                bool mobileValid =
+                                RegExp(r'^(?:[+0]6)?[0-9]{10}$').hasMatch(value);
+                                return mobileValid ? null : "Invalid mobile";
+                                }
+                                return null;
+                            },
+                            onChanged: (currentValue) => _contact = currentValue,
+                            decoration: InputDecoration(
+                              labelText: 'Person In Charge Contact Info',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event fee';
+                              }
+                              return null;
+                            },
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            inputFormatters: <TextInputFormatter>[
+                              CurrencyTextInputFormatter(
+                                // locale: 'ko',
+                                decimalDigits: 2,
+                                symbol: 'RM ',
+                              ),
+                            ],
+                            onChanged: (currentValue) => _eventfee = currentValue,
+                            decoration: InputDecoration(
+                              labelText: 'Event Fee',
+                              fillColor: Colors.white,
+                              border: new OutlineInputBorder(
+                                borderRadius: new BorderRadius.circular(25.0),
+                              )
+                            )
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                            autovalidateMode: AutovalidateMode.onUserInteraction,
+                            validator: (input) {
+                              if(input.isEmpty){
+                                return 'Please type the event description';
+                              }
+                              return null;
+                            },
+                             onChanged: (currentValue) => _description = currentValue,
 
                             decoration: InputDecoration(
                               labelText: 'Event Description',
@@ -200,6 +293,12 @@ class _CreateEventState extends State<CreateEvent> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(0.0),
                                   child: DropdownButtonFormField<String>(
+                                    validator: (input) {
+                                     if(input.isEmpty){
+                                       return 'Please choose registration';
+                                     }
+                                     return null;
+                                   },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     border: new OutlineInputBorder(
@@ -236,11 +335,42 @@ class _CreateEventState extends State<CreateEvent> {
                             ),
                                 ),
                               ),
+                        // Visibility(
+                        //   visible: _reg == 'Yes'? true : false,
+                        //   child: 
+                          Padding(padding: const EdgeInsets.all(8.0),
+                          child: DateTimeField(
+                            enabled: _reg == 'Yes'? true : false,
+                          onChanged: (currentValue) => _regDate = currentValue,
+                          decoration: InputDecoration(
+                            border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(25.0),
+                                ),
+                            labelText: 'Registration Deadline (${newformat.pattern})'
+                          ),
+                          format: newformat,
+                          onShowPicker: (context, currentValue) {
+                            return showDatePicker(
+                              context: context,
+                              firstDate: DateTime.now().subtract(Duration(days: 0)),
+                              initialDate: currentValue ?? DateTime.now(),
+                              lastDate: DateTime(2100)
+                              );
+                          },
+                          ),
+                          ),
+                        // ),   
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                                 child: Padding(
                                   padding: const EdgeInsets.all(0.0),
                                   child: DropdownButtonFormField<String>(
+                                  validator: (input) {
+                                    if(input.isEmpty){
+                                      return 'Please choose the event categories';
+                                    }
+                                    return null;
+                                  },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     border: new OutlineInputBorder(
@@ -301,7 +431,7 @@ class _CreateEventState extends State<CreateEvent> {
                             height: 40.0,
                             child: ElevatedButton(
                               onPressed: () {onSubmit();
-                              Navigator.of(context).pop();},
+                              },
                               style: ElevatedButton.styleFrom(
                                 primary: Colors.red[600],
                                 shape: new RoundedRectangleBorder(
@@ -313,23 +443,24 @@ class _CreateEventState extends State<CreateEvent> {
                               child: Text('Submit'.toUpperCase(), style: TextStyle(fontSize: 20)),
                             ),
                         ),
-                        SizedBox(height: 15),
+                        SizedBox(height: 10),
                         ButtonTheme(
                             minWidth: 338.0,
                             height: 40.0,
                             child: ElevatedButton(
-                              onPressed: () { },
+                              onPressed: () { Navigator.of(context).pop();},
                               style: ElevatedButton.styleFrom(
-                                primary: Colors.red[600],
+                                primary: Colors.white,
                                 shape: new RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
                                 ),
                                 side: BorderSide(color: Colors.red[600]),
                                 fixedSize: Size(380, 40)
                               ),
-                              child: Text('Reset'.toUpperCase(), style: TextStyle(fontSize: 20)),
+                              child: Text('Cancel'.toUpperCase(), style: TextStyle(color: Colors.red[600],fontSize: 20)),
                             ),
                         ),
+                        SizedBox(height: 15),
                       ])
               ),
             ),),
@@ -339,10 +470,12 @@ class _CreateEventState extends State<CreateEvent> {
   }
   Future <void> onSubmit() async {
   final formState = _formKey.currentState;
-  
+  if (formState.validate()) {
     formState.save();
-    DatabaseService().addEvent(_eventName,_date, _time, _endDate, _endTime,_location,_eventfee,_description,_label,_reg);
-
+    DatabaseService().addEvent(_eventName,_date, _endDate, _location,_eventfee,_description,_label,_reg,_regDate,_picName,_contact);
+    Navigator.of(context).pop();
+  }
+  
 }
 
 }

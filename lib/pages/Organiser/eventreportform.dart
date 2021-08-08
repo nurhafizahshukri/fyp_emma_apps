@@ -1,28 +1,25 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:EMMA/pages/Organiser/eventdetailsform.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:EMMA/pages/Organiser/eventContentform.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path/path.dart';
-import 'package:EMMA/Pages/Organiser/eventDetails.dart';
 
 //void main() => runApp(MyApp());
 
 final Color yellow = Color(0xfffbc31b);
 final Color orange = Color(0xfffb6900);
 
+// ignore: must_be_immutable
 class UploadingImageToFirebaseStorage extends StatefulWidget {
   DateTime date;
-  DateTime time;
+  DateTime endDate;
   String eventName;
   String location;
   String eventfee;
   String uid;
   UploadingImageToFirebaseStorage(
     this.date,
-    this.time,
+    this.endDate,
     this.eventName,
     this.location,
     this.eventfee,
@@ -166,7 +163,15 @@ class _UploadingImageToFirebaseStorageState
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: _imageFile6 != null
                                     ? Image.file(_imageFile6)
-                                    : FlatButton(
+                                    : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(250, 170)
+                                      ),
                                         child: Icon(
                                           Icons.add_a_photo,
                                           color: Colors.red,
@@ -191,7 +196,15 @@ class _UploadingImageToFirebaseStorageState
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: _imageFile7 != null
                                     ? Image.file(_imageFile7)
-                                    : FlatButton(
+                                    : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(250, 170)
+                                      ),
                                         child: Icon(
                                           Icons.add_a_photo,
                                           color: Colors.red,
@@ -216,7 +229,15 @@ class _UploadingImageToFirebaseStorageState
                                 borderRadius: BorderRadius.circular(30.0),
                                 child: _imageFile8 != null
                                     ? Image.file(_imageFile8)
-                                    : FlatButton(
+                                    : ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(250, 170)
+                                      ),
                                         child: Icon(
                                           Icons.add_a_photo,
                                           size: 50,
@@ -233,7 +254,7 @@ class _UploadingImageToFirebaseStorageState
                 )
               : Column(mainAxisAlignment: MainAxisAlignment.start, children: <
                   Widget>[
-                                              SizedBox(width:double.infinity,height:30),
+                   SizedBox(width:double.infinity,height:30),
 
                   Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -252,7 +273,15 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile1 != null
                                   ? Image.file(_imageFile1)
-                                  : FlatButton(
+                                  : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         color: Colors.red,
@@ -277,7 +306,15 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile2 != null
                                   ? Image.file(_imageFile2)
-                                  : FlatButton(
+                                  : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -306,7 +343,15 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile3 != null
                                   ? Image.file(_imageFile3)
-                                  : FlatButton(
+                                  : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         color: Colors.red,
@@ -331,7 +376,15 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile4 != null
                                   ? Image.file(_imageFile4)
-                                  : FlatButton(
+                                  : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -356,7 +409,15 @@ class _UploadingImageToFirebaseStorageState
                               borderRadius: BorderRadius.circular(30.0),
                               child: _imageFile5 != null
                                   ? Image.file(_imageFile5)
-                                  : FlatButton(
+                                  : ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.white,
+                                        shape: new RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(50.0),
+                                        ),
+                                        side: BorderSide(color: Colors.red[600]),
+                                        fixedSize: Size(100, 100)
+                                      ),
                                       child: Icon(
                                         Icons.add_a_photo,
                                         size: 50,
@@ -369,66 +430,6 @@ class _UploadingImageToFirebaseStorageState
                         ),
                       ]),
                 ])),
-
-      // Stack(
-      //   children: <Widget>[
-      //     Container(
-      //       height: 360,
-      //       decoration: BoxDecoration(
-      //           borderRadius: BorderRadius.only(
-      //               bottomLeft: Radius.circular(50.0),
-      //               bottomRight: Radius.circular(50.0)),
-      //           gradient: LinearGradient(
-      //               colors: [orange, yellow],
-      //               begin: Alignment.topLeft,
-      //               end: Alignment.bottomRight)),
-      //     ),
-      //     Container(
-      //       margin: const EdgeInsets.only(top: 80),
-      //       child: Column(
-      //         children: <Widget>[
-      //           Padding(
-      //             padding: const EdgeInsets.all(8.0),
-      //             child: Center(
-      //               child: Text(
-      //                 "Uploading Image to Firebase Storage",
-      //                 style: TextStyle(
-      //                     color: Colors.white,
-      //                     fontSize: 28,
-      //                     fontStyle: FontStyle.italic),
-      //               ),
-      //             ),
-      //           ),
-      //           SizedBox(height: 20.0),
-      //           Expanded(
-      //             child: Stack(
-      //               children: <Widget>[
-      //                 Container(
-      //                   height: double.infinity,
-      //                   margin: const EdgeInsets.only(
-      //                       left: 30.0, right: 30.0, top: 10.0),
-      //   child: ClipRRect(
-      //     borderRadius: BorderRadius.circular(30.0),
-      //     child: _imageFile != null
-      //         ? Image.file(_imageFile)
-      //         : FlatButton(
-      //             child: Icon(
-      //               Icons.add_a_photo,
-      //               size: 50,
-      //             ),
-      //             onPressed: pickImage,
-      //           ),
-      //   ),
-      // ),
-      //               ],
-      //             ),
-      //           ),
-      //           uploadImageButton(context),
-      //         ],
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 
@@ -441,18 +442,24 @@ class _UploadingImageToFirebaseStorageState
                 const EdgeInsets.symmetric(vertical: 5.0, horizontal: 16.0),
             margin: const EdgeInsets.only(
                 top: 30, left: 20.0, right: 20.0, bottom: 20.0),
-            decoration: BoxDecoration(
-                color: Colors.red, borderRadius: BorderRadius.circular(30.0)),
-            child: FlatButton(
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red[600],
+                shape: new RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25.0),
+                ),
+                side: BorderSide(color: Colors.red[600]),
+                fixedSize: Size(100, 40)
+              ),
               onPressed: () => isload
                   ? {
                       setState(() {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => EvenntDetailsForm(
+                                builder: (context) => EventContentForm(
                                     widget.date,
-                                    widget.time,
+                                    widget.endDate,
                                     widget.eventName,
                                     widget.location,
                                     widget.eventfee,
@@ -464,7 +471,16 @@ class _UploadingImageToFirebaseStorageState
                                     _uintFile5,
                                     _uintFile6,
                                     _uintFile7,
-                                    _uintFile8)));
+                                    _uintFile8,
+                                    _imageFile1,
+                                    _imageFile2,
+                                    _imageFile3,
+                                    _imageFile4,
+                                    _imageFile5,
+                                    _imageFile6,
+                                    _imageFile7,
+                                    _imageFile8,
+                                    )));
                       })
                     }
                   : {

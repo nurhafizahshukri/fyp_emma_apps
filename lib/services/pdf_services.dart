@@ -1,7 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
-import 'package:flutter/services.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -22,14 +20,6 @@ class PdfApi {
   String eventfee;
   String uid;
   String paragraph;
-  String _imageUrl1;
-  String _imageUrl2;
-  String _imageUrl3;
-  String _imageUrl4;
-  String _imageUrl5;
-  String _imageUrl6;
-  String _imageUrl7;
-  String _imageUrl8;
 
   PdfApi(
       this.date,
@@ -45,15 +35,16 @@ class PdfApi {
 
     final headers = ['Name', 'Age'];
 
-    final Tabless = [
+    final tabless = [
       Tables(name: 'Privacy', content: "Public"),
       Tables(name: 'Date ', content: "${date.year.toString()}-${date.month.toString()}-${date.day.toString()}"),
       Tables(name: 'Time', content: "${time.hour.toString()}:${time.minute.toString()} "),
       Tables(name: 'Location', content: "${location}"),
-            Tables(name: 'Location', content: "${eventfee}"),
+      Tables(name: 'Location', content: "${eventfee}"),
 
       ];
-    final data = Tabless.map((Tables) => [Tables.name, Tables.content]).toList();
+    // ignore: non_constant_identifier_names
+    final data = tabless.map((Tables) => [Tables.name, Tables.content]).toList();
 
     pdf.addPage(Page(
       build: (context) => Table.fromTextArray(
@@ -90,39 +81,6 @@ print("_imageUrl6=$_imageUrl6");
 print("_imageUrl7=$_imageUrl7");
 print("_imageUrl8=$_imageUrl8");
     
-// Uint8List bytes = (await NetworkAssetBundle(Uri.parse("${_imageUrl1}")).load("${_imageUrl1}"))
-//     .buffer
-//     .asUint8List();
-// Uint8List bytes1 = (await NetworkAssetBundle(Uri.parse("${_imageUrl2}")).load("${_imageUrl2}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes2 = (await NetworkAssetBundle(Uri.parse("${_imageUrl3}")).load("${_imageUrl3}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes3 = (await NetworkAssetBundle(Uri.parse("${_imageUrl4}")).load("${_imageUrl4}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes4 = (await NetworkAssetBundle(Uri.parse("${_imageUrl5}")).load("${_imageUrl5}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes5 = (await NetworkAssetBundle(Uri.parse("${_imageUrl6}")).load("${_imageUrl6}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes6 = (await NetworkAssetBundle(Uri.parse("${_imageUrl7}")).load("${_imageUrl7}"))
-//     .buffer
-//     .asUint8List();
-
-// Uint8List bytes7 = (await NetworkAssetBundle(Uri.parse("${_imageUrl8}")).load("${_imageUrl8}"))
-//     .buffer
-//     .asUint8List();
-
-
-
     final pageTheme = PageTheme(
       pageFormat: PdfPageFormat.a4,
       
@@ -130,7 +88,7 @@ print("_imageUrl8=$_imageUrl8");
 final headers = ['Name', 'Age'];
 
    
-    final Tabless = [
+    final tabless = [
       Tables(name: 'Privacy', content: "Public"),
       Tables(name: 'Date ', content: "${date.year.toString()}-${date.month.toString()}-${date.day.toString()}"),
       Tables(name: 'Time', content: "${time.hour.toString()}:${time.minute.toString()} "),
@@ -138,7 +96,8 @@ final headers = ['Name', 'Age'];
       Tables(name: 'Price', content: "${eventfee}"),
 
       ];
-    final data = Tabless.map((Tables) => [Tables.name, Tables.content]).toList();
+    // ignore: non_constant_identifier_names
+    final data = tabless.map((Tables) => [Tables.name, Tables.content]).toList();
     pdf.addPage(
       MultiPage(
         pageTheme: pageTheme,
@@ -175,6 +134,7 @@ final headers = ['Name', 'Age'];
           Center(child:Paragraph(
             textAlign: TextAlign.left,
             text:
+                // ignore: unnecessary_brace_in_string_interps
                 '${eventName}',
             style: TextStyle( fontSize: 20,fontBold: Font.helveticaBold() ,fontWeight:FontWeight.bold ),
           ), ),

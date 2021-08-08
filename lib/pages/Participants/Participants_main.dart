@@ -1,7 +1,7 @@
 
 import 'package:EMMA/Pages/Participants/dashboard.dart';
+import 'package:EMMA/pages/Participants/Profilepage.dart';
 import 'package:flutter/material.dart';
-import 'package:EMMA/Pages/Participants/report.dart';
 import 'package:EMMA/services/authservice.dart';
 
 class MainpageParticipant extends StatefulWidget {
@@ -12,7 +12,7 @@ class MainpageParticipant extends StatefulWidget {
 int currentTab = 0; // to keep track of active tab index
   final List<Widget> screens = [
     DashboardParticipant(),
-    HistoryReport(),
+    ProfilePage(),
   ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = DashboardParticipant(); // Our first view 
@@ -48,7 +48,7 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header'),
+              child: Text('Notification'),
               decoration: BoxDecoration(
                 color: Colors.red[700],
               ),
@@ -77,13 +77,13 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
           child: currentScreen,
           bucket: bucket,
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.deepOrange,
-          child: Icon(Icons.history),
-          onPressed: () {
-                      },
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        // floatingActionButton: FloatingActionButton(
+        //   backgroundColor: Colors.deepOrange,
+        //   child: Icon(Icons.history),
+        //   onPressed: () {
+        //               },
+        // ),
+        // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color: Colors.red[700],
         shape: CircularNotchedRectangle(),
@@ -134,7 +134,7 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
                     onPressed: () {
                       setState(() {
                         currentScreen =
-                            HistoryReport(); // if user taps on this dashboard tab will be active
+                            ProfilePage(); // if user taps on this dashboard tab will be active
                         currentTab = 1;
                       });
                     },
@@ -142,11 +142,11 @@ class _MainpageParticipantState extends State<MainpageParticipant> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         Icon(
-                          Icons.history,
+                          Icons.person,
                           color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                         ),
                         Text(
-                          'History',
+                          'Profile',
                           style: TextStyle(
                             color: currentTab == 1 ? Colors.orange[700] : Colors.orange[50]
                           ),

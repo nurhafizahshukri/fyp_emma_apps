@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -132,7 +133,9 @@ class _CalendarViewState extends State<CalendarView> {
     kEvents.clear();
     return Scaffold(
       body: StreamBuilder<QuerySnapshot>(
-          stream: event.snapshots(),
+          stream: event
+          .where('Creator_Uid', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+          .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.hasError) {
